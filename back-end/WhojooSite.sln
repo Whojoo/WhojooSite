@@ -5,9 +5,15 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1ACDDAC5-E1B5-4802-B07E-05A156626FBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Api", "src\WhojooSite.Api\WhojooSite.Api.csproj", "{D6264645-E450-4862-BAC0-561F0B30035E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Yarp", "src\WhojooSite.Yarp\WhojooSite.Yarp.csproj", "{5B2C0248-E595-407F-A3B2-54D63041FEB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Bootstrap", "src\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj", "{3470410F-4030-4A8F-AA69-F1BF1615DC9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Common", "src\WhojooSite.Common\WhojooSite.Common.csproj", "{9705F19D-CEBC-4FF9-92DC-610ECBDDA302}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WhojooSite.Recepies", "WhojooSite.Recepies", "{33E4419E-D642-4E25-A017-EDD5B4330EB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recepies.Module", "src\WhojooSite.Recepies\WhojooSite.Recepies.Module\WhojooSite.Recepies.Module.csproj", "{28D8F834-F109-476A-98CF-87796EF2A065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,17 +24,28 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D6264645-E450-4862-BAC0-561F0B30035E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6264645-E450-4862-BAC0-561F0B30035E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6264645-E450-4862-BAC0-561F0B30035E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6264645-E450-4862-BAC0-561F0B30035E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3470410F-4030-4A8F-AA69-F1BF1615DC9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3470410F-4030-4A8F-AA69-F1BF1615DC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3470410F-4030-4A8F-AA69-F1BF1615DC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3470410F-4030-4A8F-AA69-F1BF1615DC9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9705F19D-CEBC-4FF9-92DC-610ECBDDA302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9705F19D-CEBC-4FF9-92DC-610ECBDDA302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9705F19D-CEBC-4FF9-92DC-610ECBDDA302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9705F19D-CEBC-4FF9-92DC-610ECBDDA302}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D8F834-F109-476A-98CF-87796EF2A065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D8F834-F109-476A-98CF-87796EF2A065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D8F834-F109-476A-98CF-87796EF2A065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D8F834-F109-476A-98CF-87796EF2A065}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D6264645-E450-4862-BAC0-561F0B30035E} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{3470410F-4030-4A8F-AA69-F1BF1615DC9C} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{9705F19D-CEBC-4FF9-92DC-610ECBDDA302} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{33E4419E-D642-4E25-A017-EDD5B4330EB9} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{28D8F834-F109-476A-98CF-87796EF2A065} = {33E4419E-D642-4E25-A017-EDD5B4330EB9}
 	EndGlobalSection
 EndGlobal
