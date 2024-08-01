@@ -1,0 +1,24 @@
+name: whojoo-site
+
+services:
+  api-gateway:
+    build: 
+      context: ./back-end
+      dockerfile: ./src/WhojooSite.Yarp/Dockerfile
+    ports:
+      - 5001:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ReverseProxy:Clusters:webCluster:Destinations:destination1:Address=http://web:4000
+    networks:
+      - front-end
+      - back-end
+
+  web:
+    build: ./front-end
+    networks:
+      - front-end
+
+networks:
+  front-end:
+  back-end:
