@@ -10,7 +10,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ReverseProxy:Clusters:webCluster:Destinations:destination1:Address=http://web:4000
-      - ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address=http://backend:80
+      - ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address=http://server:80
     networks:
       - frontend
       - backend
