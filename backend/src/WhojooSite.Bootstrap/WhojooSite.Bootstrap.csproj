@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WhojooSite.Recepies\WhojooSite.Recepies.Module\WhojooSite.Recepies.Module.csproj" />
+    <ProjectReference Include="..\WhojooSite.Recipes\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj" />
   </ItemGroup>
 
 </Project>

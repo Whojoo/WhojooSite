@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Yarp", "src\Whoj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Bootstrap", "src\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj", "{3470410F-4030-4A8F-AA69-F1BF1615DC9C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WhojooSite.Recepies", "WhojooSite.Recepies", "{33E4419E-D642-4E25-A017-EDD5B4330EB9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WhojooSite.Recipes", "WhojooSite.Recipes", "{33E4419E-D642-4E25-A017-EDD5B4330EB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recepies.Module", "src\WhojooSite.Recepies\WhojooSite.Recepies.Module\WhojooSite.Recepies.Module.csproj", "{28D8F834-F109-476A-98CF-87796EF2A065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recipes.Module", "src\WhojooSite.Recipes\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj", "{28D8F834-F109-476A-98CF-87796EF2A065}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Common", "src\WhojooSite.Common\WhojooSite.Common.csproj", "{88F769C1-ED74-4D77-ACFF-D55048A52176}"
 EndProject
