@@ -4,12 +4,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # restore
-COPY ["Directory.Build.props", "."]
-COPY ["src/WhojooSite.Yarp/WhojooSite.Yarp.csproj", "WhojooSite.Yarp/"]
+COPY ["back-end/Directory.Build.props", "."]
+COPY ["back-end/src/WhojooSite.Yarp/WhojooSite.Yarp.csproj", "WhojooSite.Yarp/"]
 RUN dotnet restore 'WhojooSite.Yarp/WhojooSite.Yarp.csproj'
 
 # build
-COPY ["src/WhojooSite.Yarp", "WhojooSite.Yarp"]
+COPY ["back-end/src/WhojooSite.Yarp/", "WhojooSite.Yarp/"]
 WORKDIR /src/WhojooSite.Yarp
 RUN dotnet build 'WhojooSite.Yarp.csproj' -c Release -o /app/build
 
