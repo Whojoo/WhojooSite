@@ -5,8 +5,8 @@ RUN npm ci
 COPY ["frontend/", "./"]
 RUN npm run build frontend
 
-FROM node:20-alpine
+FROM node:20-alpine AS runtime
 WORKDIR /usr/app
 COPY --from=build /app/src/dist/frontend ./
-CMD node server/server.mjs
 EXPOSE 4000
+ENTRYPOINT [ "node", "server/server.mjs" ]
