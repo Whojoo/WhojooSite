@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
 using WhojooSite.Common.Web;
+using WhojooSite.Cqrs;
 
 namespace WhojooSite.Recipes.Module;
 
@@ -10,6 +11,7 @@ public static class DependencyInjection
     public static IServiceCollection AddRecipesModule(this IServiceCollection services)
     {
         var currentAssembly = typeof(IRecipesModuleAssemblyMarker).Assembly;
+        services.AddCqrs<IRecipesModuleAssemblyMarker>();
         return services;
     }
 
