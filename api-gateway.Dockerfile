@@ -19,7 +19,8 @@ RUN dotnet publish 'WhojooSite.Yarp.csproj' -c Release -o /app/publish
 
 # Stage 3: Run stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-ENV ASPNETCORE_HTTP_PORTS=80
+ENV ASPNETCORE_HTTP_PORTS=81
+ENV ASPNETCORE_HTTPS_PORTS=80
 EXPOSE 80
 WORKDIR /app
 COPY --from=publish /app/publish .
