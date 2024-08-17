@@ -486,3 +486,7 @@ $RECYCLE.BIN/
 # Docker compose secrets folder
 secrets/*
 !secrets/.gitkeep
+
+# DB volume data folder
+db-data/*
+!db-data/.gitkeep

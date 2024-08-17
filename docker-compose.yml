@@ -43,6 +43,16 @@ services:
     secrets:
       - dev-certs
 
+  db:
+    image: postgres:16.4-alpine
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
 secrets:
   dev-certs:
     file: secrets/aspnetapp.pfx
@@ -50,3 +60,11 @@ secrets:
 networks:
   frontend:
   backend:
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: 'db-data/data'
