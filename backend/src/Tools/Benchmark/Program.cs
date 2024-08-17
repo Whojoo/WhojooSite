@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Benchmark.MediatorBenchmark;
+
+using BenchmarkDotNet.Running;
+
+// BenchmarkRunner.Run<MediatorSingleBenchmark>();
+BenchmarkRunner.Run<MediatorBenchmark>();
