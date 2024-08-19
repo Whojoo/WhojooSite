@@ -8,23 +8,14 @@ namespace WhojooSite.Common.Web;
 
 public static class EndpointExtensions
 {
-    public static IServiceCollection AddEndpoints(this IServiceCollection services)
-        => services.AddEndpoints([Assembly.GetEntryAssembly()!]);
-
-    public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly[] assemblies)
+    public static IServiceCollection AddEndpoints<TAssemblyMarker>(this IServiceCollection services)
     {
-        var endpointType = typeof(IEndpoint);
-        var fullInterfaceName = endpointType.FullName!;
-
-        var endpointTypes = assemblies
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => !type.IsAbstract && !type.IsInterface)
-            .Where(type => type.GetInterface(fullInterfaceName) is not null);
-
-        foreach (var type in endpointTypes)
-        {
-            services.TryAddScoped(endpointType, type);
-        }
+        services
+            .Scan(selector => selector
+                .FromAssemblyOf<TAssemblyMarker>()
+                .AddClasses(filter => filter.AssignableTo<IEndpoint>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
 
         return services;
     }

@@ -51,7 +51,10 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
+      # Password__FILE is supported by postgres, but again not in dotnet, so .env file again
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - backend
 
 secrets:
   dev-certs:

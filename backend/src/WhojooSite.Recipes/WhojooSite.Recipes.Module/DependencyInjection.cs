@@ -10,8 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddRecipesModule(this IServiceCollection services)
     {
-        var currentAssembly = typeof(IRecipesModuleAssemblyMarker).Assembly;
         services.AddCqrs<IRecipesModuleAssemblyMarker>();
+        services.AddEndpoints<IRecipesModuleAssemblyMarker>();
         return services;
     }
 

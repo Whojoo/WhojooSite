@@ -9,10 +9,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRecipesModule();
 
-builder.Services.AddEndpoints([
-    typeof(IRecipesModuleAssemblyMarker).Assembly
-]);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

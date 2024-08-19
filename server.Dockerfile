@@ -6,12 +6,14 @@ WORKDIR /src
 # restore
 COPY ["backend/Directory.Build.props", "."]
 COPY ["backend/src/WhojooSite.Common/WhojooSite.Common.csproj", "WhojooSite.Common/"]
+COPY ["backend/src/WhojooSite.Cqrs/WhojooSite.Cqrs.csproj", "WhojooSite.Cqrs/"]
 COPY ["backend/src/WhojooSite.Recipes/WhojooSite.Recipes.Module/WhojooSite.Recipes.Module.csproj", "WhojooSite.Recipes/WhojooSite.Recipes.Module/"]
 COPY ["backend/src/WhojooSite.Bootstrap/WhojooSite.Bootstrap.csproj", "WhojooSite.Bootstrap/"]
 RUN dotnet restore 'WhojooSite.Bootstrap/WhojooSite.Bootstrap.csproj'
 
 # build
 COPY ["backend/src/WhojooSite.Common/", "WhojooSite.Common/"]
+COPY ["backend/src/WhojooSite.Cqrs/", "WhojooSite.Cqrs/"]
 COPY ["backend/src/WhojooSite.Recipes/", "WhojooSite.Recipes/"]
 COPY ["backend/src/WhojooSite.Bootstrap/", "WhojooSite.Bootstrap/"]
 WORKDIR /src/WhojooSite.Bootstrap
