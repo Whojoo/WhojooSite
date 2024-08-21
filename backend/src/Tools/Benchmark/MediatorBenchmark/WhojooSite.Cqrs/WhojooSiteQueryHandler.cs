@@ -7,7 +7,7 @@ public sealed class WhojooSiteQueryHandler(HandlerAction handlerAction) : IQuery
 {
     private readonly HandlerAction _handlerAction = handlerAction;
 
-    public async Task<HandlerResult> Handle(WhojooSiteQuery query, CancellationToken cancellationToken)
+    public async ValueTask<HandlerResult> Handle(WhojooSiteQuery query, CancellationToken cancellationToken)
     {
         return await _handlerAction.Handle(query.A, query.B);
     }

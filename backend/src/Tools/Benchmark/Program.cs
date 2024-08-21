@@ -2,5 +2,5 @@
 
 using BenchmarkDotNet.Running;
 
-// BenchmarkRunner.Run<MediatorSingleBenchmark>();
-BenchmarkRunner.Run<MediatorBenchmark>();
+BenchmarkRunner.Run<MediatorSingleBenchmark>();
+// BenchmarkRunner.Run<MediatorBenchmark>();

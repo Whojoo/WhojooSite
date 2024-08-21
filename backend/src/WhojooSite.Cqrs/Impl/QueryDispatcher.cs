@@ -8,7 +8,7 @@ internal sealed class QueryDispatcher(IServiceProvider serviceProvider) : IQuery
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public Task<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellationToken = default)
+    public ValueTask<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellationToken = default)
         where TQuery : IQuery<TQueryResult>
     {
         var handler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TQueryResult>>();
