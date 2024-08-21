@@ -1,7 +1,10 @@
+using Benchmark.MediatorBenchmark.Mediator;
 using Benchmark.MediatorBenchmark.MediatR;
 using Benchmark.MediatorBenchmark.WhojooSite.Cqrs;
 
 using BenchmarkDotNet.Attributes;
+
+using ExternalMediator = Mediator;
 
 using MediatR;
 
@@ -14,84 +17,69 @@ namespace Benchmark.MediatorBenchmark;
 [MemoryDiagnoser]
 public class MediatorSingleBenchmark
 {
-    private IServiceProvider _mediatRProvider = null!;
-    private IServiceProvider _whojooSiteCqrsProvider = null!;
-    private IServiceProvider _baselineProvider = null!;
-
-    private IServiceScope _mediatRScope = null!;
-    private IServiceScope _whojooSiteCqrsScope = null!;
-    private IServiceScope _baselineScope = null!;
+    private IServiceProvider _serviceProvider = null!;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        SetupMediatR();
-        SetupWhojooSiteCqrs();
-        SetupBaseline();
-    }
-
-    [IterationSetup]
-    public void IterationSetup()
-    {
-        _mediatRScope = _mediatRProvider.CreateScope();
-        _whojooSiteCqrsScope = _whojooSiteCqrsProvider.CreateScope();
-        _baselineScope = _baselineProvider.CreateScope();
-    }
-
-    [IterationCleanup]
-    public void IterationCleanup()
-    {
-        _mediatRScope.Dispose();
-        _whojooSiteCqrsScope.Dispose();
-        _baselineScope.Dispose();
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddScoped<HandlerAction>();
+        SetupMediatR(serviceCollection);
+        SetupWhojooSiteCqrs(serviceCollection);
+        SetupMediator(serviceCollection);
+        _serviceProvider = serviceCollection.BuildServiceProvider();
     }
 
     [Benchmark(Baseline = true)]
     public async Task<HandlerResult?> Baseline()
     {
-        var handler = _baselineProvider.GetRequiredService<HandlerAction>();
+        await using var scope = _serviceProvider.CreateAsyncScope();
+        var handler = scope.ServiceProvider.GetRequiredService<HandlerAction>();
         return await handler.Handle(2, 4);
     }
 
     [Benchmark]
     public async Task<HandlerResult?> MediatR()
     {
+        await using var scope = _serviceProvider.CreateAsyncScope();
         var query = new MediatRQuery(2, 4);
-        var mediatR = _mediatRScope.ServiceProvider.GetRequiredService<IMediator>();
+        var mediatR = scope.ServiceProvider.GetRequiredService<IMediator>();
         return await mediatR.Send(query);
     }
 
     [Benchmark]
     public async Task<HandlerResult?> WhojooSiteCqrs()
     {
+        await using var scope = _serviceProvider.CreateAsyncScope();
         var query = new WhojooSiteQuery(2, 4);
-        var queryDispatcher = _whojooSiteCqrsScope.ServiceProvider.GetRequiredService<IQueryDispatcher>();
+        var queryDispatcher = scope.ServiceProvider.GetRequiredService<IQueryDispatcher>();
         return await queryDispatcher.Dispatch<WhojooSiteQuery, HandlerResult>(query);
     }
 
-    private void SetupBaseline()
+    [Benchmark]
+    public async Task<HandlerResult?> Mediator()
     {
-        var baseLineServiceCollection = new ServiceCollection();
-        baseLineServiceCollection.AddScoped<HandlerAction>();
-        _baselineProvider = baseLineServiceCollection.BuildServiceProvider();
+        await using var scope = _serviceProvider.CreateAsyncScope();
+        var query = new MediatorQuery(2, 4);
+        var mediator = scope.ServiceProvider.GetRequiredService<ExternalMediator.IMediator>();
+        return await mediator.Send(query);
     }
 
-    private void SetupMediatR()
+    private static void SetupMediatR(ServiceCollection serviceCollection)
     {
-        var mediatRServiceCollection = new ServiceCollection();
-        mediatRServiceCollection.AddMediatR(configuration =>
+        serviceCollection.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssemblyContaining<MediatorBenchmark>();
         });
-        mediatRServiceCollection.AddScoped<HandlerAction>();
-        _mediatRProvider = mediatRServiceCollection.BuildServiceProvider();
     }
 
-    private void SetupWhojooSiteCqrs()
+    private static void SetupWhojooSiteCqrs(ServiceCollection serviceCollection)
     {
-        var whojooSiteCqrsCollection = new ServiceCollection();
-        whojooSiteCqrsCollection.AddCqrs<MediatorBenchmark>();
-        whojooSiteCqrsCollection.AddScoped<HandlerAction>();
-        _whojooSiteCqrsProvider = whojooSiteCqrsCollection.BuildServiceProvider();
+        serviceCollection.AddCqrs<MediatorBenchmark>();
+    }
+
+    private static void SetupMediator(ServiceCollection serviceCollection)
+    {
+        serviceCollection.AddMediator();
     }
 }

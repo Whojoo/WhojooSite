@@ -1,117 +1,110 @@
-using System.Runtime.InteropServices;
-
 using Benchmark.MediatorBenchmark.MediatR;
 using Benchmark.MediatorBenchmark.WhojooSite.Cqrs;
 
 using BenchmarkDotNet.Attributes;
-
+using ExternalMediator = Mediator;
 using MediatR;
 
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 
 using WhojooSite.Cqrs;
+using Benchmark.MediatorBenchmark.Mediator;
 
 namespace Benchmark.MediatorBenchmark;
 
 [MemoryDiagnoser]
 public class MediatorBenchmark
 {
-    private IServiceProvider _mediatRProvider = null!;
-    private IServiceProvider _whojooSiteCqrsProvider = null!;
-    private IServiceProvider _baselineProvider = null!;
+    private IServiceProvider _serviceProvider = null!;
 
-    [Params(1, 1000, 1000000)]
+    [Params(1_000_000)]
     public int Iterations;
-
-    private List<HandlerResult> _list = new List<HandlerResult>();
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        SetupMediatR();
-        SetupWhojooSiteCqrs();
-        SetupBaseline();
-    }
-
-    [IterationSetup]
-    public void IterationSetup()
-    {
-        _list = new List<HandlerResult>(Iterations);
-    }
-
-    [Benchmark(Baseline = true)]
-    public async Task<List<HandlerResult>> Baseline()
-    {
-        for (var i = 0; i < Iterations; i++)
-        {
-            using (var scope = _baselineProvider.CreateScope())
-            {
-                var handler = scope.ServiceProvider.GetRequiredService<HandlerAction>();
-                var result = await handler.Handle(i, 2);
-                _list.Add(result);
-            }
-        }
-        return _list;
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddScoped<HandlerAction>();
+        SetupMediatR(serviceCollection);
+        SetupWhojooSiteCqrs(serviceCollection);
+        SetupMediator(serviceCollection);
+        _serviceProvider = serviceCollection.BuildServiceProvider();
     }
 
     [Benchmark]
-    public async Task<List<HandlerResult>> MediatR()
+    public async Task<HandlerResult?> Baseline()
     {
+        HandlerResult? result = null;
         for (var i = 0; i < Iterations; i++)
         {
-            using (var scope = _mediatRProvider.CreateScope())
-            {
-                var query = new MediatRQuery(i, 2);
-                var mediatR = scope.ServiceProvider.GetRequiredService<IMediator>();
-                var result = await mediatR.Send(query);
-                _list.Add(result);
-            }
+            await using var scope = _serviceProvider.CreateAsyncScope();
+            var handler = scope.ServiceProvider.GetRequiredService<HandlerAction>();
+            result = await handler.Handle(i, 2);
         }
 
-        return _list;
+        return result;
     }
 
     [Benchmark]
-    public async Task<List<HandlerResult>> WhojooSiteCqrs()
+    public async Task<HandlerResult?> MediatR()
     {
+        HandlerResult? result = null;
         for (var i = 0; i < Iterations; i++)
         {
-            using (var scope = _whojooSiteCqrsProvider.CreateScope())
-            {
-                var query = new WhojooSiteQuery(i, 2);
-                var dispatcher = scope.ServiceProvider.GetRequiredService<IQueryDispatcher>();
-                var result = await dispatcher.Dispatch<WhojooSiteQuery, HandlerResult>(query);
-                _list.Add(result);
-            }
+            await using var scope = _serviceProvider.CreateAsyncScope();
+            var query = new MediatRQuery(i, 2);
+            var mediatR = scope.ServiceProvider.GetRequiredService<IMediator>();
+            result = await mediatR.Send(query);
         }
 
-        return _list;
+        return result;
     }
 
-    private void SetupMediatR()
+    [Benchmark]
+    public async Task<HandlerResult?> WhojooSiteCqrs()
     {
-        var mediatRServiceCollection = new ServiceCollection();
-        mediatRServiceCollection.AddMediatR(configuration =>
+        HandlerResult? result = null;
+        for (var i = 0; i < Iterations; i++)
+        {
+            await using var scope = _serviceProvider.CreateAsyncScope();
+            var query = new WhojooSiteQuery(i, 2);
+            var dispatcher = scope.ServiceProvider.GetRequiredService<IQueryDispatcher>();
+            result = await dispatcher.Dispatch<WhojooSiteQuery, HandlerResult>(query);
+        }
+
+        return result;
+    }
+
+    [Benchmark]
+    public async Task<HandlerResult?> Mediator()
+    {
+        HandlerResult? result = null;
+        for (var i = 0; i < Iterations; i++)
+        {
+            await using var scope = _serviceProvider.CreateAsyncScope();
+            var query = new MediatorQuery(i, 2);
+            var mediator = scope.ServiceProvider.GetRequiredService<ExternalMediator.IMediator>();
+            result = await mediator.Send(query);
+        }
+
+        return result;
+    }
+
+    private static void SetupMediatR(ServiceCollection serviceCollection)
+    {
+        serviceCollection.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssemblyContaining<MediatorBenchmark>();
         });
-        mediatRServiceCollection.AddScoped<HandlerAction>();
-        _mediatRProvider = mediatRServiceCollection.BuildServiceProvider();
     }
 
-    private void SetupWhojooSiteCqrs()
+    private static void SetupWhojooSiteCqrs(ServiceCollection serviceCollection)
     {
-        var whojooSiteCqrsCollection = new ServiceCollection();
-        whojooSiteCqrsCollection.AddCqrs<MediatorBenchmark>();
-        whojooSiteCqrsCollection.AddScoped<HandlerAction>();
-        _whojooSiteCqrsProvider = whojooSiteCqrsCollection.BuildServiceProvider();
+        serviceCollection.AddCqrs<MediatorBenchmark>();
     }
 
-    private void SetupBaseline()
+    private static void SetupMediator(ServiceCollection serviceCollection)
     {
-        var baselineCollection = new ServiceCollection();
-        baselineCollection.AddScoped<HandlerAction>();
-        _baselineProvider = baselineCollection.BuildServiceProvider();
+        serviceCollection.AddMediator();
     }
 }
