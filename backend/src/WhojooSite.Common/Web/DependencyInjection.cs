@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace WhojooSite.Common.Web;
 
-public static class EndpointExtensions
+public static class DependencyInjection
 {
     public static IServiceCollection AddEndpoints<TAssemblyMarker>(this IServiceCollection services)
     {

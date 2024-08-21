@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
+using WhojooSite.Common.Cqrs;
 using WhojooSite.Common.Web;
-using WhojooSite.Cqrs;
 
 namespace WhojooSite.Recipes.Module;
 

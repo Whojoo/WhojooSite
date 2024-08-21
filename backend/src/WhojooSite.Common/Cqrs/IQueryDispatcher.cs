@@ -1,4 +1,4 @@
-namespace WhojooSite.Cqrs;
+namespace WhojooSite.Common.Cqrs;
 
 public interface IQueryDispatcher
 {

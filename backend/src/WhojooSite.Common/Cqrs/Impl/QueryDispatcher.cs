@@ -2,7 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace WhojooSite.Cqrs.Impl;
+namespace WhojooSite.Common.Cqrs.Impl;
 
 internal sealed class QueryDispatcher(IServiceProvider serviceProvider) : IQueryDispatcher
 {

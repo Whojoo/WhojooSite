@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WhojooSite.Cqrs\WhojooSite.Cqrs.csproj" />
+    <ProjectReference Include="..\..\WhojooSite.Common\WhojooSite.Common.csproj" />
   </ItemGroup>
 
 </Project>

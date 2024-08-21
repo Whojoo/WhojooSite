@@ -1,4 +1,6 @@
-using WhojooSite.Cqrs;
+
+
+using WhojooSite.Common.Cqrs;
 
 namespace Benchmark.MediatorBenchmark.WhojooSite.Cqrs;
 

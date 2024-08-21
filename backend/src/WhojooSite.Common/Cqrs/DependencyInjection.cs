@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-using WhojooSite.Cqrs.Impl;
+using WhojooSite.Common.Cqrs.Impl;
 
-namespace WhojooSite.Cqrs;
+namespace WhojooSite.Common.Cqrs;
 
 public static class DependencyInjection
 {

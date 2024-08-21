@@ -10,7 +10,8 @@ using MediatR;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using WhojooSite.Cqrs;
+using WhojooSite.Common.Cqrs;
+
 
 namespace Benchmark.MediatorBenchmark;
 

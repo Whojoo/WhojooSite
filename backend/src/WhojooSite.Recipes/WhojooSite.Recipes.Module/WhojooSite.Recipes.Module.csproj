@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\WhojooSite.Common\WhojooSite.Common.csproj" />
-    <ProjectReference Include="..\..\WhojooSite.Cqrs\WhojooSite.Cqrs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

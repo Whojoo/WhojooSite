@@ -1,4 +1,4 @@
-namespace WhojooSite.Cqrs;
+namespace WhojooSite.Common.Cqrs;
 
 public interface IQueryHandler<in TQuery, TQueryResult>
     where TQuery : IQuery<TQueryResult>
