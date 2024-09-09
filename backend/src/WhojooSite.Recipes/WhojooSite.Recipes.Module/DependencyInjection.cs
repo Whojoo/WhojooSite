@@ -11,12 +11,14 @@ public static class DependencyInjection
     public static IServiceCollection AddRecipesModule(this IServiceCollection services)
     {
         services.AddCqrs<IRecipesModuleAssemblyMarker>();
-        services.AddEndpoints<IRecipesModuleAssemblyMarker>();
+        // services.AddEndpoints<IRecipesModuleAssemblyMarker>();
+        
         return services;
     }
 
     public static WebApplication MapRecipesModule(this WebApplication app)
     {
+        app.MapGeneratedEndpoints();
         return app;
     }
 }

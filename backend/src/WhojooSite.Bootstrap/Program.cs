@@ -21,6 +21,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapRecipesModule();
 
-app.MapEndpoints();
+// app.MapEndpoints();
 
 app.Run();

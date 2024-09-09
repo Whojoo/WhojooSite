@@ -1,3 +1,6 @@
+# Base image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
 # Stage 1: Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
@@ -6,14 +9,14 @@ WORKDIR /src
 # restore
 COPY ["backend/Directory.Build.props", "."]
 COPY ["backend/src/WhojooSite.Common/WhojooSite.Common.csproj", "WhojooSite.Common/"]
-COPY ["backend/src/WhojooSite.Cqrs/WhojooSite.Cqrs.csproj", "WhojooSite.Cqrs/"]
+COPY ["backend/src/WhojooSite.Common.SourceGenerator/WhojooSite.Common.SourceGenerator.csproj", "WhojooSite.Common.SourceGenerator/"]
 COPY ["backend/src/WhojooSite.Recipes/WhojooSite.Recipes.Module/WhojooSite.Recipes.Module.csproj", "WhojooSite.Recipes/WhojooSite.Recipes.Module/"]
 COPY ["backend/src/WhojooSite.Bootstrap/WhojooSite.Bootstrap.csproj", "WhojooSite.Bootstrap/"]
 RUN dotnet restore 'WhojooSite.Bootstrap/WhojooSite.Bootstrap.csproj'
 
 # build
 COPY ["backend/src/WhojooSite.Common/", "WhojooSite.Common/"]
-COPY ["backend/src/WhojooSite.Cqrs/", "WhojooSite.Cqrs/"]
+COPY ["backend/src/WhojooSite.Common.SourceGenerator/", "WhojooSite.Common.SourceGenerator/"]
 COPY ["backend/src/WhojooSite.Recipes/", "WhojooSite.Recipes/"]
 COPY ["backend/src/WhojooSite.Bootstrap/", "WhojooSite.Bootstrap/"]
 WORKDIR /src/WhojooSite.Bootstrap
@@ -24,7 +27,7 @@ FROM build AS publish
 RUN dotnet publish 'WhojooSite.Bootstrap.csproj' -c Release -o /app/publish
 
 # Stage 3: Run stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM base AS runtime
 ENV ASPNETCORE_HTTP_PORTS=80
 EXPOSE 80
 WORKDIR /app
