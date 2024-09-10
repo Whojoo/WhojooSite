@@ -11,6 +11,7 @@ public sealed class Step : Entity<StepId>
     private readonly string _name = string.Empty;
     private readonly string _summary = string.Empty;
     private readonly string _description = string.Empty;
+    private readonly RecipeId _recipeId;
 
     public Step(
         StepId stepId,
@@ -18,12 +19,14 @@ public sealed class Step : Entity<StepId>
         string summary,
         string description,
         List<Ingredient> ingredients,
-        List<Ingredient> spices)
+        List<Ingredient> spices,
+        RecipeId recipeId)
         : base(stepId)
     {
         _name = name;
         _summary = summary;
         _description = description;
+        _recipeId = recipeId;
         Ingredients = ingredients;
         Spices = spices;
     }
