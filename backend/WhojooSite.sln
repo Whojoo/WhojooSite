@@ -15,14 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recipes.Module",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Common", "src\WhojooSite.Common\WhojooSite.Common.csproj", "{88F769C1-ED74-4D77-ACFF-D55048A52176}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{610724AE-3415-4AF8-9D10-7D022577EB25}"
-	ProjectSection(SolutionItems) = preProject
-		..\api-gateway.Dockerfile = ..\api-gateway.Dockerfile
-		..\docker-compose.yml = ..\docker-compose.yml
-		..\server.Dockerfile = ..\server.Dockerfile
-		..\web.Dockerfile = ..\web.Dockerfile
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.AppHost", "src\WhojooSite.AppHost\WhojooSite.AppHost.csproj", "{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.ServiceDefaults", "src\WhojooSite.ServiceDefaults\WhojooSite.ServiceDefaults.csproj", "{90D4484A-97D0-458B-9446-0F354FA17309}"
