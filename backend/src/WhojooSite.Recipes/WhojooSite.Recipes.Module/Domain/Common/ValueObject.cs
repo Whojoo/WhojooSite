@@ -1,23 +1,27 @@
 namespace WhojooSite.Recipes.Module.Domain.Common;
 
-public abstract class ValueObject
+public abstract class ValueObject<TValueObject> where TValueObject : ValueObject<TValueObject>
 {
-    protected abstract object[] GetEqualityComponents();
+    protected abstract bool IsEqualTo(TValueObject other);
+    protected abstract int CalculateHashCode();
+
     public override bool Equals(object? obj)
     {
-        if (obj is null || obj.GetType() != GetType())
-        {
-            return false;
-        }
-
-        return ((ValueObject)obj)
-            .GetEqualityComponents()
-            .AsSpan()
-            .SequenceEqual(GetEqualityComponents());
+        return obj is TValueObject other && IsEqualTo(other);
     }
 
     public override int GetHashCode()
     {
-        return GetEqualityComponents().Aggregate(0, (current, obj) => current ^ obj.GetHashCode());
+        return CalculateHashCode();
+    }
+
+    public static bool operator ==(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
+    {
+        return !(left.Equals(right));
     }
 }

@@ -2,7 +2,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\WhojooSite.Common\WhojooSite.Common.csproj"/>
-        <ProjectReference Include="..\..\WhojooSite.Common.SourceGenerator\WhojooSite.Common.SourceGenerator.csproj" OutputItemType="Analyzer"/>
     </ItemGroup>
 
     <ItemGroup>

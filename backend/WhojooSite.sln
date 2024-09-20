@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recipes.Module",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Common", "src\WhojooSite.Common\WhojooSite.Common.csproj", "{88F769C1-ED74-4D77-ACFF-D55048A52176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Common.SourceGenerator", "src\WhojooSite.Common.SourceGenerator\WhojooSite.Common.SourceGenerator.csproj", "{2ECBFC32-565A-473B-94B7-D8562ADE53EA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{610724AE-3415-4AF8-9D10-7D022577EB25}"
 	ProjectSection(SolutionItems) = preProject
 		..\api-gateway.Dockerfile = ..\api-gateway.Dockerfile
@@ -24,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\server.Dockerfile = ..\server.Dockerfile
 		..\web.Dockerfile = ..\web.Dockerfile
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.AppHost", "src\WhojooSite.AppHost\WhojooSite.AppHost.csproj", "{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.ServiceDefaults", "src\WhojooSite.ServiceDefaults\WhojooSite.ServiceDefaults.csproj", "{90D4484A-97D0-458B-9446-0F354FA17309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +52,14 @@ Global
 		{88F769C1-ED74-4D77-ACFF-D55048A52176}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88F769C1-ED74-4D77-ACFF-D55048A52176}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88F769C1-ED74-4D77-ACFF-D55048A52176}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2ECBFC32-565A-473B-94B7-D8562ADE53EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2ECBFC32-565A-473B-94B7-D8562ADE53EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2ECBFC32-565A-473B-94B7-D8562ADE53EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2ECBFC32-565A-473B-94B7-D8562ADE53EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90D4484A-97D0-458B-9446-0F354FA17309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90D4484A-97D0-458B-9446-0F354FA17309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90D4484A-97D0-458B-9446-0F354FA17309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90D4484A-97D0-458B-9446-0F354FA17309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
@@ -61,6 +67,7 @@ Global
 		{33E4419E-D642-4E25-A017-EDD5B4330EB9} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
 		{28D8F834-F109-476A-98CF-87796EF2A065} = {33E4419E-D642-4E25-A017-EDD5B4330EB9}
 		{88F769C1-ED74-4D77-ACFF-D55048A52176} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
-		{2ECBFC32-565A-473B-94B7-D8562ADE53EA} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{90D4484A-97D0-458B-9446-0F354FA17309} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
 	EndGlobalSection
 EndGlobal
