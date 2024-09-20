@@ -1,12 +1,16 @@
-using WhojooSite.Common.Web;
+using FastEndpoints;
+
 using WhojooSite.Recipes.Module;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddFastEndpoints();
 builder.Services.AddRecipesModule();
 
 var app = builder.Build();
@@ -21,6 +25,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapRecipesModule();
 
-// app.MapEndpoints();
+app.UseFastEndpoints();
 
 app.Run();

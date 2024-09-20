@@ -1,18 +1,19 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using FastEndpoints;
 
-using WhojooSite.Common.Web;
+using Microsoft.Extensions.Logging;
 
 namespace WhojooSite.Recipes.Module.Recipes;
 
-public static class GetRecipes
+internal sealed class GetRecipes : EndpointWithoutRequest<string>
 {
-    internal sealed class Endpoint : IEndpoint
+    public override void Configure()
     {
-        public void AddEndpoint(IEndpointRouteBuilder app)
-        {
-            app.MapGet("/recipes", () => "Hello Recipes");
-        }
+        Get("/recipes");
+        AllowAnonymous();
     }
-    
+
+    public override async Task HandleAsync(CancellationToken ct)
+    {
+        await SendAsync("Hello, World!", cancellation: ct);
+    }
 }

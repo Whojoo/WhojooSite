@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="5.29.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
@@ -8,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WhojooSite.Recipes\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj" />
     <ProjectReference Include="..\WhojooSite.Common\WhojooSite.Common.csproj" />
+    <ProjectReference Include="..\WhojooSite.ServiceDefaults\WhojooSite.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
