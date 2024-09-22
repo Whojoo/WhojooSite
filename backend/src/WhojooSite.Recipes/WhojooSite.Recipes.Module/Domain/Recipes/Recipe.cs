@@ -5,16 +5,21 @@ using WhojooSite.Recipes.Module.Domain.Cookbook;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
-public sealed class Recipe : Entity<RecipeId>
+public class Recipe : Entity<RecipeId>
 {
-    private readonly string _name = string.Empty;
-    private readonly string _description = string.Empty;
+    public string Name { get; } = string.Empty;
+    public string Description { get; } = string.Empty;
+    public CookbookId CookbookId { get; } = CookbookId.Empty;
+    public IReadOnlyList<Step> Steps => _steps.AsReadOnly();
+    public IReadOnlyList<Ingredient> Ingredients => _ingredients.AsReadOnly();
+    public IReadOnlyList<Ingredient> Spices => _spices.AsReadOnly();
+    public IReadOnlyList<SpiceMixIngredient> SpiceMixIngredients => _spiceMixIngredients.AsReadOnly();
+    public OwnerId OwnerId { get; } = OwnerId.Empty;
+
     private readonly List<Step> _steps = [];
-    private readonly CookbookId _cookbookId = CookbookId.Empty;
     private readonly List<Ingredient> _ingredients = [];
     private readonly List<Ingredient> _spices = [];
     private readonly List<SpiceMixIngredient> _spiceMixIngredients = [];
-    private readonly OwnerId _ownerId = OwnerId.Empty;
 
     public Recipe(
         RecipeId id,
@@ -26,13 +31,13 @@ public sealed class Recipe : Entity<RecipeId>
         List<Ingredient> ingredients,
         List<Ingredient> spices,
         List<SpiceMixIngredient> spiceMixIngredients)
-    : base(id)
+        : base(id)
     {
-        _name = name;
-        _description = description;
-        _ownerId = ownerId;
+        Name = name;
+        Description = description;
+        OwnerId = ownerId;
+        CookbookId = cookbookId;
         _steps = steps;
-        _cookbookId = cookbookId;
         _ingredients = ingredients;
         _spices = spices;
         _spiceMixIngredients = spiceMixIngredients;

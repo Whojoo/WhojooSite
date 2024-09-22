@@ -1,19 +1,20 @@
 using WhojooSite.Recipes.Module.Domain.Common;
-using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 
 namespace WhojooSite.Recipes.Module.Domain.Cookbook;
 
-public sealed class Cookbook : Entity<CookbookId>
+public class Cookbook : Entity<CookbookId>
 {
-    private readonly string _name = string.Empty;
+    public string Name { get; } = string.Empty;
+    public IReadOnlyList<RecipeId> RecipeIds => _recipeIds.AsReadOnly();
+
     private readonly List<RecipeId> _recipeIds = [];
 
-    public Cookbook(CookbookId id, string name, List<RecipeId> recipeIds)
+    public Cookbook(CookbookId id, string name, List<RecipeId> recipeIdIds)
         : base(id)
     {
-        _name = name;
-        _recipeIds = recipeIds;
+        Name = name;
+        _recipeIds = recipeIdIds;
     }
 
     private Cookbook() { }

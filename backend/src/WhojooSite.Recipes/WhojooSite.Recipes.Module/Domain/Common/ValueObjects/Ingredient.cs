@@ -1,6 +1,6 @@
 namespace WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
 
-public sealed class Ingredient : ValueObject<Ingredient>
+public class Ingredient : ValueObject<Ingredient>
 {
     public string Name { get; init; } = string.Empty;
 

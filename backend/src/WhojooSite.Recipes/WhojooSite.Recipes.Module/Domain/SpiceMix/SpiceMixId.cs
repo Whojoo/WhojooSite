@@ -2,7 +2,7 @@ using WhojooSite.Recipes.Module.Domain.Common;
 
 namespace WhojooSite.Recipes.Module.Domain.SpiceMix;
 
-public sealed class SpiceMixId(long id = default) : TypedId<long>(id)
+public class SpiceMixId(long id = default) : TypedId<long>(id)
 {
     public static SpiceMixId Empty { get; } = new();
 }
