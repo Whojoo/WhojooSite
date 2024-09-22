@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using WhojooSite.Common.Cqrs;
+using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddRecipesModule(this IServiceCollection services)
+    public static WebApplicationBuilder ConfigureRecipesModules(this WebApplicationBuilder builder)
     {
-        services.AddCqrs<IRecipesModuleAssemblyMarker>();
-        // services.AddEndpoints<IRecipesModuleAssemblyMarker>();
-        // services.AddDbContext<RecipesDbContext>(options =>
-        // {
-        //     options
-        //         .UseNpgsql()
-        // })
+        builder.AddNpgsqlDbContext<RecipesDbContext>("recipes-db");
 
-        return services;
+        builder.Services.AddCqrs<IRecipesModuleAssemblyMarker>();
+
+        return builder;
     }
 
     public static WebApplication MapRecipesModule(this WebApplication app)

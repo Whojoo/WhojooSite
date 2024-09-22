@@ -11,7 +11,8 @@ builder.AddServiceDefaults();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddFastEndpoints();
-builder.Services.AddRecipesModule();
+
+builder.ConfigureRecipesModules();
 
 var app = builder.Build();
 

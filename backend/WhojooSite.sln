@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.AppHost", "src\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.ServiceDefaults", "src\WhojooSite.ServiceDefaults\WhojooSite.ServiceDefaults.csproj", "{90D4484A-97D0-458B-9446-0F354FA17309}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recipes.MigrationService", "src\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj", "{D825B65F-C232-4E58-B523-FF72A90694B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{90D4484A-97D0-458B-9446-0F354FA17309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90D4484A-97D0-458B-9446-0F354FA17309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90D4484A-97D0-458B-9446-0F354FA17309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D825B65F-C232-4E58-B523-FF72A90694B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D825B65F-C232-4E58-B523-FF72A90694B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D825B65F-C232-4E58-B523-FF72A90694B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D825B65F-C232-4E58-B523-FF72A90694B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B2C0248-E595-407F-A3B2-54D63041FEB8} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
@@ -61,5 +67,6 @@ Global
 		{88F769C1-ED74-4D77-ACFF-D55048A52176} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
 		{16748D60-9E27-4BF1-A8F2-FA24D1ADAB03} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
 		{90D4484A-97D0-458B-9446-0F354FA17309} = {1ACDDAC5-E1B5-4802-B07E-05A156626FBD}
+		{D825B65F-C232-4E58-B523-FF72A90694B1} = {33E4419E-D642-4E25-A017-EDD5B4330EB9}
 	EndGlobalSection
 EndGlobal

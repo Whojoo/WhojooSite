@@ -1,5 +1,4 @@
 using WhojooSite.Recipes.Module.Domain.Common;
-using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
