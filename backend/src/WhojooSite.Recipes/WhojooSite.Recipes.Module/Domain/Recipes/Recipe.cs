@@ -10,7 +10,7 @@ public sealed class Recipe : Entity<RecipeId>
     private readonly string _name = string.Empty;
     private readonly string _description = string.Empty;
     private readonly List<Step> _steps = [];
-    private readonly CookbookId _cookbookId;
+    private readonly CookbookId _cookbookId = CookbookId.Empty;
     private readonly List<Ingredient> _ingredients = [];
     private readonly List<Ingredient> _spices = [];
     private readonly List<SpiceMixIngredient> _spiceMixIngredients = [];

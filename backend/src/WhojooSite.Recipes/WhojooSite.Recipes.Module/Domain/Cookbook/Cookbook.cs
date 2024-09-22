@@ -1,4 +1,5 @@
 using WhojooSite.Recipes.Module.Domain.Common;
+using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 
 namespace WhojooSite.Recipes.Module.Domain.Cookbook;
