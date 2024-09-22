@@ -17,6 +17,8 @@ public class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
 
         builder.HasKey(cookbook => cookbook.Id);
 
+        builder.Ignore(cookbook => cookbook.RecipeIds);
+
         builder
             .Property(cookbook => cookbook.Id)
             .HasConversion<CookbookIdConverter>();

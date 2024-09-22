@@ -15,6 +15,8 @@ public class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
 
         builder.HasKey(spiceMix => spiceMix.Id);
 
+        builder.Ignore(spiceMix => spiceMix.Spices);
+
         builder
             .Property(spiceMix => spiceMix.Id)
             .HasConversion<SpiceMixIdConverter>();

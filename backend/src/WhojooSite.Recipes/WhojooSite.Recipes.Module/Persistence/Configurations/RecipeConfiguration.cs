@@ -15,6 +15,11 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
         builder.HasKey(recipe => recipe.Id);
 
+        builder.Ignore(recipe => recipe.Ingredients);
+        builder.Ignore(recipe => recipe.Spices);
+        builder.Ignore(recipe => recipe.SpiceMixIngredients);
+        builder.Ignore(recipe => recipe.Steps);
+
         builder
             .Property(recipe => recipe.Id)
             .HasConversion(
