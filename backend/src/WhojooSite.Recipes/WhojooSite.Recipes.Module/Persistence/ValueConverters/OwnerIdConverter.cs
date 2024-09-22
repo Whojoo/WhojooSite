@@ -8,4 +8,9 @@ public class OwnerIdConverter(ConverterMappingHints? mappingHints = null)
     : ValueConverter<OwnerId, Guid>(
         ownerId => ownerId.Value,
         value => new OwnerId(value),
-        mappingHints);
+        mappingHints)
+{
+    public OwnerIdConverter() : this(null)
+    {
+    }
+}

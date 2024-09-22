@@ -8,4 +8,9 @@ public class StepIdConverter(ConverterMappingHints? mappingHints = null)
     : ValueConverter<StepId, long>(
         stepId => stepId.Value,
         value => new StepId(value),
-        mappingHints);
+        mappingHints)
+{
+    public StepIdConverter() : this(null)
+    {
+    }
+}

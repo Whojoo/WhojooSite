@@ -8,4 +8,9 @@ public class CookbookIdConverter(ConverterMappingHints? mappingHints = null)
     : ValueConverter<CookbookId, long>(
         cookbookId => cookbookId.Value,
         value => new CookbookId(value),
-        mappingHints);
+        mappingHints)
+{
+    public CookbookIdConverter() : this(null)
+    {
+    }
+}

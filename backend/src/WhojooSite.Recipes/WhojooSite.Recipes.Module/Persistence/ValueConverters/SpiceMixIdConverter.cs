@@ -8,4 +8,9 @@ public class SpiceMixIdConverter(ConverterMappingHints? mappingHints = null)
     : ValueConverter<SpiceMixId, long>(
         spiceMixId => spiceMixId.Value,
         value => new SpiceMixId(value),
-        mappingHints);
+        mappingHints)
+{
+    public SpiceMixIdConverter() : this(null)
+    {
+    }
+}
