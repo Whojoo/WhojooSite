@@ -1,14 +1,16 @@
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres");
+var postgres = builder.AddPostgres("postgres").WithPgAdmin();
 var recipesDb = postgres.AddDatabase("recipes-db");
 
 builder
-    .AddProject<Projects.WhojooSite_Recipes_MigrationService>("recipes-module-migrations")
+    .AddProject<WhojooSite_Recipes_MigrationService>("recipes-module-migrations")
     .WithReference(recipesDb);
 
 var server = builder
-    .AddProject<Projects.WhojooSite_Bootstrap>("server")
+    .AddProject<WhojooSite_Bootstrap>("server")
     .WithReference(recipesDb);
 
 var web = builder
@@ -16,7 +18,7 @@ var web = builder
     .WithHttpEndpoint(env: "PORT");
 
 var yarp = builder
-    .AddProject<Projects.WhojooSite_Yarp>("api-gateway")
+    .AddProject<WhojooSite_Yarp>("api-gateway")
     .WithReference(server)
     .WithReference(web)
     .WithExternalHttpEndpoints();
