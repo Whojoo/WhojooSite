@@ -11,4 +11,6 @@ var app = builder.Build();
 
 app.MapReverseProxy();
 
+app.MapDefaultEndpoints();
+
 app.Run();

@@ -9,4 +9,11 @@ var yarp = builder
     .WithReference(server)
     .WithExternalHttpEndpoints();
 
+var web = builder
+    .AddNpmApp("web", "../WhojooSite.Angular")
+    .WithReference(yarp)
+    .WithHttpEndpoint(env: "PORT");
+
+yarp = yarp.WithReference(web);
+
 builder.Build().Run();
