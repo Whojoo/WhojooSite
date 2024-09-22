@@ -1,6 +1,7 @@
 using System.Text.Json;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -32,6 +33,12 @@ public class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
             .Property<List<RecipeId>>("_recipeIds")
             .HasConversion(
                 recipeIds => JsonSerializer.Serialize(recipeIds, JsonSerializerOptions.Default),
-                value => JsonSerializer.Deserialize<List<RecipeId>>(value, JsonSerializerOptions.Default)!);
+                value => JsonSerializer.Deserialize<List<RecipeId>>(value, JsonSerializerOptions.Default)!)
+            .Metadata
+            .SetValueComparer(new ValueComparer<List<RecipeId>>(
+                (left, right) => left!.SequenceEqual(right!),
+                list => list.Aggregate(0,
+                    (accumulated, recipeId) => HashCode.Combine(accumulated, recipeId.GetHashCode())),
+                list => list.ToList()));
     }
 }
