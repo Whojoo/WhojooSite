@@ -21,7 +21,7 @@ internal class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
 
         builder
             .Property(cookbook => cookbook.Id)
-            .HasConversion<CookbookIdValueConverter>();
+            .HasConversion<CookbookId.EfCoreValueConverter>();
 
         builder
             .Property(cookbook => cookbook.Name)

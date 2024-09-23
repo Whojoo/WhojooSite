@@ -18,7 +18,7 @@ internal class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
 
         builder
             .Property(spiceMix => spiceMix.Id)
-            .HasConversion<SpiceMixIdValueConverter>();
+            .HasConversion<SpiceMixId.EfCoreValueConverter>();
 
         builder
             .Property(spiceMix => spiceMix.Name)

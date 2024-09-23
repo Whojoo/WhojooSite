@@ -24,9 +24,7 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
         builder
             .Property(recipe => recipe.Id)
-            .HasConversion(
-                recipeId => recipeId.Value,
-                value => new RecipeId(value));
+            .HasConversion<RecipeId.EfCoreValueConverter>();
 
         builder
             .Property(recipe => recipe.Name)
@@ -41,12 +39,12 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder
             .Property(recipe => recipe.OwnerId)
             .IsRequired()
-            .HasConversion<OwnerIdValueConverter>();
+            .HasConversion<OwnerId.EfCoreValueConverter>();
 
         builder
             .Property(recipe => recipe.CookbookId)
             .IsRequired()
-            .HasConversion<CookbookIdValueConverter>();
+            .HasConversion<CookbookId.EfCoreValueConverter>();
 
         builder.OwnsMany<Step>("_steps", stepsBuilder =>
         {
@@ -60,7 +58,7 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             stepsBuilder
                 .Property(step => step.Id)
-                .HasConversion<StepIdValueConverter>();
+                .HasConversion<StepId.EfCoreValueConverter>();
 
             stepsBuilder
                 .Property(step => step.Name)
@@ -74,7 +72,7 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             stepsBuilder
                 .Property(step => step.RecipeId)
-                .HasConversion<RecipeIdValueConverter>();
+                .HasConversion<RecipeId.EfCoreValueConverter>();
         });
 
         builder.OwnsMany<Ingredient>("_ingredients", spicesBuilder =>
@@ -135,7 +133,7 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             spiceMixIngredientsBuilder
                 .Property(spiceMixIngredient => spiceMixIngredient.SpiceMixId)
-                .HasConversion<SpiceMixIdValueConverter>()
+                .HasConversion<SpiceMixId.EfCoreValueConverter>()
                 .IsRequired();
 
             spiceMixIngredientsBuilder
