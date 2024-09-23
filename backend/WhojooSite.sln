@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.ServiceDefaults"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhojooSite.Recipes.MigrationService", "src\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj", "{D825B65F-C232-4E58-B523-FF72A90694B1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D70C0F05-74C7-4327-A52E-4ED0DEA28D5F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

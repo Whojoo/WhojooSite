@@ -3,7 +3,7 @@ using WhojooSite.Recipes.Module.Domain.Recipes;
 
 namespace WhojooSite.Recipes.Module.Domain.Cookbook;
 
-public class Cookbook : Entity<CookbookId>
+internal class Cookbook : Entity<CookbookId>
 {
     public string Name { get; } = string.Empty;
     public IReadOnlyList<RecipeId> RecipeIds => _recipeIds.AsReadOnly();

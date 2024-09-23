@@ -2,7 +2,7 @@ using WhojooSite.Recipes.Module.Domain.Common;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
-public class Step : Entity<StepId>
+internal class Step : Entity<StepId>
 {
     public string Name { get; } = string.Empty;
     public string Summary { get; } = string.Empty;

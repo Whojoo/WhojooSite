@@ -6,7 +6,7 @@ using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
 namespace WhojooSite.Recipes.Module.Persistence;
 
-public class RecipesDbContext(DbContextOptions<RecipesDbContext> options) : DbContext(options)
+internal class RecipesDbContext(DbContextOptions<RecipesDbContext> options) : DbContext(options)
 {
     public virtual DbSet<Recipe> Recipes { get; set; }
 

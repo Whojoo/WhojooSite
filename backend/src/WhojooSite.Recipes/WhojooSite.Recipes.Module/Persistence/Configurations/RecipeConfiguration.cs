@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
+using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
-using WhojooSite.Recipes.Module.Persistence.ValueConverters;
+using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
 namespace WhojooSite.Recipes.Module.Persistence.Configurations;
 
-public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
+internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 {
     public void Configure(EntityTypeBuilder<Recipe> builder)
     {
@@ -39,12 +41,12 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder
             .Property(recipe => recipe.OwnerId)
             .IsRequired()
-            .HasConversion<OwnerIdConverter>();
+            .HasConversion<OwnerIdValueConverter>();
 
         builder
             .Property(recipe => recipe.CookbookId)
             .IsRequired()
-            .HasConversion<CookbookIdConverter>();
+            .HasConversion<CookbookIdValueConverter>();
 
         builder.OwnsMany<Step>("_steps", stepsBuilder =>
         {
@@ -58,7 +60,7 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             stepsBuilder
                 .Property(step => step.Id)
-                .HasConversion<StepIdConverter>();
+                .HasConversion<StepIdValueConverter>();
 
             stepsBuilder
                 .Property(step => step.Name)
@@ -72,7 +74,7 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             stepsBuilder
                 .Property(step => step.RecipeId)
-                .HasConversion<RecipeIdConverter>();
+                .HasConversion<RecipeIdValueConverter>();
         });
 
         builder.OwnsMany<Ingredient>("_ingredients", spicesBuilder =>
@@ -133,7 +135,7 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
             spiceMixIngredientsBuilder
                 .Property(spiceMixIngredient => spiceMixIngredient.SpiceMixId)
-                .HasConversion<SpiceMixIdConverter>()
+                .HasConversion<SpiceMixIdValueConverter>()
                 .IsRequired();
 
             spiceMixIngredientsBuilder

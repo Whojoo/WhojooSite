@@ -6,11 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
-using WhojooSite.Recipes.Module.Persistence.ValueConverters;
 
 namespace WhojooSite.Recipes.Module.Persistence.Configurations;
 
-public class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
+internal class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
 {
     public void Configure(EntityTypeBuilder<Cookbook> builder)
     {
@@ -22,7 +21,7 @@ public class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
 
         builder
             .Property(cookbook => cookbook.Id)
-            .HasConversion<CookbookIdConverter>();
+            .HasConversion<CookbookIdValueConverter>();
 
         builder
             .Property(cookbook => cookbook.Name)

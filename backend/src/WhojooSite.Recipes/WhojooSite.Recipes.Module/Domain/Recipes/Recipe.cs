@@ -5,7 +5,7 @@ using WhojooSite.Recipes.Module.Domain.Cookbook;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
-public class Recipe : Entity<RecipeId>
+internal class Recipe : Entity<RecipeId>
 {
     public string Name { get; } = string.Empty;
     public string Description { get; } = string.Empty;

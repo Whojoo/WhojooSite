@@ -2,7 +2,7 @@ using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
-public class SpiceMixIngredient
+internal class SpiceMixIngredient
 {
     public SpiceMixId SpiceMixId { get; init; } = SpiceMixId.Empty;
     public double Amount { get; init; }

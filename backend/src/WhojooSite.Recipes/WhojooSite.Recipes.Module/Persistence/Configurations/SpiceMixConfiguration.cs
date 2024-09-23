@@ -3,11 +3,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
-using WhojooSite.Recipes.Module.Persistence.ValueConverters;
 
 namespace WhojooSite.Recipes.Module.Persistence.Configurations;
 
-public class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
+internal class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
 {
     public void Configure(EntityTypeBuilder<SpiceMix> builder)
     {
@@ -19,7 +18,7 @@ public class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
 
         builder
             .Property(spiceMix => spiceMix.Id)
-            .HasConversion<SpiceMixIdConverter>();
+            .HasConversion<SpiceMixIdValueConverter>();
 
         builder
             .Property(spiceMix => spiceMix.Name)
