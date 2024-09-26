@@ -1,7 +1,9 @@
+using Dapper;
+
 using FastEndpoints;
 
-using Microsoft.EntityFrameworkCore;
-
+using WhojooSite.Common;
+using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Persistence;
@@ -12,10 +14,14 @@ internal record GetRecipeByIdRequest(RecipeId Id);
 
 internal record GetRecipeByIdResponse(RecipeId Id, string Name, string Description, CookbookId CookbookId);
 
-internal class GetRecipeById(RecipesDbContext dbContext)
+internal record GetRecipeByIdQuery(RecipeId RecipeId) : IQuery<Option<GetRecipeByIdResult>>;
+
+internal record GetRecipeByIdResult(RecipeId Id, string Name, string Description, CookbookId CookbookId);
+
+internal class GetRecipeById(IQueryDispatcher queryDispatcher)
     : Endpoint<GetRecipeByIdRequest, GetRecipeByIdResponse>
 {
-    private readonly RecipesDbContext _dbContext = dbContext;
+    private readonly IQueryDispatcher _queryDispatcher = queryDispatcher;
 
     public override void Configure()
     {
@@ -25,17 +31,35 @@ internal class GetRecipeById(RecipesDbContext dbContext)
 
     public override async Task HandleAsync(GetRecipeByIdRequest req, CancellationToken ct)
     {
-        var recipe = await _dbContext
-            .Recipes
-            .FirstOrDefaultAsync(recipe => recipe.Id == req.Id, ct);
+        var query = new GetRecipeByIdQuery(req.Id);
+        var result = await _queryDispatcher.Dispatch<GetRecipeByIdQuery, Option<GetRecipeByIdResult>>(query, ct);
 
-        if (recipe is null)
-        {
-            await SendNotFoundAsync(ct);
-            return;
-        }
+        await result.MatchAsync(
+            notNullAction: async recipe =>
+            {
+                var response = new GetRecipeByIdResponse(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId);
+                await SendOkAsync(response, ct);
+            },
+            nullAction: async () =>
+            {
+                await SendNotFoundAsync(ct);
+            });
+    }
+}
 
-        var response = new GetRecipeByIdResponse(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId);
-        await SendOkAsync(response, ct);
+internal class GetRecipeByIdQueryHandler(RecipesDbConnectionFactory connectionFactory)
+    : IQueryHandler<GetRecipeByIdQuery, Option<GetRecipeByIdResult>>
+{
+    private readonly RecipesDbConnectionFactory _connectionFactory = connectionFactory;
+
+    public async ValueTask<Option<GetRecipeByIdResult>> Handle(
+        GetRecipeByIdQuery query,
+        CancellationToken cancellationToken)
+    {
+        using var connection = _connectionFactory.CreateConnection();
+
+        return await connection.QueryFirstOrDefaultAsync<GetRecipeByIdResult>(
+            """SELECT "Id", "Name", "Description", "CookbookId" FROM "Recipes" WHERE "Id" = @Id""",
+            new { Id = query.RecipeId });
     }
 }

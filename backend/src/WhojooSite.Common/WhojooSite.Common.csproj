@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+      <PackageReference Include="Ardalis.GuardClauses" Version="4.6.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
     <PackageReference Include="Scrutor" Version="4.2.2" />
   </ItemGroup>
