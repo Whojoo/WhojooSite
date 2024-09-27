@@ -9,13 +9,17 @@ internal sealed class QueryDispatcher(IServiceProvider serviceProvider, ILogger<
     private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly ILogger<QueryDispatcher> _logger = logger;
 
-    public ValueTask<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query,
+    public async ValueTask<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query,
         CancellationToken cancellationToken = default)
         where TQuery : IQuery<TQueryResult>
     {
-        _logger.LogInformation("Executing query {QueryName}", typeof(TQuery).Name);
+        _logger.LogInformation("Executing query {Query}", query);
         var handler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TQueryResult>>();
-        _logger.LogInformation("Finished execution of query {QueryName}", typeof(TQuery).Name);
-        return handler.Handle(query, cancellationToken);
+        var result = await handler.Handle(query, cancellationToken);
+        _logger.LogInformation(
+            "Finished execution of query {QueryName} with result {Result}",
+            typeof(TQuery).Name,
+            result);
+        return result;
     }
 }

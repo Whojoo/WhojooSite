@@ -1,3 +1,5 @@
+using System.Text;
+
 using Ardalis.GuardClauses;
 
 namespace WhojooSite.Common;
@@ -41,6 +43,20 @@ public readonly struct Option<T>
     public Option<TMappedType> Map<TMappedType>(Func<T, TMappedType> mapFunc)
     {
         return _hasValue ? mapFunc(_value!) : Option<TMappedType>.None;
+    }
+
+    public override string ToString()
+    {
+        var stringBuilder = new StringBuilder()
+            .Append($"Option<{typeof(T).Name}> {{ ");
+
+        stringBuilder = _hasValue
+            ? stringBuilder.Append(_value!)
+            : stringBuilder.Append("None");
+
+        return stringBuilder
+            .Append(" }")
+            .ToString();
     }
 
     public static implicit operator Option<T>(T? value) => new(value);
