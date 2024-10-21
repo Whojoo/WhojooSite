@@ -4,7 +4,7 @@ using FastEndpoints;
 
 using FluentValidation;
 
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -30,6 +30,9 @@ internal sealed class ListRecipes(IQueryDispatcher queryDispatcher)
     {
         Get("/recipes");
         AllowAnonymous();
+        Options(x => x.CacheOutput(p => p
+            .Expire(TimeSpan.FromMinutes(5))
+            .SetVaryByQuery("page", "pageSize")));
     }
 
     public override async Task HandleAsync(ListRecipesRequest req, CancellationToken ct)

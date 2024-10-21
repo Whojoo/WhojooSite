@@ -2,6 +2,8 @@ using Dapper;
 
 using FastEndpoints;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using WhojooSite.Common;
 using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -23,6 +25,10 @@ internal class GetRecipeById(IQueryDispatcher queryDispatcher)
     {
         Get("/recipes/{Id}");
         AllowAnonymous();
+        Options(x =>
+        {
+            x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5)));
+        });
     }
 
     public override async Task HandleAsync(GetRecipeByIdRequest req, CancellationToken ct)
@@ -57,7 +63,7 @@ internal class GetRecipeById(IQueryDispatcher queryDispatcher)
         {
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<GetRecipeById.RecipeDto>(
+            return await connection.QueryFirstOrDefaultAsync<RecipeDto>(
                 """SELECT "Id", "Name", "Description", "CookbookId" FROM "Recipes" WHERE "Id" = @Id""",
                 new { Id = query.RecipeId });
         }

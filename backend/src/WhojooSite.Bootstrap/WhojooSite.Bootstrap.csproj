@@ -14,6 +14,7 @@
     <ProjectReference Include="..\WhojooSite.Recipes\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj" />
     <ProjectReference Include="..\WhojooSite.Common\WhojooSite.Common.csproj" />
     <ProjectReference Include="..\WhojooSite.ServiceDefaults\WhojooSite.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\WhojooSite.Users\WhojooSite.Users.Module\WhojooSite.Users.Module.csproj"/>
   </ItemGroup>
 
 </Project>

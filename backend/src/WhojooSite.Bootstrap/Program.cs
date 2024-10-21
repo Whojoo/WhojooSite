@@ -10,6 +10,7 @@ builder.AddServiceDefaults();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddOutputCache();
 builder.Services.AddFastEndpoints();
 
 builder.ConfigureRecipesModules();
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseOutputCache();
+
 app.MapRecipesModule();
 
 app.UseFastEndpoints();
