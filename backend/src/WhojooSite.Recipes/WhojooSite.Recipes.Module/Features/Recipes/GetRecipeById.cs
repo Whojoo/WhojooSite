@@ -64,7 +64,11 @@ internal class GetRecipeById(IQueryDispatcher queryDispatcher)
             using var connection = _connectionFactory.CreateConnection();
 
             return await connection.QueryFirstOrDefaultAsync<RecipeDto>(
-                """SELECT "Id", "Name", "Description", "CookbookId" FROM "Recipes" WHERE "Id" = @Id""",
+                """
+                SELECT "Id", "Name", "Description", "CookbookId" 
+                FROM "Recipes" 
+                WHERE "Id" = @Id
+                """,
                 new { Id = query.RecipeId });
         }
     }
