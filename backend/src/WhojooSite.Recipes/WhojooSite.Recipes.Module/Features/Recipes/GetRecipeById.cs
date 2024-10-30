@@ -2,7 +2,7 @@ using Dapper;
 
 using FastEndpoints;
 
-using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 
 using WhojooSite.Common;
 using WhojooSite.Common.Cqrs;
@@ -12,10 +12,10 @@ using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal class GetRecipeById(IQueryDispatcher queryDispatcher)
+internal class GetRecipeById(ISender sender)
     : Endpoint<GetRecipeById.GetRecipeByIdRequest, GetRecipeById.GetRecipeByIdResponse>
 {
-    private readonly IQueryDispatcher _queryDispatcher = queryDispatcher;
+    private readonly ISender _sender = sender;
 
     internal record GetRecipeByIdRequest(RecipeId Id);
 
@@ -25,16 +25,16 @@ internal class GetRecipeById(IQueryDispatcher queryDispatcher)
     {
         Get("/recipes/{Id}");
         AllowAnonymous();
-        Options(x =>
-        {
-            x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5)));
-        });
+        // Options(x =>
+        // {
+        //     x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5)));
+        // });
     }
 
     public override async Task HandleAsync(GetRecipeByIdRequest req, CancellationToken ct)
     {
         var query = new GetRecipeByIdQuery(req.Id);
-        var result = await _queryDispatcher.Dispatch<GetRecipeByIdQuery, Option<RecipeDto>>(query, ct);
+        var result = await _sender.Send(query, ct);
 
         await result.MatchAsync(
             notNullAction: async recipe =>
@@ -57,7 +57,7 @@ internal class GetRecipeById(IQueryDispatcher queryDispatcher)
     {
         private readonly RecipesDbConnectionFactory _connectionFactory = connectionFactory;
 
-        public async ValueTask<Option<RecipeDto>> Handle(
+        public async Task<Option<RecipeDto>> Handle(
             GetRecipeByIdQuery query,
             CancellationToken cancellationToken)
         {

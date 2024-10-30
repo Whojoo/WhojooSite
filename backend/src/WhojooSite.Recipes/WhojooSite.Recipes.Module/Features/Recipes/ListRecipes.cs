@@ -4,7 +4,7 @@ using FastEndpoints;
 
 using FluentValidation;
 
-using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 
 using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -13,10 +13,10 @@ using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal sealed class ListRecipes(IQueryDispatcher queryDispatcher)
+internal sealed class ListRecipes(ISender sender)
     : Endpoint<ListRecipes.ListRecipesRequest, ListRecipes.ListRecipesResponse>
 {
-    private readonly IQueryDispatcher _queryDispatcher = queryDispatcher;
+    private readonly ISender _sender = sender;
 
     internal class ListRecipesRequest
     {
@@ -30,15 +30,15 @@ internal sealed class ListRecipes(IQueryDispatcher queryDispatcher)
     {
         Get("/recipes");
         AllowAnonymous();
-        Options(x => x.CacheOutput(p => p
-            .Expire(TimeSpan.FromMinutes(5))
-            .SetVaryByQuery("page", "pageSize")));
+        // Options(x => x.CacheOutput(p => p
+        //     .Expire(TimeSpan.FromMinutes(5))
+        //     .SetVaryByQuery("page", "pageSize")));
     }
 
     public override async Task HandleAsync(ListRecipesRequest req, CancellationToken ct)
     {
         var query = new ListRecipesQuery(req.Page, req.PageSize);
-        var result = await _queryDispatcher.Dispatch<ListRecipesQuery, ListRecipesDto>(query, ct);
+        var result = await _sender.Send(query, ct);
         var response = new ListRecipesResponse(result.Recipes);
         await SendOkAsync(response, ct);
     }
@@ -54,7 +54,7 @@ internal sealed class ListRecipes(IQueryDispatcher queryDispatcher)
     {
         private readonly RecipesDbConnectionFactory _connectionFactory = connectionFactory;
 
-        public async ValueTask<ListRecipesDto> Handle(ListRecipesQuery query,
+        public async Task<ListRecipesDto> Handle(ListRecipesQuery query,
             CancellationToken cancellationToken)
         {
             using var connection = _connectionFactory.CreateConnection();

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
@@ -20,7 +19,6 @@ public static class DependencyInjection
         builder.AddNpgsqlDbContext<RecipesDbContext>(DataSchemaConstants.DbName);
 
         builder.Services.AddScoped<RecipesDbConnectionFactory>();
-        builder.Services.AddCqrs<IRecipesModuleAssemblyMarker>();
 
         RegisterTypeHandlers();
 
