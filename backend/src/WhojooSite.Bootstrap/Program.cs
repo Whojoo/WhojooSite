@@ -1,6 +1,7 @@
 using FastEndpoints;
 
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 using WhojooSite.Common.Cqrs.Behaviors;
 using WhojooSite.Common.Modules;
@@ -10,7 +11,10 @@ var logger = Log.Logger = new LoggerConfiguration()
     .Enrich
     .FromLogContext()
     .WriteTo
-    .Console()
+    .Console(
+        theme: AnsiConsoleTheme.Code,
+        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}",
+        applyThemeToRedirectedOutput: true)
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
