@@ -10,4 +10,8 @@
         <PackageReference Include="Serilog.AspNetCore"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\WhojooSite.Common\WhojooSite.Common.csproj"/>
+    </ItemGroup>
+
 </Project>

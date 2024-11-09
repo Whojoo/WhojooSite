@@ -2,18 +2,13 @@ name: whojoo-site
 
 services:
   api-gateway:
-    build:
-      context: .
-      dockerfile: api-gateway.Dockerfile
     ports:
       - "5001:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      # Password__File is not supported, so use .env instead to inject password
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
       ReverseProxy:Clusters:webCluster:Destinations:destination1:Address: http://web:80
-      ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address: http://server:80
+      ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address: http://server-1:80
+      ReverseProxy:Clusters:backendCluster:Destinations:destination2:Address: http://server-2:80
+      ReverseProxy:Clusters:backendCluster:Destinations:destination3:Address: http://server-3:80
     networks:
       - frontend
       - backend
@@ -21,33 +16,23 @@ services:
       - dev-certs
 
   web:
-    build:
-      context: .
-      dockerfile: web.Dockerfile
-    ports:
-      - "5003:80"
     networks:
       - frontend
 
-  server:
-    build:
-      context: .
-      dockerfile: server.Dockerfile
-    ports:
-      - "5002:80"
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      # Password__File is not supported, so use .env instead to inject password
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
+  server-1:
+    hostname: server-1
     networks:
       - backend
-    secrets:
-      - dev-certs
 
-secrets:
-  dev-certs:
-    file: secrets/aspnetapp.pfx
+  server-2:
+    hostname: server-2
+    networks:
+      - backend
+
+  server-3:
+    hostname: server-3
+    networks:
+      - backend
 
 networks:
   frontend:

@@ -28,9 +28,9 @@ public class ModuleOrchestrator(ILogger logger)
             throw new ArgumentException($"Module {moduleInitializer.ModuleName} is already registered");
         }
 
-        _logger.Information("Module {ModuleName} is registered for configuration", moduleInitializer.ModuleName);
-
         _moduleInitializers.Add(moduleInitializer);
+
+        _logger.Information("Module {ModuleName} is registered for configuration", moduleInitializer.ModuleName);
     }
 
     public Assembly[] GetModuleAssemblies() =>

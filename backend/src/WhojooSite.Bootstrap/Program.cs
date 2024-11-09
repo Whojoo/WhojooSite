@@ -6,6 +6,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using WhojooSite.Common.Cqrs.Behaviors;
 using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module;
+using WhojooSite.Users.Module;
 
 var logger = Log.Logger = new LoggerConfiguration()
     .Enrich
@@ -34,6 +35,7 @@ builder.Services.AddFastEndpoints();
 var moduleOrchestrator = new ModuleOrchestrator(logger);
 
 moduleOrchestrator.AddModule<RecipesModuleInitializer>();
+moduleOrchestrator.AddModule<UsersModuleInitializer>();
 
 moduleOrchestrator.ConfigureModules(builder.Services, builder.Configuration);
 

@@ -117,6 +117,8 @@ public class LoggingDbCommand(DbCommand command, DbConnection? connection, ILogg
             CommandText);
     }
 
+    #region Other members with simple pass through
+
     public override void Cancel() => _command.Cancel();
 
     public override void Prepare() => _command.Prepare();
@@ -191,4 +193,6 @@ public class LoggingDbCommand(DbCommand command, DbConnection? connection, ILogg
     public override bool Equals(object? obj) => _command.Equals(obj);
 
     public override int GetHashCode() => _command.GetHashCode();
+
+    #endregion
 }

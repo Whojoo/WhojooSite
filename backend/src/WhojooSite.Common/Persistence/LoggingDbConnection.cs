@@ -11,9 +11,7 @@ using IsolationLevel = System.Data.IsolationLevel;
 
 namespace WhojooSite.Common.Persistence;
 
-public class LoggingDbConnection(
-    DbConnection connection,
-    ILogger<LoggingDbConnection> logger)
+public class LoggingDbConnection(DbConnection connection, ILogger<LoggingDbConnection> logger)
     : DbConnection
 {
     private readonly DbConnection _connection = connection;
@@ -22,7 +20,6 @@ public class LoggingDbConnection(
     public override void Close()
     {
         var startTimestamp = Stopwatch.GetTimestamp();
-
         try
         {
             _connection.Close();
@@ -36,7 +33,6 @@ public class LoggingDbConnection(
     public override async Task CloseAsync()
     {
         var startTimestamp = Stopwatch.GetTimestamp();
-
         try
         {
             await _connection.CloseAsync();
@@ -50,7 +46,6 @@ public class LoggingDbConnection(
     public override void Open()
     {
         var startTimestamp = Stopwatch.GetTimestamp();
-
         try
         {
             _connection.Open();
@@ -64,7 +59,6 @@ public class LoggingDbConnection(
     public override async Task OpenAsync(CancellationToken cancellationToken)
     {
         var startTimestamp = Stopwatch.GetTimestamp();
-
         try
         {
             await _connection.OpenAsync(cancellationToken);
@@ -89,6 +83,7 @@ public class LoggingDbConnection(
     {
         await _connection.DisposeAsync();
         await base.DisposeAsync();
+        GC.SuppressFinalize(this);
     }
 
     protected override DbCommand CreateDbCommand()
@@ -111,7 +106,7 @@ public class LoggingDbConnection(
             Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds);
     }
 
-    // Other public member, no need to wrap those
+    #region Other members with simple pass through
 
     protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel) =>
         _connection.BeginTransaction(isolationLevel);
@@ -175,4 +170,6 @@ public class LoggingDbConnection(
     [Obsolete("This Remoting API is not supported and throws PlatformNotSupportedException.",
         DiagnosticId = "SYSLIB0010", UrlFormat = "https://aka.ms/dotnet-warnings/{0}")]
     public override object InitializeLifetimeService() => _connection.InitializeLifetimeService();
+
+    #endregion
 }

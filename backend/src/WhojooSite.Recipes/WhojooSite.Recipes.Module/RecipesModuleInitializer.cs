@@ -19,7 +19,7 @@ namespace WhojooSite.Recipes.Module;
 
 public class RecipesModuleInitializer : IModuleInitializer
 {
-    public string ModuleName { get; } = "Recipes Module";
+    public string ModuleName => "Recipes";
 
     public void ConfigureModule(IServiceCollection services, IConfiguration configuration, ILogger logger)
     {
