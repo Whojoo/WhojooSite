@@ -2,16 +2,18 @@ using System.Data;
 
 using Microsoft.Extensions.Configuration;
 
-using Npgsql;
+using WhojooSite.Common.Persistence;
 
 namespace WhojooSite.Recipes.Module.Persistence;
 
-internal sealed class RecipesDbConnectionFactory(IConfiguration configuration)
+internal sealed class RecipesDbConnectionFactory(IDbConnectionFactory dbConnectionFactory, IConfiguration configuration)
 {
+    private readonly IDbConnectionFactory _dbConnectionFactory = dbConnectionFactory;
     private readonly IConfiguration _configuration = configuration;
 
     public IDbConnection CreateConnection()
     {
-        return new NpgsqlConnection(_configuration.GetConnectionString(DataSchemaConstants.DbName));
+        var connectionString = _configuration.GetConnectionString(DataSchemaConstants.ConnectionStringName);
+        return _dbConnectionFactory.CreateConnection(connectionString!);
     }
 }

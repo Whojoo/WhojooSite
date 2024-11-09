@@ -2,7 +2,7 @@ namespace WhojooSite.Recipes.Module.Persistence;
 
 public static class DataSchemaConstants
 {
-    public const string DbName = "recipes-db";
+    public const string ConnectionStringName = "RecipesDb";
 
     public const int NameMaxLength = 200;
     public const int MeasurementUnitMaxLength = 20;

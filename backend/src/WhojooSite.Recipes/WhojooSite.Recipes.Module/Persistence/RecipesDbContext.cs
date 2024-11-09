@@ -16,7 +16,7 @@ internal class RecipesDbContext(DbContextOptions<RecipesDbContext> options) : Db
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(IRecipesModuleAssemblyMarker).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipesModuleInitializer).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }

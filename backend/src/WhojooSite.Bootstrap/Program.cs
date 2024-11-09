@@ -1,13 +1,24 @@
-using System.Reflection;
-
 using FastEndpoints;
 
+using Serilog;
+
 using WhojooSite.Common.Cqrs.Behaviors;
+using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module;
+
+var logger = Log.Logger = new LoggerConfiguration()
+    .Enrich
+    .FromLogContext()
+    .WriteTo
+    .Console()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+builder.Host.UseSerilog(((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+}));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -16,23 +27,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOutputCache();
 builder.Services.AddFastEndpoints();
 
-Assembly[] moduleAssemblies =
-[
-    typeof(IRecipesModuleAssemblyMarker).Assembly
-];
+var moduleOrchestrator = new ModuleOrchestrator(logger);
 
-builder.ConfigureRecipesModules();
+moduleOrchestrator.AddModule<RecipesModuleInitializer>();
+
+moduleOrchestrator.ConfigureModules(builder.Services, builder.Configuration);
 
 builder.Services.AddMediatR(configuration =>
 {
-    configuration.RegisterServicesFromAssemblies(moduleAssemblies);
+    configuration.RegisterServicesFromAssemblies(moduleOrchestrator.GetModuleAssemblies());
 });
 
 builder.Services.AddMediatRLoggingBehaviors();
 
 var app = builder.Build();
-
-app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -44,7 +52,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseOutputCache();
 
-app.MapRecipesModule();
+moduleOrchestrator.MapModules(app);
 
 app.UseFastEndpoints();
 

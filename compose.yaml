@@ -2,17 +2,17 @@ name: whojoo-site
 
 services:
   api-gateway:
-    build: 
+    build:
       context: .
       dockerfile: api-gateway.Dockerfile
     ports:
-      - 5001:80
+      - "5001:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       # Password__File is not supported, so use .env instead to inject password
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
       ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
-      ReverseProxy:Clusters:webCluster:Destinations:destination1:Address: http://web:4000
+      ReverseProxy:Clusters:webCluster:Destinations:destination1:Address: http://web:80
       ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address: http://server:80
     networks:
       - frontend
@@ -21,9 +21,11 @@ services:
       - dev-certs
 
   web:
-    build: 
+    build:
       context: .
       dockerfile: web.Dockerfile
+    ports:
+      - "5003:80"
     networks:
       - frontend
 
@@ -32,7 +34,7 @@ services:
       context: .
       dockerfile: server.Dockerfile
     ports:
-      - 5002:80
+      - "5002:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       # Password__File is not supported, so use .env instead to inject password
@@ -43,19 +45,6 @@ services:
     secrets:
       - dev-certs
 
-  db:
-    image: postgres:16.4-alpine
-    shm_size: 128mb
-    ports:
-      - 5432:5432
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    environment:
-      # Password__FILE is supported by postgres, but again not in dotnet, so .env file again
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - backend
-
 secrets:
   dev-certs:
     file: secrets/aspnetapp.pfx
@@ -63,11 +52,3 @@ secrets:
 networks:
   frontend:
   backend:
-
-volumes:
-  db_data:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: 'db-data/data'

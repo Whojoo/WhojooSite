@@ -5,6 +5,7 @@ WORKDIR /src
 
 # restore
 COPY ["backend/Directory.Build.props", "."]
+COPY ["backend/Directory.Packages.props", "."]
 COPY ["backend/src/WhojooSite.Yarp/WhojooSite.Yarp.csproj", "WhojooSite.Yarp/"]
 RUN dotnet restore 'WhojooSite.Yarp/WhojooSite.Yarp.csproj'
 
