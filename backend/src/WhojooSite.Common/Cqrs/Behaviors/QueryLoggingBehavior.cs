@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Reflection;
 
-using Ardalis.GuardClauses;
-
 using MediatR;
 
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +26,6 @@ public class QueryLoggingBehavior<TQuery, TQueryResult>(
         {
             return await next();
         }
-
-        Guard.Against.Null(request);
 
         _logger.LogInformation("Executing query {QueryName}", typeof(TQuery).Name);
 

@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Reflection;
 
-using Ardalis.GuardClauses;
-
 using MediatR;
 
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +26,6 @@ public class CommandLoggingBehavior<TCommand, TCommandResult>(
         {
             return await next();
         }
-
-        Guard.Against.Null(request);
 
         _logger.LogInformation("Executing command {CommandName}", typeof(TCommand).Name);
 
