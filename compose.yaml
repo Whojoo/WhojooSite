@@ -6,33 +6,46 @@ services:
       - "5001:80"
     environment:
       ReverseProxy:Clusters:webCluster:Destinations:destination1:Address: http://web:80
-      ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address: http://server-1:80
-      ReverseProxy:Clusters:backendCluster:Destinations:destination2:Address: http://server-2:80
-      ReverseProxy:Clusters:backendCluster:Destinations:destination3:Address: http://server-3:80
+      ReverseProxy:Clusters:backendCluster:Destinations:destination1:Address: http://server:80
     networks:
       - frontend
       - backend
     secrets:
       - dev-certs
+    depends_on:
+      consul:
+        condition: service_started
 
   web:
     networks:
       - frontend
+    depends_on:
+      consul:
+        condition: service_started
 
-  server-1:
-    hostname: server-1
+  server:
+    hostname: server
+    deploy:
+      replicas: 3
     networks:
       - backend
+    depends_on:
+      consul:
+        condition: service_started
 
-  server-2:
-    hostname: server-2
+  consul:
+    container_name: consul_service
+    image: hashicorp/consul:1.18
+    ports:
+      - "8500:8500" # HTTP API and UI port
+      - "8600:8600" # DNS Port
+    command: consul agent -dev -config-dir /etc/consul.d
     networks:
+      - frontend
       - backend
-
-  server-3:
-    hostname: server-3
-    networks:
-      - backend
+    volumes:
+      - ./.tmp/consul/data:/opt/consul
+      - ./consul.server.json:/etc/consul.d/consul.server.json:ro
 
 networks:
   frontend:

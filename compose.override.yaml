@@ -9,39 +9,7 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
       ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
 
-  server-1:
-    build:
-      context: .
-      dockerfile: server.Dockerfile
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      # Password__File is not supported, so use .env instead to inject password
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
-      ConnectionStrings__RecipesDb: "Host=db;Port=5432;Username=postgres;Password=${DB_PASSWORD};Database=recipes-db"
-    secrets:
-      - dev-certs
-
-  server-2:
-    build:
-      context: .
-      dockerfile: server.Dockerfile
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      # Password__File is not supported, so use .env instead to inject password
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTS_PASSWORD}
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /run/secrets/dev-certs
-      ConnectionStrings__RecipesDb: "Host=db;Port=5432;Username=postgres;Password=${DB_PASSWORD};Database=recipes-db"
-    secrets:
-      - dev-certs
-
-  server-3:
+  server:
     build:
       context: .
       dockerfile: server.Dockerfile
