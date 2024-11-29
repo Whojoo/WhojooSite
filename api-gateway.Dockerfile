@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
 WORKDIR /src
 
@@ -19,7 +19,7 @@ FROM build AS publish
 RUN dotnet publish 'WhojooSite.Yarp.csproj' -c Release -o /app/publish
 
 # Stage 3: Run stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 ENV ASPNETCORE_HTTP_PORTS=81
 ENV ASPNETCORE_HTTPS_PORTS=80
 EXPOSE 80

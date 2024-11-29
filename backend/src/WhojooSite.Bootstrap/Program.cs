@@ -1,5 +1,7 @@
 using FastEndpoints;
 
+using Scalar.AspNetCore;
+
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
@@ -25,10 +27,10 @@ builder.Host.UseSerilog(((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration);
 }));
 
+builder.Services.AddOpenApi();
+
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddOutputCache();
 builder.Services.AddFastEndpoints();
 
@@ -51,8 +53,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapScalarApiReference();
+    app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
