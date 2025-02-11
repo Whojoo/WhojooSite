@@ -19,4 +19,6 @@ public class UsersModuleInitializer : IModuleInitializer
     public void MapModule(WebApplication app, ILogger logger)
     {
     }
+
+    public bool HasEndpoints() => true;
 }

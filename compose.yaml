@@ -2,6 +2,7 @@ name: whojoo-site
 
 services:
   api-gateway:
+    image: whojoo-site/api-gateway:${API_GATEWAY_VERSION}
     ports:
       - "5001:80"
     environment:
@@ -12,40 +13,19 @@ services:
       - backend
     secrets:
       - dev-certs
-    depends_on:
-      consul:
-        condition: service_started
 
-  web:
-    networks:
-      - frontend
-    depends_on:
-      consul:
-        condition: service_started
+#  web:
+#    image: whojoo-site/web:${WEB_VERSION}
+#    networks:
+#      - frontend
+#    depends_on:
+#      consul:
+#        condition: service_started
 
   server:
-    hostname: server
-    deploy:
-      replicas: 3
+    image: whojoo-site/server:${SERVER_VERSION}
     networks:
       - backend
-    depends_on:
-      consul:
-        condition: service_started
-
-  consul:
-    container_name: consul_service
-    image: hashicorp/consul:1.18
-    ports:
-      - "8500:8500" # HTTP API and UI port
-      - "8600:8600" # DNS Port
-    command: consul agent -dev -config-dir /etc/consul.d
-    networks:
-      - frontend
-      - backend
-    volumes:
-      - ./.tmp/consul/data:/opt/consul
-      - ./consul.server.json:/etc/consul.d/consul.server.json:ro
 
 networks:
   frontend:

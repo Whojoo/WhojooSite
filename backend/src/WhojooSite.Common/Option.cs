@@ -1,7 +1,3 @@
-using System.Text;
-
-using Ardalis.GuardClauses;
-
 namespace WhojooSite.Common;
 
 public readonly struct Option<T>
@@ -9,55 +5,40 @@ public readonly struct Option<T>
     private readonly T? _value;
     private readonly bool _hasValue;
 
-    public static readonly Option<T> None = default;
-
-    public static Option<T> Some(T value)
+    public Option() : this(default, false)
     {
-        Guard.Against.Null(value);
-        return new Option<T>(value);
     }
 
-    public Option(T? value)
+    public Option(T? value) : this(value, value is not null)
+    {
+    }
+
+    private Option(T? value, bool hasValue)
     {
         _value = value;
-        _hasValue = _value is not null;
+        _hasValue = hasValue;
     }
 
-    public void Match(Action<T> notNullAction, Action nullAction)
-    {
-        if (_hasValue)
-        {
-            notNullAction(_value!);
-        }
-        else
-        {
-            nullAction();
-        }
-    }
-
-    public Task MatchAsync(Func<T, Task> notNullAction, Func<Task> nullAction)
+    public TReturn Match<TReturn>(Func<T, TReturn> notNullAction, Func<TReturn> nullAction)
     {
         return _hasValue ? notNullAction(_value!) : nullAction();
     }
 
-    public Option<TMappedType> Map<TMappedType>(Func<T, TMappedType> mapFunc)
-    {
-        return _hasValue ? mapFunc(_value!) : Option<TMappedType>.None;
-    }
-
     public override string ToString()
     {
-        var stringBuilder = new StringBuilder()
-            .Append($"Option<{typeof(T).Name}> {{ ");
+        return $"Option<{typeof(T).Name}> {{ {_value?.ToString() ?? "None"} }}";
+    }
+}
 
-        stringBuilder = _hasValue
-            ? stringBuilder.Append(_value!)
-            : stringBuilder.Append("None");
+public static class Option
+{
+    public static Option<T> None<T>() => new();
 
-        return stringBuilder
-            .Append(" }")
-            .ToString();
+    public static Option<T> Some<T>(T value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        return new Option<T>(value);
     }
 
-    public static implicit operator Option<T>(T? value) => new(value);
+    public static Option<T> Create<T>(T? value) => new(value);
 }

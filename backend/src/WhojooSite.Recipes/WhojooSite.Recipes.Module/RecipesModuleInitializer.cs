@@ -40,6 +40,8 @@ public class RecipesModuleInitializer : IModuleInitializer
     {
     }
 
+    public bool HasEndpoints() => true;
+
     private static void RegisterTypeHandlers()
     {
         SqlMapper.AddTypeHandler(new OwnerId.DapperTypeHandler());

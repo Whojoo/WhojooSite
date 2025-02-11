@@ -1,4 +1,3 @@
-using FastEndpoints;
 
 using Scalar.AspNetCore;
 
@@ -32,7 +31,6 @@ builder.Services.AddOpenApi();
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOutputCache();
-builder.Services.AddFastEndpoints();
 
 var moduleOrchestrator = new ModuleOrchestrator(logger);
 
@@ -62,6 +60,4 @@ app.UseOutputCache();
 
 moduleOrchestrator.MapModules(app);
 
-app.UseFastEndpoints();
-
-app.Run();
+await app.RunAsync();

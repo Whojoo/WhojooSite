@@ -12,4 +12,5 @@ public interface IModuleInitializer
 
     void ConfigureModule(IServiceCollection services, IConfiguration configuration, ILogger logger);
     void MapModule(WebApplication app, ILogger logger);
+    bool HasEndpoints();
 }

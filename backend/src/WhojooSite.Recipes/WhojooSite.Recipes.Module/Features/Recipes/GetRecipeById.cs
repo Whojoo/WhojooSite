@@ -1,75 +1,53 @@
 using Dapper;
 
-using FastEndpoints;
-
-using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Routing;
 
 using WhojooSite.Common;
-using WhojooSite.Common.Cqrs;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Persistence;
 
+using IEndpoint = WhojooSite.Common.Api.IEndpoint;
+
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal class GetRecipeById(ISender sender)
-    : Endpoint<GetRecipeById.GetRecipeByIdRequest, GetRecipeById.GetRecipeByIdResponse>
+internal class GetRecipeByIdEndpoint : IEndpoint
 {
-    private readonly ISender _sender = sender;
-
-    internal record GetRecipeByIdRequest(RecipeId Id);
-
-    internal record GetRecipeByIdResponse(RecipeId Id, string Name, string Description, CookbookId CookbookId);
-
-    public override void Configure()
+    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        Get("/recipes/{Id}");
-        AllowAnonymous();
-        // Options(x =>
-        // {
-        //     x.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(5)));
-        // });
+        endpointRouteBuilder.MapGet("/api/recipes/{recipeId}", GetRecipeByIdAsync);
     }
-
-    public override async Task HandleAsync(GetRecipeByIdRequest req, CancellationToken ct)
-    {
-        var query = new GetRecipeByIdQuery(req.Id);
-        var result = await _sender.Send(query, ct);
-
-        await result.MatchAsync(
-            notNullAction: async recipe =>
-            {
-                var response = new GetRecipeByIdResponse(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId);
-                await SendOkAsync(response, ct);
-            },
-            nullAction: async () =>
-            {
-                await SendNotFoundAsync(ct);
-            });
-    }
-
-    internal record GetRecipeByIdQuery(RecipeId RecipeId) : IQuery<Option<RecipeDto>>;
 
     internal record RecipeDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);
 
-    internal class GetRecipeByIdQueryHandler(RecipesDbConnectionFactory connectionFactory)
-        : IQueryHandler<GetRecipeByIdQuery, Option<RecipeDto>>
+    private static async Task<Results<Ok<RecipeDto>, NotFound>> GetRecipeByIdAsync(
+        RecipeId recipeId,
+        RecipesDbConnectionFactory recipesDbConnectionFactory)
     {
-        private readonly RecipesDbConnectionFactory _connectionFactory = connectionFactory;
+        var recipeDtoOption = await RetrieveFromDatabaseAsync(recipesDbConnectionFactory, recipeId);
 
-        public async Task<Option<RecipeDto>> Handle(
-            GetRecipeByIdQuery query,
-            CancellationToken cancellationToken)
-        {
-            using var connection = _connectionFactory.CreateConnection();
+        return recipeDtoOption.Match<Results<Ok<RecipeDto>, NotFound>>(
+            recipeDto => TypedResults.Ok(recipeDto),
+            () => TypedResults.NotFound());
+    }
 
-            return await connection.QueryFirstOrDefaultAsync<RecipeDto>(
-                """
-                SELECT "Id", "Name", "Description", "CookbookId" 
-                FROM "Recipes" 
-                WHERE "Id" = @Id
-                """,
-                new { Id = query.RecipeId });
-        }
+    private static async Task<Option<RecipeDto>> RetrieveFromDatabaseAsync(
+        RecipesDbConnectionFactory connectionFactory,
+        RecipeId recipeId)
+    {
+        using var connection = connectionFactory.CreateConnection();
+
+        var recipeDto = await connection.QueryFirstOrDefaultAsync<RecipeDto>(
+            """
+            SELECT "Id", "Name", "Description", "CookbookId" 
+            FROM "Recipes" 
+            WHERE "Id" = @Id
+            """,
+            new { Id = recipeId });
+
+        return Option.Create(recipeDto);
     }
 }

@@ -1,90 +1,79 @@
 using Dapper;
 
-using FastEndpoints;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
-using FluentValidation;
-
-using MediatR;
-
-using WhojooSite.Common.Cqrs;
+using WhojooSite.Common.Api;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Persistence;
 
+using IEndpoint = WhojooSite.Common.Api.IEndpoint;
+
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal sealed class ListRecipes(ISender sender)
-    : Endpoint<ListRecipes.ListRecipesRequest, ListRecipes.ListRecipesResponse>
+internal sealed class ListRecipesEndpoint : IEndpoint
 {
-    private readonly ISender _sender = sender;
-
-    internal class ListRecipesRequest
+    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        endpointRouteBuilder
+            .MapGet("/api/recipes", ListRecipesAsync)
+            .AddValidation<ListRecipesRequest>()
+            .AddRequestLogging<ListRecipesRequest>();
     }
 
-    internal record ListRecipesResponse(List<RecipeDto> Recipes);
-
-    public override void Configure()
+    private sealed class ListRecipesRequest
     {
-        Get("/recipes");
-        AllowAnonymous();
-        // Options(x => x.CacheOutput(p => p
-        //     .Expire(TimeSpan.FromMinutes(5))
-        //     .SetVaryByQuery("page", "pageSize")));
+        [FromQuery]
+        public long? NextKey { get; set; }
+
+        [FromQuery]
+        public int? PageSize { get; set; }
     }
 
-    public override async Task HandleAsync(ListRecipesRequest req, CancellationToken ct)
+    private record ListRecipesResponse(List<ListRecipeItemDto> Recipes, long NextKey);
+
+    internal record ListRecipeItemDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);
+
+    private static async Task<Ok<ListRecipesResponse>> ListRecipesAsync(
+        [AsParameters] ListRecipesRequest request,
+        RecipesDbConnectionFactory recipesDbConnectionFactory,
+        CancellationToken cancellationToken)
     {
-        var query = new ListRecipesQuery(req.Page, req.PageSize);
-        var result = await _sender.Send(query, ct);
-        var response = new ListRecipesResponse(result.Recipes);
-        await SendOkAsync(response, ct);
+        using var connection = recipesDbConnectionFactory.CreateConnection();
+
+        var pageSize = GetPageSize(request.PageSize);
+        var currentKey = GetCurrentKey(request.NextKey);
+
+        var recipes = await connection.QueryAsync<ListRecipeItemDto>(
+            """
+            SELECT "Id", "Name", "Description", "CookbookId"
+            FROM "Recipes"
+            WHERE "Id" > @Key
+            ORDER BY "Id"
+            LIMIT @Limit
+            """,
+            new { Limit = pageSize, Key = currentKey });
+
+        var recipeDtos = recipes.ToList();
+        var nextKey = recipeDtos.Count > 0 ? recipeDtos[^1].Id.Value : currentKey;
+        var response = new ListRecipesResponse(recipeDtos, nextKey);
+        return TypedResults.Ok(response);
     }
 
-    internal record ListRecipesQuery(int Page, int PageSize) : IQuery<ListRecipesDto>;
-
-    internal record ListRecipesDto(List<RecipeDto> Recipes);
-
-    internal record RecipeDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);
-
-    internal class ListRecipesQueryHandler(RecipesDbConnectionFactory connectionFactory)
-        : IQueryHandler<ListRecipesQuery, ListRecipesDto>
+    private static int GetPageSize(int? pageSize)
     {
-        private readonly RecipesDbConnectionFactory _connectionFactory = connectionFactory;
-
-        public async Task<ListRecipesDto> Handle(ListRecipesQuery query,
-            CancellationToken cancellationToken)
-        {
-            using var connection = _connectionFactory.CreateConnection();
-
-            var limit = query.PageSize;
-            var offset = (query.Page - 1) * query.PageSize;
-
-            var recipes = await connection.QueryAsync<RecipeDto>(
-                """
-                SELECT "Id", "Name", "Description", "CookbookId"
-                FROM "Recipes"
-                ORDER BY "Id"
-                LIMIT @Limit
-                OFFSET @Offset
-                """,
-                new { Limit = limit, Offset = offset });
-
-            return new ListRecipesDto(recipes.ToList());
-        }
+        const int defaultPageSize = 10;
+        return !pageSize.HasValue ? defaultPageSize : Math.Min(defaultPageSize, pageSize.Value);
     }
 
-    internal class ListRecipesValidator : Validator<ListRecipesRequest>
+    private static long GetCurrentKey(long? nextKey)
     {
-        public ListRecipesValidator()
-        {
-            RuleFor(x => x.Page)
-                .GreaterThan(0);
-
-            RuleFor(x => x.PageSize)
-                .GreaterThan(0);
-        }
+        const long defaultNextKey = 0;
+        return !nextKey.HasValue ? defaultNextKey : Math.Max(defaultNextKey, nextKey.Value);
     }
 }

@@ -4,6 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 # Stage 1: Build stage
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
+ARG BUILD_CONFIGURATION=Release
+
 WORKDIR /src
 
 # restore
@@ -21,11 +23,11 @@ COPY ["backend/src/WhojooSite.Recipes/", "WhojooSite.Recipes/"]
 COPY ["backend/src/WhojooSite.Users/", "WhojooSite.Users/"]
 COPY ["backend/src/WhojooSite.Bootstrap/", "WhojooSite.Bootstrap/"]
 WORKDIR /src/WhojooSite.Bootstrap
-RUN dotnet build 'WhojooSite.Bootstrap.csproj' -c Release -o /app/build
+RUN dotnet build 'WhojooSite.Bootstrap.csproj' -c $BUILD_CONFIGURATION -o /app/build
 
 # Stage 2: Publish stage
 FROM build AS publish
-RUN dotnet publish 'WhojooSite.Bootstrap.csproj' -c Release -o /app/publish
+RUN dotnet publish 'WhojooSite.Bootstrap.csproj' -c $BUILD_CONFIGURATION -o /app/publish
 
 # Stage 3: Run stage
 FROM base AS runtime
