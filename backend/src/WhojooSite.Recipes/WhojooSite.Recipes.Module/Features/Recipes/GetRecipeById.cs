@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 
 using WhojooSite.Common;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -25,9 +26,9 @@ internal class GetRecipeByIdEndpoint : IEndpoint
 
     private static async Task<Results<Ok<RecipeDto>, NotFound>> GetRecipeByIdAsync(
         RecipeId recipeId,
-        RecipesDbConnectionFactory recipesDbConnectionFactory)
+        RecipesDbContext recipesDbContext)
     {
-        var recipeDtoOption = await RetrieveFromDatabaseAsync(recipesDbConnectionFactory, recipeId);
+        var recipeDtoOption = await RetrieveFromDatabaseAsync(recipesDbContext, recipeId);
 
         return recipeDtoOption.Match<Results<Ok<RecipeDto>, NotFound>>(
             recipeDto => TypedResults.Ok(recipeDto),
@@ -35,19 +36,20 @@ internal class GetRecipeByIdEndpoint : IEndpoint
     }
 
     private static async Task<Option<RecipeDto>> RetrieveFromDatabaseAsync(
-        RecipesDbConnectionFactory connectionFactory,
+        RecipesDbContext recipesDbContext,
         RecipeId recipeId)
     {
-        using var connection = connectionFactory.CreateConnection();
+        var recipe = await recipesDbContext
+            .Recipes
+            .Where(recipe => recipe.Id == recipeId)
+            .Select(recipe => new RecipeDto(
+                recipe.Id,
+                recipe.Name,
+                recipe.Description,
+                recipe.CookbookId))
+            .FirstOrDefaultAsync()
+            .ConfigureAwait(false);
 
-        var recipeDto = await connection.QueryFirstOrDefaultAsync<RecipeDto>(
-            """
-            SELECT "Id", "Name", "Description", "CookbookId" 
-            FROM "Recipes" 
-            WHERE "Id" = @Id
-            """,
-            new { Id = recipeId });
-
-        return Option.Create(recipeDto);
+        return Option.Create(recipe);
     }
 }

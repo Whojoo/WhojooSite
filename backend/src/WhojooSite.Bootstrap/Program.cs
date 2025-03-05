@@ -39,13 +39,6 @@ moduleOrchestrator.AddModule<UsersModuleInitializer>();
 
 moduleOrchestrator.ConfigureModules(builder.Services, builder.Configuration);
 
-builder.Services.AddMediatR(configuration =>
-{
-    configuration.RegisterServicesFromAssemblies(moduleOrchestrator.GetModuleAssemblies());
-});
-
-builder.Services.AddMediatRLoggingBehaviors();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
