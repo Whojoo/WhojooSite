@@ -17,21 +17,11 @@ namespace Microsoft.Extensions.Hosting;
 // To learn more about using this project, see https://aka.ms/dotnet/aspire/service-defaults
 public static class Extensions
 {
-    public static WebApplicationBuilder AddServiceDefaults(this WebApplicationBuilder builder) 
+    public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) 
+        where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();
         
-        builder.Host.UseSerilog(((context, configuration) =>
-        {
-            configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .WriteTo.OpenTelemetry(options =>
-                {
-                    options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-                    options.ResourceAttributes.Add("service.name", builder.Configuration["OTEL_SERVICE_NAME"]!);
-                });
-        }));
-
         builder.AddDefaultHealthChecks();
 
         builder.Services.AddServiceDiscovery();
@@ -50,6 +40,22 @@ public static class Extensions
         // {
         //     options.AllowedSchemes = ["https"];
         // });
+
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddSerilog(this WebApplicationBuilder builder)
+    {
+        builder.Host.UseSerilog(((context, configuration) =>
+        {
+            configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .WriteTo.OpenTelemetry(options =>
+                {
+                    options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+                    options.ResourceAttributes.Add("service.name", builder.Configuration["OTEL_SERVICE_NAME"]!);
+                });
+        }));
 
         return builder;
     }

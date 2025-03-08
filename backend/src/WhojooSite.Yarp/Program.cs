@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+builder.AddServiceDefaults()
+    .AddSerilog();
 
 builder.Services
     .AddReverseProxy()

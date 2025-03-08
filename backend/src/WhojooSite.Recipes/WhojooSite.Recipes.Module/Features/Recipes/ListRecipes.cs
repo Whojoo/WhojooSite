@@ -67,12 +67,13 @@ internal sealed class ListRecipesEndpoint
         long currentKey,
         CancellationToken cancellationToken)
     {
+        var idCursor = new RecipeId(currentKey);
         var recipeList = await recipesDbContext
             .Recipes
-            .Where(recipe => recipe.Id.Value > currentKey)
-            .Select(recipe => new ListRecipeItemDto(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId))
+            .Where(recipe => recipe.Id > idCursor)
             .Take(pageSize)
             .OrderBy(recipe => recipe.Id)
+            .Select(recipe => new ListRecipeItemDto(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId))
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
         

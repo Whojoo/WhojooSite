@@ -15,10 +15,13 @@
         <PackageReference Include="Aspire.Hosting.AppHost" />
         <PackageReference Include="Aspire.Hosting.NodeJs" />
         <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+        <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
+        <PackageReference Include="Yarp.ReverseProxy" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj" />
+      <ProjectReference Include="..\..\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj" />
       <ProjectReference Include="..\..\WhojooSite.Yarp\WhojooSite.Yarp.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿### GET request to example server
 GET {{baseUrl}}/api/recipes-module/recipes
 
-###
+### GET single recipe
+GET {{baseUrl}}/api/recipes-module/recipes/1

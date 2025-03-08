@@ -23,7 +23,8 @@ var logger = Log.Logger = new LoggerConfiguration()
         })
     .CreateLogger();
 
-builder.AddServiceDefaults();
+builder.AddServiceDefaults()
+    .AddSerilog();
 
 builder.Services.AddOpenApi();
 

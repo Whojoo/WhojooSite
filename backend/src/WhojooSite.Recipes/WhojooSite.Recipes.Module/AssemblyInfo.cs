@@ -4,3 +4,5 @@ using StronglyTypedIds;
 
 [assembly: InternalsVisibleTo("WhojooSite.Recipes.MigrationService")]
 [assembly: StronglyTypedIdDefaults(Template.Long, "long-efcore")]
+
+[assembly: InternalsVisibleTo("WhojooSite.Recipes.MigrationService")]

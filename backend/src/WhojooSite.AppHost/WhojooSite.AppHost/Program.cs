@@ -8,17 +8,25 @@ var web = builder.AddNpmApp("web", "../../../../frontend")
 
 var server = builder.AddProject<Projects.WhojooSite_Bootstrap>("server");
 
-var database = builder.AddPostgres("postgres");
-var recipesDb = database.AddDatabase("recipesDb");
+var recipeMigrationService = builder.AddProject<Projects.WhojooSite_Recipes_MigrationService>("recipeMigrationService");
+
+var database = builder
+    .AddPostgres("postgres")
+    .WithPgAdmin()
+    .AddDatabase("ServerDb");
 
 apiGateway
-    .WithReference(server)
-    .WithReference(web);
+     .WithReference(server)
+     .WithReference(web);
 
 web.WithReference(apiGateway);
 
+recipeMigrationService
+    .WithReference(database)
+    .WaitFor(database);
+
 server
-    .WithReference(recipesDb)
-    .WaitFor(recipesDb);
+    .WithReference(database)
+    .WaitForCompletion(recipeMigrationService);
 
 await builder.Build().RunAsync();

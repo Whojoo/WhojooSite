@@ -2,9 +2,11 @@ import {ApplicationConfig, provideExperimentalZonelessChangeDetection, provideZo
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
+import {provideHttpClient} from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideExperimentalZonelessChangeDetection(),
-        provideRouter(routes)]
+        provideRouter(routes),
+        provideHttpClient()]
 };
