@@ -2,6 +2,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Host.UseSerilog(((context, configuration) =>
 {
     configuration
@@ -14,6 +16,8 @@ builder.Services
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.MapReverseProxy();
 

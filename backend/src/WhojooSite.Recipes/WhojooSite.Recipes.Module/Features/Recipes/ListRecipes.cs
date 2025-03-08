@@ -1,24 +1,21 @@
-using Dapper;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 using WhojooSite.Common.Api;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Persistence;
 
-using IEndpoint = WhojooSite.Common.Api.IEndpoint;
-
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal sealed class ListRecipesEndpoint : IEndpoint
+internal sealed class ListRecipesEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+    internal static void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder
             .MapGet("/api/recipes", ListRecipesAsync)
@@ -41,28 +38,38 @@ internal sealed class ListRecipesEndpoint : IEndpoint
 
     private static async Task<Ok<ListRecipesResponse>> ListRecipesAsync(
         [AsParameters] ListRecipesRequest request,
-        RecipesDbConnectionFactory recipesDbConnectionFactory,
+        RecipesDbContext recipesDbContext,
         CancellationToken cancellationToken)
     {
-        using var connection = recipesDbConnectionFactory.CreateConnection();
-
         var pageSize = GetPageSize(request.PageSize);
         var currentKey = GetCurrentKey(request.NextKey);
+        (List<ListRecipeItemDto> recipeDtos, long nextKey) = await RetrieveFromDatabase(
+            recipesDbContext,
+            pageSize,
+            currentKey,
+            cancellationToken);
 
-        var recipes = await connection.QueryAsync<ListRecipeItemDto>(
-            """
-            SELECT "Id", "Name", "Description", "CookbookId"
-            FROM "Recipes"
-            WHERE "Id" > @Key
-            ORDER BY "Id"
-            LIMIT @Limit
-            """,
-            new { Limit = pageSize, Key = currentKey });
-
-        var recipeDtos = recipes.ToList();
-        var nextKey = recipeDtos.Count > 0 ? recipeDtos[^1].Id.Value : currentKey;
         var response = new ListRecipesResponse(recipeDtos, nextKey);
         return TypedResults.Ok(response);
+    }
+
+    private static async Task<(List<ListRecipeItemDto>, long)> RetrieveFromDatabase(
+        RecipesDbContext recipesDbContext,
+        int pageSize,
+        long currentKey,
+        CancellationToken cancellationToken)
+    {
+        var recipeList = await recipesDbContext
+            .Recipes
+            .Where(recipe => recipe.Id.Value > currentKey)
+            .Select(recipe => new ListRecipeItemDto(recipe.Id, recipe.Name, recipe.Description, recipe.CookbookId))
+            .Take(pageSize)
+            .OrderBy(recipe => recipe.Id)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+        
+        var nextKey = recipeList.Count > 0 ? recipeList[^1].Id.Value : currentKey;
+        return (recipeList, nextKey);
     }
 
     private static int GetPageSize(int? pageSize)

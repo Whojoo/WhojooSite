@@ -4,7 +4,6 @@ using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-using WhojooSite.Common.Cqrs.Behaviors;
 using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module;
 using WhojooSite.Users.Module;
@@ -20,6 +19,8 @@ var logger = Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 builder.Host.UseSerilog(((context, configuration) =>
 {
@@ -40,6 +41,8 @@ moduleOrchestrator.AddModule<UsersModuleInitializer>();
 moduleOrchestrator.ConfigureModules(builder.Services, builder.Configuration);
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

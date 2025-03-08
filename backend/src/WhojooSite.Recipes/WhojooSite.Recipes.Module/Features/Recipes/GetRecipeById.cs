@@ -1,5 +1,3 @@
-using Dapper;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,13 +9,11 @@ using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Persistence;
 
-using IEndpoint = WhojooSite.Common.Api.IEndpoint;
-
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
-internal class GetRecipeByIdEndpoint : IEndpoint
+internal class GetRecipeByIdEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+    internal static void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.MapGet("/api/recipes/{recipeId}", GetRecipeByIdAsync);
     }

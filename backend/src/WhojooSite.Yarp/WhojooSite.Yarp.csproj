@@ -5,4 +5,8 @@
       <PackageReference Include="Yarp.ReverseProxy"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WhojooSite.AppHost\WhojooSite.AppHost.ServiceDefaults\WhojooSite.AppHost.ServiceDefaults.csproj" />
+  </ItemGroup>
+
 </Project>

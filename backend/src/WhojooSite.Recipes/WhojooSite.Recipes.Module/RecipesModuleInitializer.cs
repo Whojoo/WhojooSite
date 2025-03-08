@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,9 +24,9 @@ public class RecipesModuleInitializer : IModuleInitializer
         });
     }
 
-    public void MapModule(WebApplication app, ILogger logger)
+    public void MapEndpoints(RouteGroupBuilder routeGroupBuilder)
     {
+        var recipeModuleGroup = routeGroupBuilder.MapGroup("/recipes-module");
+        
     }
-
-    public bool HasEndpoints() => true;
 }

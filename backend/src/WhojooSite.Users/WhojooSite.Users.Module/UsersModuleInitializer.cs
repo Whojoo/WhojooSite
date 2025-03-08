@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,9 +16,7 @@ public class UsersModuleInitializer : IModuleInitializer
     {
     }
 
-    public void MapModule(WebApplication app, ILogger logger)
+    public void MapEndpoints(RouteGroupBuilder routeGroupBuilder)
     {
     }
-
-    public bool HasEndpoints() => true;
 }
