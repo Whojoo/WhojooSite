@@ -4,8 +4,7 @@ var apiGateway = builder.AddProject<Projects.WhojooSite_Yarp>("api-gateway")
     .WithExternalHttpEndpoints();
 
 var web = builder.AddNpmApp("web", "../../../../frontend")
-    .WithHttpEndpoint(env: "PORT")
-    .WithExternalHttpEndpoints();
+    .WithHttpEndpoint(env: "PORT");
 
 var server = builder.AddProject<Projects.WhojooSite_Bootstrap>("server");
 

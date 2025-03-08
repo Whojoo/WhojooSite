@@ -1,10 +1,13 @@
 
+using FluentValidation;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 using WhojooSite.Common.Api;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
@@ -15,10 +18,15 @@ namespace WhojooSite.Recipes.Module.Features.Recipes;
 
 internal sealed class ListRecipesEndpoint
 {
+    internal static void AddEndpoint(IServiceCollection services)
+    {
+        services.AddSingleton<IValidator<ListRecipesRequest>, ListRecipesRequestValidator>();
+    }
+    
     internal static void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder
-            .MapGet("/api/recipes", ListRecipesAsync)
+            .MapGet("/", ListRecipesAsync)
             .AddValidation<ListRecipesRequest>()
             .AddRequestLogging<ListRecipesRequest>();
     }
@@ -82,5 +90,19 @@ internal sealed class ListRecipesEndpoint
     {
         const long defaultNextKey = 0;
         return !nextKey.HasValue ? defaultNextKey : Math.Max(defaultNextKey, nextKey.Value);
+    }
+
+    private class ListRecipesRequestValidator : AbstractValidator<ListRecipesRequest>
+    {
+        public ListRecipesRequestValidator()
+        {
+            RuleFor(request => request.PageSize)
+                .GreaterThan(0)
+                .When(request => request.PageSize.HasValue);
+
+            RuleFor(request => request.NextKey)
+                .GreaterThanOrEqualTo(0)
+                .When(request => request.NextKey.HasValue);
+        }
     }
 }

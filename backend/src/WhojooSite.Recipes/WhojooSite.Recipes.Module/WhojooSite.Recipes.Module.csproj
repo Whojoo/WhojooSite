@@ -5,6 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
         <PackageReference Include="Microsoft.EntityFrameworkCore"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
@@ -12,10 +13,6 @@
         <PackageReference Include="StronglyTypedId"/>
         <PackageReference Include="StronglyTypedId.Templates"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Features\"/>
     </ItemGroup>
 
 </Project>

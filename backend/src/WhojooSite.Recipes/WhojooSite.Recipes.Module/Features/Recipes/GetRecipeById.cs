@@ -15,7 +15,7 @@ internal class GetRecipeByIdEndpoint
 {
     internal static void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        endpointRouteBuilder.MapGet("/api/recipes/{recipeId}", GetRecipeByIdAsync);
+        endpointRouteBuilder.MapGet("/{recipeId}", GetRecipeByIdAsync);
     }
 
     internal record RecipeDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);

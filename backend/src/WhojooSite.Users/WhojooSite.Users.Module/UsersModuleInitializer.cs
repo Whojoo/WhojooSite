@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using Serilog;
 
@@ -12,7 +13,7 @@ public class UsersModuleInitializer : IModuleInitializer
 {
     public string ModuleName => "Users";
 
-    public void ConfigureModule(IServiceCollection services, IConfiguration configuration, ILogger logger)
+    public void ConfigureModule(IHostApplicationBuilder applicationBuilder, ILogger logger)
     {
     }
 

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 using Serilog;
 
@@ -32,12 +33,12 @@ public class ModuleOrchestrator(ILogger logger)
         _logger.Information("Module {ModuleName} is registered for configuration", moduleInitializer.ModuleName);
     }
 
-    public void ConfigureModules(IServiceCollection services, IConfiguration configuration)
+    public void ConfigureModules(IHostApplicationBuilder applicationBuilder)
     {
         foreach (var moduleInitializer in _moduleInitializers)
         {
             var startTimestamp = Stopwatch.GetTimestamp();
-            moduleInitializer.ConfigureModule(services, configuration, _logger);
+            moduleInitializer.ConfigureModule(applicationBuilder, _logger);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
 
             _logger.Information(
