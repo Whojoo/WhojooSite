@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using WhojooSite.Common;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
+using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module.Features.Recipes;

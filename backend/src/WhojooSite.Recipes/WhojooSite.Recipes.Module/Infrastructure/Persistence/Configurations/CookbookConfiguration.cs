@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 
-namespace WhojooSite.Recipes.Module.Persistence.Configurations;
+namespace WhojooSite.Recipes.Module.Infrastructure.Persistence.Configurations;
 
 internal class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
 {

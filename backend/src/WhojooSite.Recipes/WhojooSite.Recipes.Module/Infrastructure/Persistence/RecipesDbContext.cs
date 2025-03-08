@@ -4,7 +4,7 @@ using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
-namespace WhojooSite.Recipes.Module.Persistence;
+namespace WhojooSite.Recipes.Module.Infrastructure.Persistence;
 
 internal class RecipesDbContext(DbContextOptions<RecipesDbContext> options) : DbContext(options)
 {

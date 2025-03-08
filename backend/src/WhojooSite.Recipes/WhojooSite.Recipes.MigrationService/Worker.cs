@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
+using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.MigrationService;

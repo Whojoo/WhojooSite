@@ -1,4 +1,4 @@
-namespace WhojooSite.Recipes.Module.Persistence;
+namespace WhojooSite.Recipes.Module.Infrastructure.Persistence;
 
 public static class DataSchemaConstants
 {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
-namespace WhojooSite.Recipes.Module.Persistence.Configurations;
+namespace WhojooSite.Recipes.Module.Infrastructure.Persistence.Configurations;
 
 internal class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
 {

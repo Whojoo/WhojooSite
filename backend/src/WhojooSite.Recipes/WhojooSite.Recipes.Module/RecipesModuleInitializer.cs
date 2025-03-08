@@ -6,6 +6,7 @@ using Serilog;
 
 using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module.Features;
+using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module;

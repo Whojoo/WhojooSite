@@ -1,4 +1,5 @@
 using WhojooSite.Recipes.MigrationService;
+using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 using WhojooSite.Recipes.Module.Persistence;
 
 var builder = Host.CreateApplicationBuilder(args);

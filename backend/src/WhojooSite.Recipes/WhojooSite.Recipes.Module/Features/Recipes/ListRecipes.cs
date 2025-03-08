@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WhojooSite.Common.Api;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
+using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module.Features.Recipes;

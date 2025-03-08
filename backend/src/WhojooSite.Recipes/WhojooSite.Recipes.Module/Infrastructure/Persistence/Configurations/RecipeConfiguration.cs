@@ -7,7 +7,7 @@ using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
-namespace WhojooSite.Recipes.Module.Persistence.Configurations;
+namespace WhojooSite.Recipes.Module.Infrastructure.Persistence.Configurations;
 
 internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 {
