@@ -5,7 +5,8 @@ using WhojooSite.View.Components;
 var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .ConfigureDefaultSerilog(builder)
     .CreateLogger();
 
 builder.AddServiceDefaults().AddSerilog();

@@ -9,7 +9,8 @@ using WhojooSite.Users.Module;
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .ConfigureDefaultSerilog(builder)
     .CreateLogger();
 
 builder.AddServiceDefaults()

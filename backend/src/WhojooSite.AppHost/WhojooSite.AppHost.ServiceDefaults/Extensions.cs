@@ -46,19 +46,22 @@ public static class Extensions
 
     public static WebApplicationBuilder AddSerilog(this WebApplicationBuilder builder)
     {
-        builder.Host.UseSerilog((context, configuration) =>
-        {
-            configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .WriteTo.OpenTelemetry(options =>
-                {
-                    options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-                    options.ResourceAttributes.Add("service.name", builder.Configuration["OTEL_SERVICE_NAME"]!);
-                });
-        });
+        builder.Host.UseSerilog((_, configuration) => configuration.ConfigureDefaultSerilog(builder));
 
         return builder;
     }
+
+    public static LoggerConfiguration ConfigureDefaultSerilog(this LoggerConfiguration configuration, WebApplicationBuilder builder)
+    {
+        return configuration
+            .ReadFrom.Configuration(builder.Configuration)
+            .WriteTo.OpenTelemetry(options =>
+            {
+                options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+                options.ResourceAttributes.Add("service.name", builder.Configuration["OTEL_SERVICE_NAME"]!);
+            });
+    }
+
 
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder)
         where TBuilder : IHostApplicationBuilder
