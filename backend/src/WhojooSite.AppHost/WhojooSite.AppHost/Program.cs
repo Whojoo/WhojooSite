@@ -5,8 +5,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 var apiGateway = builder.AddProject<WhojooSite_Yarp>("api-gateway")
     .WithExternalHttpEndpoints();
 
-var web = builder.AddNpmApp("web", "../../../../frontend")
-    .WithHttpEndpoint(env: "PORT");
+var web = builder.AddProject<WhojooSite_View>("web");
 
 var server = builder.AddProject<WhojooSite_Bootstrap>("server");
 
