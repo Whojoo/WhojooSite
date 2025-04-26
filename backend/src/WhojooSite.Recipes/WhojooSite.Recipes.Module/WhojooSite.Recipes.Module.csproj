@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="Grpc.AspNetCore"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
@@ -19,4 +20,7 @@
         <Folder Include="Infrastructure\"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Protobuf Include="**\*.proto" GrpcServices="Server"/>
+    </ItemGroup>
 </Project>

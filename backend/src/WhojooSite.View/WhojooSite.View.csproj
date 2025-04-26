@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\src\WhojooSite.AppHost\WhojooSite.AppHost.ServiceDefaults\WhojooSite.AppHost.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\WhojooSite.AppHost\WhojooSite.AppHost.ServiceDefaults\WhojooSite.AppHost.ServiceDefaults.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -6,6 +6,7 @@ using Serilog;
 
 using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module.Features;
+using WhojooSite.Recipes.Module.Grpc;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 
 namespace WhojooSite.Recipes.Module;
@@ -26,5 +27,7 @@ public class RecipesModuleInitializer : IModuleInitializer
         var recipeModuleGroup = routeGroupBuilder.MapGroup("/recipes-module");
 
         recipeModuleGroup.MapFeatures();
+
+        routeGroupBuilder.MapGrpcServices();
     }
 }

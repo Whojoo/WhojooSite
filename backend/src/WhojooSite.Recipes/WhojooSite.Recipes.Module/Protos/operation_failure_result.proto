@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "WhojooSite.Recipes.Module.Protos";
+
+package whojoo_site.recipes_module.common;
+
+message OperationFailureResult {
+  FailureStatus status = 1;
+  repeated Error errors = 2;
+}
+
+enum FailureStatus {
+  FAILURE_STATUS_UNSPECIFIED = 0;
+  BAD_REQUEST = 1;
+  NOT_FOUND = 2;
+  INTERNAL_ERROR = 3;
+}
+
+message Error {
+  string code = 1;
+  repeated ErrorDescription descriptions = 2;
+}
+
+message ErrorDescription {
+  string description = 1;
+}

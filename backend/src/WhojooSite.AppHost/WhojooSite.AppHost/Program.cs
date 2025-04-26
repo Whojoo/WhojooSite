@@ -2,12 +2,9 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var apiGateway = builder.AddProject<WhojooSite_Yarp>("api-gateway")
-    .WithExternalHttpEndpoints();
+var server = builder.AddProject<WhojooSite_Bootstrap>("server");
 
 var web = builder.AddProject<WhojooSite_View>("web");
-
-var server = builder.AddProject<WhojooSite_Bootstrap>("server");
 
 var recipeMigrationService =
     builder.AddProject<WhojooSite_Recipes_MigrationService>("recipeMigrationService");
@@ -17,15 +14,11 @@ var database = builder
     .WithPgAdmin()
     .AddDatabase("ServerDb");
 
-apiGateway
-    .WithReference(server)
-    .WithReference(web);
-
-web.WithReference(apiGateway);
-
 recipeMigrationService
     .WithReference(database)
     .WaitFor(database);
+
+web.WithReference(server);
 
 server
     .WithReference(database)

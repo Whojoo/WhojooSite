@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\WhojooSite.View\WhojooSite.View.csproj"/>
+        <ProjectReference Include="..\..\WhojooSite.View\WhojooSite.View.csproj"/>
         <ProjectReference Include="..\..\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj"/>
         <ProjectReference Include="..\..\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj"/>
         <ProjectReference Include="..\..\WhojooSite.Yarp\WhojooSite.Yarp.csproj"/>

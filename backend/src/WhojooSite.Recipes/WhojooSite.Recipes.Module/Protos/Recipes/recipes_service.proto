@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option csharp_namespace = "WhojooSite.Recipes.Module.Protos.Recipes";
+
+import "Protos/Recipes/recipe_by_id_request.proto";
+import "Protos/Recipes/recipe_by_id_response.proto";
+
+package whojoo_site.recipes_module.recipes;
+
+service RecipeService {
+  rpc GetRecipeById(RecipeByIdRequest) returns (RecipeByIdResponse);
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option csharp_namespace = "WhojooSite.Recipes.Module.Protos.Recipes";
+
+package whojoo_site.recipes_module.recipes;
+
+message RecipeId {
+  int64 id = 1;
+}

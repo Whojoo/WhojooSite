@@ -16,6 +16,7 @@ var logger = Log.Logger = new LoggerConfiguration()
 builder.AddServiceDefaults()
     .AddSerilog();
 
+builder.Services.AddGrpc();
 builder.Services.AddOpenApi();
 
 // Add services to the container.

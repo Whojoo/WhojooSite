@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "WhojooSite.Recipes.Module.Protos.Recipes";
+
+import "Protos/Recipes/recipe.proto";
+import "Protos/operation_failure_result.proto";
+
+package whojoo_site.recipes_module.recipes;
+
+message RecipeByIdResponse {
+  oneof result {
+    Recipe recipe = 1;
+    common.OperationFailureResult failure_result = 2;
+  }
+}
