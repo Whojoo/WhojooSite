@@ -12,27 +12,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" />
-        <PackageReference Include="Aspire.Hosting.NodeJs" />
-        <PackageReference Include="Aspire.Hosting.PostgreSQL" />
-        <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp" />
-        <PackageReference Include="Yarp.ReverseProxy" />
+        <PackageReference Include="Aspire.Hosting.AppHost"/>
+        <PackageReference Include="Aspire.Hosting.NodeJs"/>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL"/>
+        <PackageReference Include="Microsoft.Extensions.ServiceDiscovery.Yarp"/>
+        <PackageReference Include="Yarp.ReverseProxy"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj" />
-      <ProjectReference Include="..\..\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj" />
-      <ProjectReference Include="..\..\WhojooSite.Yarp\WhojooSite.Yarp.csproj" />
+        <ProjectReference Include="..\..\WhojooSite.Bootstrap\WhojooSite.Bootstrap.csproj"/>
+        <ProjectReference Include="..\..\WhojooSite.Recipes\WhojooSite.Recipes.MigrationService\WhojooSite.Recipes.MigrationService.csproj"/>
+        <ProjectReference Include="..\..\WhojooSite.Yarp\WhojooSite.Yarp.csproj"/>
     </ItemGroup>
 
-<!--    <Target Name="RestoreNpm" BeforeTargets="Build" Condition=" '$(DesignTimeBuild)' != 'true' ">-->
-<!--        <ItemGroup>-->
-<!--            <PackageJsons Include="..\*\package.json" />-->
-<!--        </ItemGroup>-->
+    <!--    <Target Name="RestoreNpm" BeforeTargets="Build" Condition=" '$(DesignTimeBuild)' != 'true' ">-->
+    <!--        <ItemGroup>-->
+    <!--            <PackageJsons Include="..\*\package.json" />-->
+    <!--        </ItemGroup>-->
 
-<!--        &lt;!&ndash; Install npm packages if node_modules is missing &ndash;&gt;-->
-<!--        <Message Importance="Normal" Text="Installing npm packages for %(PackageJsons.RelativeDir)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />-->
-<!--        <Exec Command="npm install" WorkingDirectory="%(PackageJsons.RootDir)%(PackageJsons.Directory)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />-->
-<!--    </Target>-->
-    
+    <!--        &lt;!&ndash; Install npm packages if node_modules is missing &ndash;&gt;-->
+    <!--        <Message Importance="Normal" Text="Installing npm packages for %(PackageJsons.RelativeDir)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />-->
+    <!--        <Exec Command="npm install" WorkingDirectory="%(PackageJsons.RootDir)%(PackageJsons.Directory)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />-->
+    <!--    </Target>-->
+
 </Project>

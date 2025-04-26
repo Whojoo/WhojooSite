@@ -10,7 +10,7 @@ internal static class RecipeExtensions
     {
         ListRecipesEndpoint.AddEndpoint(services);
     }
-    
+
     internal static void MapRecipeEndpoints(this RouteGroupBuilder routeGroupBuilder)
     {
         var recipeGroup = routeGroupBuilder.MapGroup("/recipes/");

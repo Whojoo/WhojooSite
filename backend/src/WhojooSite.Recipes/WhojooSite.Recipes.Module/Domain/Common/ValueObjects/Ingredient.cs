@@ -2,12 +2,6 @@ namespace WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
 
 public class Ingredient : ValueObject<Ingredient>
 {
-    public string Name { get; init; } = string.Empty;
-
-    public double Amount { get; init; }
-
-    public string MeasurementUnit { get; init; } = string.Empty;
-
     public Ingredient(string name, double amount, string measurementUnit)
     {
         Name = name;
@@ -16,6 +10,11 @@ public class Ingredient : ValueObject<Ingredient>
     }
 
     private Ingredient() { }
+    public string Name { get; init; } = string.Empty;
+
+    public double Amount { get; init; }
+
+    public string MeasurementUnit { get; init; } = string.Empty;
 
     protected override bool IsEqualTo(Ingredient other)
     {

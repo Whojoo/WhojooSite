@@ -8,7 +8,6 @@ using WhojooSite.Common;
 using WhojooSite.Recipes.Module.Domain.Cookbook;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
-using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.Module.Features.Recipes;
 
@@ -18,8 +17,6 @@ internal class GetRecipeByIdEndpoint
     {
         endpointRouteBuilder.MapGet("/{recipeId}", GetRecipeByIdAsync);
     }
-
-    internal record RecipeDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);
 
     private static async Task<Results<Ok<RecipeDto>, NotFound>> GetRecipeByIdAsync(
         RecipeId recipeId,
@@ -49,4 +46,6 @@ internal class GetRecipeByIdEndpoint
 
         return Option.Create(recipe);
     }
+
+    internal record RecipeDto(RecipeId Id, string Name, string Description, CookbookId CookbookId);
 }

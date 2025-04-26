@@ -7,19 +7,11 @@ namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
 internal class Recipe : Entity<RecipeId>
 {
-    public string Name { get; } = string.Empty;
-    public string Description { get; } = string.Empty;
-    public CookbookId CookbookId { get; } = CookbookId.Empty;
-    public IReadOnlyList<Step> Steps => _steps.AsReadOnly();
-    public IReadOnlyList<Ingredient> Ingredients => _ingredients.AsReadOnly();
-    public IReadOnlyList<Ingredient> Spices => _spices.AsReadOnly();
-    public IReadOnlyList<SpiceMixIngredient> SpiceMixIngredients => _spiceMixIngredients.AsReadOnly();
-    public OwnerId OwnerId { get; } = OwnerId.Empty;
+    private readonly List<Ingredient> _ingredients = [];
+    private readonly List<SpiceMixIngredient> _spiceMixIngredients = [];
+    private readonly List<Ingredient> _spices = [];
 
     private readonly List<Step> _steps = [];
-    private readonly List<Ingredient> _ingredients = [];
-    private readonly List<Ingredient> _spices = [];
-    private readonly List<SpiceMixIngredient> _spiceMixIngredients = [];
 
     public Recipe(
         RecipeId id,
@@ -44,4 +36,12 @@ internal class Recipe : Entity<RecipeId>
     }
 
     private Recipe() { }
+    public string Name { get; } = string.Empty;
+    public string Description { get; } = string.Empty;
+    public CookbookId CookbookId { get; } = CookbookId.Empty;
+    public IReadOnlyList<Step> Steps => _steps.AsReadOnly();
+    public IReadOnlyList<Ingredient> Ingredients => _ingredients.AsReadOnly();
+    public IReadOnlyList<Ingredient> Spices => _spices.AsReadOnly();
+    public IReadOnlyList<SpiceMixIngredient> SpiceMixIngredients => _spiceMixIngredients.AsReadOnly();
+    public OwnerId OwnerId { get; } = OwnerId.Empty;
 }

@@ -2,6 +2,12 @@ namespace WhojooSite.Recipes.Module.Domain.Common;
 
 public abstract class Entity<TId> where TId : notnull
 {
+    protected Entity(TId id)
+    {
+        Id = id;
+    }
+
+    protected Entity() { }
     public TId Id { get; init; } = default!;
 
     public override bool Equals(object? obj)
@@ -13,8 +19,4 @@ public abstract class Entity<TId> where TId : notnull
     {
         return Id.GetHashCode();
     }
-
-    protected Entity(TId id) => Id = id;
-
-    protected Entity() { }
 }

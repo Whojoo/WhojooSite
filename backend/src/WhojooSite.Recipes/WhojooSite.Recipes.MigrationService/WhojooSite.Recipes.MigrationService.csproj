@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\WhojooSite.AppHost\WhojooSite.AppHost.ServiceDefaults\WhojooSite.AppHost.ServiceDefaults.csproj" />
-      <ProjectReference Include="..\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj" />
+        <ProjectReference Include="..\..\WhojooSite.AppHost\WhojooSite.AppHost.ServiceDefaults\WhojooSite.AppHost.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\WhojooSite.Recipes.Module\WhojooSite.Recipes.Module.csproj"/>
     </ItemGroup>
 </Project>

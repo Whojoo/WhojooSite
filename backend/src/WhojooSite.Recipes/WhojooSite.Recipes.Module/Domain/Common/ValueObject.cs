@@ -22,6 +22,6 @@ public abstract class ValueObject<TValueObject> where TValueObject : ValueObject
 
     public static bool operator !=(ValueObject<TValueObject> left, ValueObject<TValueObject> right)
     {
-        return !(left.Equals(right));
+        return !left.Equals(right);
     }
 }

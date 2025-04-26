@@ -5,9 +5,6 @@ namespace WhojooSite.Recipes.Module.Domain.Cookbook;
 
 internal class Cookbook : Entity<CookbookId>
 {
-    public string Name { get; } = string.Empty;
-    public IReadOnlyList<RecipeId> RecipeIds => _recipeIds.AsReadOnly();
-
     private readonly List<RecipeId> _recipeIds = [];
 
     public Cookbook(CookbookId id, string name, List<RecipeId> recipeIdIds)
@@ -18,4 +15,6 @@ internal class Cookbook : Entity<CookbookId>
     }
 
     private Cookbook() { }
+    public string Name { get; } = string.Empty;
+    public IReadOnlyList<RecipeId> RecipeIds => _recipeIds.AsReadOnly();
 }

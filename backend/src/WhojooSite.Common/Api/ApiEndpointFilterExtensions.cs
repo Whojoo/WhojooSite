@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using FluentValidation;
 
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +31,8 @@ public static class ApiEndpointFilterExtensions
     {
         return routeHandlerBuilder.AddEndpointFilterFactory((filterFactoryContext, next) =>
         {
-            var validator = filterFactoryContext.ApplicationServices.GetService<IValidator<TValidationType>>();
+            var validator =
+                filterFactoryContext.ApplicationServices.GetService<IValidator<TValidationType>>();
 
             if (validator is null)
             {
@@ -46,7 +45,8 @@ public static class ApiEndpointFilterExtensions
             var parameterInfoEnumerable = filterFactoryContext.MethodInfo
                 .GetParameters()
                 .Select((item, index) => (index, item));
-            foreach ((int i, ParameterInfo parameter) in parameterInfoEnumerable)
+
+            foreach (var (i, parameter) in parameterInfoEnumerable)
             {
                 if (parameter.ParameterType != typeof(TValidationType))
                 {

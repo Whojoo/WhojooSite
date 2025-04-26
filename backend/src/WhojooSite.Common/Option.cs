@@ -32,7 +32,10 @@ public readonly struct Option<T>
 
 public static class Option
 {
-    public static Option<T> None<T>() => new();
+    public static Option<T> None<T>()
+    {
+        return new Option<T>();
+    }
 
     public static Option<T> Some<T>(T value)
     {
@@ -40,5 +43,8 @@ public static class Option
         return new Option<T>(value);
     }
 
-    public static Option<T> Create<T>(T? value) => new(value);
+    public static Option<T> Create<T>(T? value)
+    {
+        return new Option<T>(value);
+    }
 }

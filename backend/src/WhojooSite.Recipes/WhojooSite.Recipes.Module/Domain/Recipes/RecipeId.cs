@@ -3,6 +3,4 @@ using StronglyTypedIds;
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
 [StronglyTypedId]
-internal partial struct RecipeId
-{
-}
+internal partial struct RecipeId;

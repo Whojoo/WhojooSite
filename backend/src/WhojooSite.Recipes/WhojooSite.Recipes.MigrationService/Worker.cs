@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
+using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
+using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
-using WhojooSite.Recipes.Module.Persistence;
 
 namespace WhojooSite.Recipes.MigrationService;
 
@@ -15,9 +17,9 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
     public const string ActivitySourceName = "Migrations";
 
     private static readonly ActivitySource ActivitySource = new(ActivitySourceName);
+    private readonly IHostApplicationLifetime _hostApplicationLifetime = hostApplicationLifetime;
 
     private readonly IServiceProvider _serviceProvider = serviceProvider;
-    private readonly IHostApplicationLifetime _hostApplicationLifetime = hostApplicationLifetime;
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
@@ -51,9 +53,9 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
             {
                 // Create the database if it does not exist.
                 // Do this first so there is then a database to start a transaction against.
-                if (!await creator.ExistsAsync(cancellationToken))
+                if (!await creator.ExistsAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await creator.CreateAsync(cancellationToken);
+                    await creator.CreateAsync(cancellationToken).ConfigureAwait(false);
                 }
             })
             .ConfigureAwait(false);
@@ -63,34 +65,34 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy
-            .ExecuteAsync(dbContext, async context =>
-            {
-                // Run migration in a transaction to avoid partial migration if it fails.
-                // await using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
-                await context.Database.MigrateAsync(cancellationToken);
-                // await transaction.CommitAsync(cancellationToken);
-            })
+            .ExecuteAsync(dbContext, context => context.Database.MigrateAsync(cancellationToken))
             .ConfigureAwait(false);
     }
 
-    private static Task SeedDataAsync(RecipesDbContext dbContext, CancellationToken cancellationToken)
+    private static async Task SeedDataAsync(RecipesDbContext dbContext, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
-        // SupportTicket firstTicket = new()
-        // {
-        //     Title = "Test Ticket",
-        //     Description = "Default ticket, please ignore!",
-        //     Completed = true
-        // };
-        //
-        // var strategy = dbContext.Database.CreateExecutionStrategy();
-        // await strategy.ExecuteAsync(async () =>
-        // {
-        //     // Seed the database
-        //     await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-        //     await dbContext.Tickets.AddAsync(firstTicket, cancellationToken);
-        //     await dbContext.SaveChangesAsync(cancellationToken);
-        //     await transaction.CommitAsync(cancellationToken);
-        // });
+        var ownerId = OwnerId.New();
+        Cookbook cookbook = new(CookbookId.Empty, "Basis kookboek", []);
+        await dbContext.Cookbooks.AddAsync(cookbook, cancellationToken).ConfigureAwait(false);
+
+        Recipe recipe1 = new(
+            RecipeId.Empty,
+            "Een pan pasta",
+            "Een makkelijke pasta dat volledig in een enkele pan wordt bereid",
+            ownerId,
+            [
+                new Step(StepId.Empty, "groente snijden", "Snijd alle groenten", RecipeId.Empty),
+                new Step(StepId.Empty, "Groente bakken", "Fruit alle groenten in de pan", RecipeId.Empty),
+                new Step(StepId.Empty, "Voeg de saus toe", "Voeg de saus toe", RecipeId.Empty),
+                new Step(StepId.Empty, "Pasta", "Voeg de pasta toe en laat het 15 min koken", RecipeId.Empty)
+            ],
+            cookbook.Id,
+            [],
+            [],
+            []);
+
+        await dbContext.Recipes.AddAsync(recipe1, cancellationToken).ConfigureAwait(false);
+
+        await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
 }

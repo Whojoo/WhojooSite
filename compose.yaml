@@ -13,14 +13,14 @@ services:
       - backend
     secrets:
       - dev-certs
-
-#  web:
-#    image: whojoo-site/web:${WEB_VERSION}
-#    networks:
-#      - frontend
-#    depends_on:
-#      consul:
-#        condition: service_started
+  
+  #  web:
+  #    image: whojoo-site/web:${WEB_VERSION}
+  #    networks:
+  #      - frontend
+  #    depends_on:
+  #      consul:
+  #        condition: service_started
 
   server:
     image: whojoo-site/server:${SERVER_VERSION}
