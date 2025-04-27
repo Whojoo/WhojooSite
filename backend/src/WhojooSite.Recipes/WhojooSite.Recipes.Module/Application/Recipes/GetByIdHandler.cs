@@ -14,6 +14,7 @@ internal class GetByIdHandler(RecipesDbContext recipesDbContext) : QueryTemplate
     {
         var recipe = await _recipesDbContext
             .Recipes
+            .AsSplitQuery()
             .Where(recipe => recipe.Id == query.RecipeId)
             .FirstOrDefaultAsync()
             .ConfigureAwait(false);

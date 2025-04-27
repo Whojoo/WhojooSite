@@ -1,15 +1,16 @@
 ﻿using Grpc.Core;
 
+using WhojooSite.Common.Protos;
 using WhojooSite.Recipes.Module.Application.Recipes;
-using WhojooSite.Recipes.Module.Protos;
-using WhojooSite.Recipes.Module.Protos.Recipes;
+using WhojooSite.Recipes.Module.Domain.Recipes;
+using WhojooSite.RecipesModule.Protos.Recipes;
 
-using RecipeId = WhojooSite.Recipes.Module.Domain.Recipes.RecipeId;
+using Recipe = WhojooSite.RecipesModule.Protos.Recipes.Recipe;
 
 namespace WhojooSite.Recipes.Module.Grpc;
 
 internal class RecipeService(GetByIdHandler getByIdHandler)
-    : Protos.Recipes.RecipeService.RecipeServiceBase
+    : RecipesModule.Protos.Recipes.RecipeService.RecipeServiceBase
 {
     private readonly GetByIdHandler _getByIdHandler = getByIdHandler;
 
@@ -21,7 +22,7 @@ internal class RecipeService(GetByIdHandler getByIdHandler)
         return result.Match(
             successResult => new RecipeByIdResponse
             {
-                Recipe = new Recipe { Id = new Protos.Recipes.RecipeId { Id = successResult.Recipe.Id.Value } }
+                Recipe = new Recipe { Id = new WhojooSiteRecipes.Module.Protos.Recipes.RecipeId { Id = successResult.Recipe.Id.Value } }
             },
             errors =>
             {

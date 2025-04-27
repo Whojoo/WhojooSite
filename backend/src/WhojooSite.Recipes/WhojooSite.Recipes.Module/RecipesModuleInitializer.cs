@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 
 using WhojooSite.Common.Modules;
+using WhojooSite.Recipes.Module.Application;
 using WhojooSite.Recipes.Module.Features;
 using WhojooSite.Recipes.Module.Grpc;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
@@ -20,6 +21,7 @@ public class RecipesModuleInitializer : IModuleInitializer
         applicationBuilder.AddNpgsqlDbContext<RecipesDbContext>("ServerDb");
 
         applicationBuilder.Services.AddFeatures();
+        applicationBuilder.Services.AddApplication();
     }
 
     public void MapEndpoints(RouteGroupBuilder routeGroupBuilder)
@@ -27,7 +29,10 @@ public class RecipesModuleInitializer : IModuleInitializer
         var recipeModuleGroup = routeGroupBuilder.MapGroup("/recipes-module");
 
         recipeModuleGroup.MapFeatures();
+    }
 
-        routeGroupBuilder.MapGrpcServices();
+    public void MapModule(WebApplication app)
+    {
+        app.MapGrpcServices();
     }
 }

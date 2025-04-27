@@ -86,9 +86,19 @@ public class Result
         return new Result(errorMessages);
     }
 
+    public static Result Failure(IEnumerable<string> errorMessages)
+    {
+        return new Result(errorMessages.ToList());
+    }
+
     public static Result<T> Failure<T>(List<string> errorMessages)
     {
         return new Result<T>(errorMessages);
+    }
+
+    public static Result<T> Failure<T>(IEnumerable<string> errorMessages)
+    {
+        return new Result<T>(errorMessages.ToList());
     }
 
     public static Result Failure(List<ResultError> errorMessages)
@@ -96,15 +106,26 @@ public class Result
         return new Result(errorMessages);
     }
 
+    public static Result Failure(IEnumerable<ResultError> errorMessages)
+    {
+        return new Result(errorMessages.ToList());
+    }
+
     public static Result<T> Failure<T>(List<ResultError> errorMessages)
     {
         return new Result<T>(errorMessages);
+    }
+
+    public static Result<T> Failure<T>(IEnumerable<ResultError> errorMessages)
+    {
+        return new Result<T>(errorMessages.ToList());
     }
 }
 
 public record ResultError(string Code, List<string> Description)
 {
     public ResultError(string code, string description) : this(code, [description]) { }
+    public ResultError(string code, IEnumerable<string> descriptions) : this(code, descriptions.ToList()) { }
 }
 
 public enum ResultStatus

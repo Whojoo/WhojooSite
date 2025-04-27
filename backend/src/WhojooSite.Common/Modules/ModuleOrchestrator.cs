@@ -9,6 +9,7 @@ namespace WhojooSite.Common.Modules;
 
 public class ModuleOrchestrator(ILogger logger)
 {
+    private readonly ILogger _logger = logger;
     private readonly List<IModuleInitializer> _moduleInitializers = [];
 
     public void AddModule<TModule>(TModule moduleInitializer) where TModule : IModuleInitializer
@@ -24,7 +25,7 @@ public class ModuleOrchestrator(ILogger logger)
 
         _moduleInitializers.Add(moduleInitializer);
 
-        logger.Information("Module {ModuleName} is registered for configuration", moduleInitializer.ModuleName);
+        _logger.Information("Module {ModuleName} is registered for configuration", moduleInitializer.ModuleName);
     }
 
     public void ConfigureModules(IHostApplicationBuilder applicationBuilder)
@@ -32,10 +33,10 @@ public class ModuleOrchestrator(ILogger logger)
         foreach (var moduleInitializer in _moduleInitializers)
         {
             var startTimestamp = Stopwatch.GetTimestamp();
-            moduleInitializer.ConfigureModule(applicationBuilder, logger);
+            moduleInitializer.ConfigureModule(applicationBuilder, _logger);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
 
-            logger.Information(
+            _logger.Information(
                 "Module {ModuleName} is configured in {ElapsedMilliseconds} ms",
                 moduleInitializer.ModuleName,
                 elapsed.TotalMilliseconds);
@@ -49,10 +50,11 @@ public class ModuleOrchestrator(ILogger logger)
         foreach (var moduleInitializer in _moduleInitializers)
         {
             var startTimestamp = Stopwatch.GetTimestamp();
+            moduleInitializer.MapModule(app);
             moduleInitializer.MapEndpoints(rootGroup);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
 
-            logger.Information(
+            _logger.Information(
                 "Module {ModuleName} is mapped in {ElapsedMilliseconds} ms",
                 moduleInitializer.ModuleName,
                 elapsed.TotalMilliseconds);

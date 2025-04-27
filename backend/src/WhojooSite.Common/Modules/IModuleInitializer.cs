@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 
@@ -11,4 +12,5 @@ public interface IModuleInitializer
 
     void ConfigureModule(IHostApplicationBuilder applicationBuilder, ILogger logger);
     void MapEndpoints(RouteGroupBuilder routeGroupBuilder);
+    void MapModule(WebApplication app);
 }

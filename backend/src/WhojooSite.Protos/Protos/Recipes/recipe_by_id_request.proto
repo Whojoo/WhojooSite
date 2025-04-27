@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option csharp_namespace = "WhojooSite.Recipes.Module.Protos.Recipes";
+option csharp_namespace = "WhojooSite.RecipesModule.Protos.Recipes";
 
-import "Protos/Recipes/recipe_id.proto";
+import "Recipes/recipe_id.proto";
 
 package whojoo_site.recipes_module.recipes;
 

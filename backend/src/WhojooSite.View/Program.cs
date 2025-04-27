@@ -1,6 +1,8 @@
 using Serilog;
 
+using WhojooSite.View.Application;
 using WhojooSite.View.Components;
+using WhojooSite.View.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.AddServiceDefaults().AddSerilog();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,11 +33,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.Run();
+await app.RunAsync();

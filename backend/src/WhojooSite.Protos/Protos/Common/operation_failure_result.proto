@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option csharp_namespace = "WhojooSite.Recipes.Module.Protos";
+option csharp_namespace = "WhojooSite.Common.Protos";
 
-package whojoo_site.recipes_module.common;
+package whojoo_site.common;
 
 message OperationFailureResult {
   FailureStatus status = 1;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 
@@ -16,6 +17,10 @@ public class UsersModuleInitializer : IModuleInitializer
     }
 
     public void MapEndpoints(RouteGroupBuilder routeGroupBuilder)
+    {
+    }
+
+    public void MapModule(WebApplication app)
     {
     }
 }
