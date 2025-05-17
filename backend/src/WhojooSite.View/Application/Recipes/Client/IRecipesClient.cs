@@ -1,4 +1,4 @@
-﻿using WhojooSite.Common;
+﻿using WhojooSite.Common.Results;
 
 namespace WhojooSite.View.Application.Recipes.Client;
 

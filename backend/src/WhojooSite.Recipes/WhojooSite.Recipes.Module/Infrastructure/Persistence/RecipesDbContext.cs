@@ -18,6 +18,8 @@ internal class RecipesDbContext(DbContextOptions<RecipesDbContext> options) : Db
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RecipesModuleInitializer).Assembly);
 
+        modelBuilder.HasDefaultSchema("recipes");
+
         base.OnModelCreating(modelBuilder);
     }
 }

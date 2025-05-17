@@ -32,7 +32,7 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
 
             await EnsureDatabaseAsync(dbContext, cancellationToken).ConfigureAwait(false);
             await RunMigrationAsync(dbContext, cancellationToken).ConfigureAwait(false);
-            await SeedDataAsync(dbContext, cancellationToken).ConfigureAwait(false);
+            // await SeedDataAsync(dbContext, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {

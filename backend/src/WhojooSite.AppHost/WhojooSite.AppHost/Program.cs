@@ -11,6 +11,7 @@ var recipeMigrationService =
 
 var database = builder
     .AddPostgres("postgres")
+    .WithDataVolume()
     .WithPgAdmin()
     .AddDatabase("ServerDb");
 
@@ -20,8 +21,6 @@ recipeMigrationService
 
 web.WithReference(server);
 
-server
-    .WithReference(database)
-    .WaitForCompletion(recipeMigrationService);
+server.WithReference(database);
 
 await builder.Build().RunAsync();

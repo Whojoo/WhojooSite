@@ -1,5 +1,3 @@
-using Scalar.AspNetCore;
-
 using Serilog;
 
 using WhojooSite.Common.Modules;
@@ -16,7 +14,6 @@ var logger = Log.Logger = new LoggerConfiguration()
 builder.AddServiceDefaults()
     .AddSerilog();
 
-builder.Services.AddGrpc();
 builder.Services.AddOpenApi();
 
 // Add services to the container.
@@ -37,7 +34,6 @@ app.MapDefaultEndpoints();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapScalarApiReference();
     app.MapOpenApi();
 }
 

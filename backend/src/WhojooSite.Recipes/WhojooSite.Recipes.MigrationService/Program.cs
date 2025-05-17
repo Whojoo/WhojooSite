@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 using WhojooSite.Recipes.MigrationService;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 
@@ -9,7 +11,13 @@ builder.Services.AddHostedService<Worker>();
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing.AddSource(Worker.ActivitySourceName));
 
-builder.AddNpgsqlDbContext<RecipesDbContext>("ServerDb");
+builder.Services.AddDbContext<RecipesDbContext>(dbContextOptions =>
+{
+    dbContextOptions.UseNpgsql(
+        builder.Configuration.GetConnectionString("ServerDb"),
+        options => options.MigrationsHistoryTable("__EFMigrationsHistory", "recipes"));
+});
+
 
 var host = builder.Build();
 host.Run();

@@ -2,12 +2,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\WhojooSite.Common\WhojooSite.Common.csproj"/>
-        <ProjectReference Include="..\..\WhojooSite.Protos\WhojooSite.Protos.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL"/>
-        <PackageReference Include="Grpc.AspNetCore"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
@@ -19,11 +17,5 @@
 
     <ItemGroup>
         <Folder Include="Infrastructure\"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="..\..\WhojooSite.Protos\**\*.proto"
-                  GrpcServices="Server"
-                  AdditionalImportDirs="..\..\WhojooSite.Protos\Protos"/>
     </ItemGroup>
 </Project>
