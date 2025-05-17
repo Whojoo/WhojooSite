@@ -35,9 +35,9 @@ public static class ResultErrorIResultExtensions
         {
             ResultStatus.Unspecified => TypedResults.InternalServerError(error.Code),
             ResultStatus.BadRequest => MapToValidationProblem([error]),
-            ResultStatus.NotFound => TypedResults.NotFound(error.Code),
+            ResultStatus.NotFound => TypedResults.NotFound(),
             ResultStatus.InternalError => TypedResults.InternalServerError(error.Code),
-            ResultStatus.Conflict => TypedResults.Conflict(error.Code),
+            ResultStatus.Conflict => TypedResults.Conflict(error.Description),
             ResultStatus.Unauthorized => TypedResults.Unauthorized(),
             ResultStatus.Forbidden => TypedResults.Forbid(),
             _ => throw new ArgumentOutOfRangeException()

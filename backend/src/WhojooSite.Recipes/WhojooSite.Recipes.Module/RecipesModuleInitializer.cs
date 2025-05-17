@@ -22,11 +22,6 @@ public class RecipesModuleInitializer : IModuleInitializer
 
     public void ConfigureModule(IHostApplicationBuilder applicationBuilder, ILogger logger)
     {
-        // applicationBuilder.AddNpgsqlDbContext<RecipesDbContext>(
-        //     connectionName: "ServerDb",
-        //     configureDbContextOptions: dbContextOptions => dbContextOptions
-        //         .UseNpgsql(options => options.MigrationsHistoryTable("__EFMigrationsHistory", "recipes")));
-
         applicationBuilder.Services.AddDbContext<RecipesDbContext>(dbContextOptions =>
         {
             dbContextOptions.UseNpgsql(

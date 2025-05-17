@@ -12,6 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.Kiota.Bundle"/>
         <PackageReference Include="Serilog.AspNetCore"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Clients\"/>
+        <Folder Include="OpenApi\"/>
     </ItemGroup>
 </Project>

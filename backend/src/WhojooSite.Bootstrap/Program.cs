@@ -2,6 +2,7 @@ using Serilog;
 
 using WhojooSite.Common.Modules;
 using WhojooSite.Recipes.Module;
+using WhojooSite.Recipes.Module.Shared;
 using WhojooSite.Users.Module;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,12 @@ var logger = Log.Logger = new LoggerConfiguration()
 builder.AddServiceDefaults()
     .AddSerilog();
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(
+    "recipes-module",
+    options =>
+    {
+        options.AddSchemaTransformer<StronglyTypedIdSchemaTransformer>();
+    });
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();

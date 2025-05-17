@@ -20,6 +20,7 @@
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2"/>
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.2"/>
         <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery.Yarp" Version="9.1.0"/>
+        <PackageVersion Include="Microsoft.Kiota.Bundle" Version="1.17.2"/>
         <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
         <PackageVersion Include="OpenTelemetry.Api" Version="1.11.2"/>
         <PackageVersion Include="Scrutor" Version="6.0.1"/>

@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "WhojooSite.Bootstrap | recipes-module",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/recipes-module/recipes": {
+      "get": {
+        "tags": [
+          "WhojooSite.Bootstrap"
+        ],
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "nextKey",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/recipes-module/recipes/{recipeId}": {
+      "get": {
+        "tags": [
+          "GetRecipeByIdEndpoint"
+        ],
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CookbookId": {
+        "type": "integer"
+      },
+      "RecipeDto": {
+        "required": [
+          "id",
+          "name",
+          "description",
+          "cookbookId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/RecipeId"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cookbookId": {
+            "$ref": "#/components/schemas/CookbookId"
+          }
+        }
+      },
+      "RecipeId": {
+        "type": "integer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "WhojooSite.Bootstrap"
+    },
+    {
+      "name": "GetRecipeByIdEndpoint"
+    }
+  ]
+}
