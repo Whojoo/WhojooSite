@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item;
+using WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe;
+using WhojooSite.View.Clients.Models;
 namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
 {
     /// <summary>
@@ -17,15 +19,33 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RecipesRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The startNewRecipe property</summary>
+        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder StartNewRecipe
+        {
+            get => new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>Gets an item from the WhojooSite.View.Clients.api.recipesModule.recipes.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
         /// <returns>A <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[string position]
+        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[long position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
                 urlTplParams.Add("recipeId", position);
+                return new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
+            }
+        }
+        /// <summary>Gets an item from the WhojooSite.View.Clients.api.recipesModule.recipes.item collection</summary>
+        /// <param name="position">Unique identifier of the item</param>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
+        [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
+        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[string position]
+        {
+            get
+            {
+                var urlTplParams = new Dictionary<string, object>(PathParameters);
+                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("recipeId", position);
                 return new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
@@ -45,20 +65,25 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
         public RecipesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/api/recipes-module/recipes{?nextKey*,pageSize*}", rawUrl)
         {
         }
-        /// <returns>A <see cref="Stream"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.ListRecipesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
+        /// <exception cref="global::WhojooSite.View.Clients.Models.HttpValidationProblemDetails">When receiving a 400 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::WhojooSite.View.Clients.Models.ListRecipesResponse?> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::WhojooSite.View.Clients.Models.ListRecipesResponse> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            return await RequestAdapter.SendPrimitiveAsync<Stream>(requestInfo, default, cancellationToken).ConfigureAwait(false);
+            var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
+            {
+                { "400", global::WhojooSite.View.Clients.Models.HttpValidationProblemDetails.CreateFromDiscriminatorValue },
+            };
+            return await RequestAdapter.SendAsync<global::WhojooSite.View.Clients.Models.ListRecipesResponse>(requestInfo, global::WhojooSite.View.Clients.Models.ListRecipesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -73,6 +98,7 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
 #endif
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
             requestInfo.Configure(requestConfiguration);
+            requestInfo.Headers.TryAdd("Accept", "application/json");
             return requestInfo;
         }
         /// <summary>

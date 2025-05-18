@@ -20,7 +20,7 @@ public static class ResultErrorIResultExtensions
         return MapToProblem(errors[0]);
     }
 
-    private static ValidationProblem MapToValidationProblem(List<ResultError> errors)
+    public static ValidationProblem MapToValidationProblem(this List<ResultError> errors)
     {
         var errorDict = errors
             .GroupBy(error => error.Code, error => error.Description)

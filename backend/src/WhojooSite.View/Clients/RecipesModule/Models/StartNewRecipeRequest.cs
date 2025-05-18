@@ -9,7 +9,7 @@ namespace WhojooSite.View.Clients.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public partial class RecipeDto : IAdditionalDataHolder, IParsable
+    public partial class StartNewRecipeRequest : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
@@ -24,8 +24,6 @@ namespace WhojooSite.View.Clients.Models
 #else
         public string Description { get; set; }
 #endif
-        /// <summary>The id property</summary>
-        public long? Id { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -34,22 +32,24 @@ namespace WhojooSite.View.Clients.Models
 #else
         public string Name { get; set; }
 #endif
+        /// <summary>The ownerId property</summary>
+        public Guid? OwnerId { get; set; }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.RecipeDto"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.StartNewRecipeRequest"/> and sets the default values.
         /// </summary>
-        public RecipeDto()
+        public StartNewRecipeRequest()
         {
             AdditionalData = new Dictionary<string, object>();
         }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.RecipeDto"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.StartNewRecipeRequest"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::WhojooSite.View.Clients.Models.RecipeDto CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::WhojooSite.View.Clients.Models.StartNewRecipeRequest CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::WhojooSite.View.Clients.Models.RecipeDto();
+            return new global::WhojooSite.View.Clients.Models.StartNewRecipeRequest();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -61,8 +61,8 @@ namespace WhojooSite.View.Clients.Models
             {
                 { "cookbookId", n => { CookbookId = n.GetLongValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "id", n => { Id = n.GetLongValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
+                { "ownerId", n => { OwnerId = n.GetGuidValue(); } },
             };
         }
         /// <summary>
@@ -74,8 +74,8 @@ namespace WhojooSite.View.Clients.Models
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteLongValue("cookbookId", CookbookId);
             writer.WriteStringValue("description", Description);
-            writer.WriteLongValue("id", Id);
             writer.WriteStringValue("name", Name);
+            writer.WriteGuidValue("ownerId", OwnerId);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

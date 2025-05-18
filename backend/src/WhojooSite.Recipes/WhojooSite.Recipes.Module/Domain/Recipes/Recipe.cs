@@ -1,11 +1,11 @@
 using WhojooSite.Recipes.Module.Domain.Common;
 using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
-using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Cookbooks;
 
 namespace WhojooSite.Recipes.Module.Domain.Recipes;
 
-internal class Recipe : Entity<RecipeId>
+internal partial class Recipe : Entity<RecipeId>
 {
     private readonly List<Ingredient> _ingredients = [];
     private readonly List<SpiceMixIngredient> _spiceMixIngredients = [];
@@ -14,7 +14,6 @@ internal class Recipe : Entity<RecipeId>
     private readonly List<Step> _steps = [];
 
     public Recipe(
-        RecipeId id,
         string name,
         string description,
         OwnerId ownerId,
@@ -22,8 +21,9 @@ internal class Recipe : Entity<RecipeId>
         CookbookId cookbookId,
         List<Ingredient> ingredients,
         List<Ingredient> spices,
-        List<SpiceMixIngredient> spiceMixIngredients)
-        : base(id)
+        List<SpiceMixIngredient> spiceMixIngredients,
+        RecipeId? id = null)
+        : base(id ?? RecipeId.Empty)
     {
         Name = name;
         Description = description;

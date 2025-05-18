@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
+using WhojooSite.View.Clients.Api.RecipesModule.Cookbooks;
 using WhojooSite.View.Clients.Api.RecipesModule.Recipes;
 namespace WhojooSite.View.Clients.Api.RecipesModule
 {
@@ -15,6 +16,11 @@ namespace WhojooSite.View.Clients.Api.RecipesModule
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RecipesModuleRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The cookbooks property</summary>
+        public global::WhojooSite.View.Clients.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder Cookbooks
+        {
+            get => new global::WhojooSite.View.Clients.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The recipes property</summary>
         public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder Recipes
         {

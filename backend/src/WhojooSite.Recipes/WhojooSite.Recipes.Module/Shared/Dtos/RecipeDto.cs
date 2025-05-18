@@ -1,4 +1,4 @@
-﻿using WhojooSite.Recipes.Module.Domain.Cookbook;
+﻿using WhojooSite.Recipes.Module.Domain.Cookbooks;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 
 namespace WhojooSite.Recipes.Module.Shared.Dtos;

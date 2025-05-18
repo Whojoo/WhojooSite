@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Cookbooks;
 using WhojooSite.Recipes.Module.Domain.Recipes;
+
+using CookbookId = WhojooSite.Recipes.Module.Domain.Cookbooks.CookbookId;
 
 namespace WhojooSite.Recipes.Module.Infrastructure.Persistence.Configurations;
 
@@ -22,6 +24,10 @@ internal class CookbookConfiguration : IEntityTypeConfiguration<Cookbook>
         builder
             .Property(cookbook => cookbook.Id)
             .HasConversion<CookbookId.EfCoreValueConverter>();
+
+        builder
+            .Property(cookbook => cookbook.Id)
+            .ValueGeneratedOnAdd();
 
         builder
             .Property(cookbook => cookbook.Name)

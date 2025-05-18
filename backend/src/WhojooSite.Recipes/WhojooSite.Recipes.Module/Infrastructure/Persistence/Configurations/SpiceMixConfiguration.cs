@@ -21,6 +21,10 @@ internal class SpiceMixConfiguration : IEntityTypeConfiguration<SpiceMix>
             .HasConversion<SpiceMixId.EfCoreValueConverter>();
 
         builder
+            .Property(spiceMix => spiceMix.Id)
+            .ValueGeneratedOnAdd();
+
+        builder
             .Property(spiceMix => spiceMix.Name)
             .IsRequired()
             .HasMaxLength(DataSchemaConstants.NameMaxLength);

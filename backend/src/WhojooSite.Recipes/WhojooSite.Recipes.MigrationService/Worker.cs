@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
 using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
-using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Cookbooks;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Infrastructure.Persistence;
 
@@ -72,11 +72,10 @@ public class Worker(IServiceProvider serviceProvider, IHostApplicationLifetime h
     private static async Task SeedDataAsync(RecipesDbContext dbContext, CancellationToken cancellationToken)
     {
         var ownerId = OwnerId.New();
-        Cookbook cookbook = new(CookbookId.Empty, "Basis kookboek", []);
+        Cookbook cookbook = new("Basis kookboek", []);
         await dbContext.Cookbooks.AddAsync(cookbook, cancellationToken).ConfigureAwait(false);
 
         Recipe recipe1 = new(
-            RecipeId.Empty,
             "Een pan pasta",
             "Een makkelijke pasta dat volledig in een enkele pan wordt bereid",
             ownerId,

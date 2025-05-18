@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using WhojooSite.Recipes.Module.Domain.Common.StronglyTypedIds;
 using WhojooSite.Recipes.Module.Domain.Common.ValueObjects;
-using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Cookbooks;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
 
@@ -25,6 +25,10 @@ internal class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder
             .Property(recipe => recipe.Id)
             .HasConversion<RecipeId.EfCoreValueConverter>();
+
+        builder
+            .Property(recipe => recipe.Id)
+            .ValueGeneratedOnAdd();
 
         builder
             .Property(recipe => recipe.Name)

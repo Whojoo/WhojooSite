@@ -9,23 +9,13 @@ namespace WhojooSite.View.Clients.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public partial class RecipeDto : IAdditionalDataHolder, IParsable
+    public partial class ListCookbooksItem : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The cookbookId property</summary>
         public long? CookbookId { get; set; }
-        /// <summary>The description property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Description { get; set; }
-#nullable restore
-#else
-        public string Description { get; set; }
-#endif
-        /// <summary>The id property</summary>
-        public long? Id { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -35,21 +25,21 @@ namespace WhojooSite.View.Clients.Models
         public string Name { get; set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.RecipeDto"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.ListCookbooksItem"/> and sets the default values.
         /// </summary>
-        public RecipeDto()
+        public ListCookbooksItem()
         {
             AdditionalData = new Dictionary<string, object>();
         }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.RecipeDto"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.ListCookbooksItem"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::WhojooSite.View.Clients.Models.RecipeDto CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::WhojooSite.View.Clients.Models.ListCookbooksItem CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::WhojooSite.View.Clients.Models.RecipeDto();
+            return new global::WhojooSite.View.Clients.Models.ListCookbooksItem();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -60,8 +50,6 @@ namespace WhojooSite.View.Clients.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "cookbookId", n => { CookbookId = n.GetLongValue(); } },
-                { "description", n => { Description = n.GetStringValue(); } },
-                { "id", n => { Id = n.GetLongValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
             };
         }
@@ -73,8 +61,6 @@ namespace WhojooSite.View.Clients.Models
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteLongValue("cookbookId", CookbookId);
-            writer.WriteStringValue("description", Description);
-            writer.WriteLongValue("id", Id);
             writer.WriteStringValue("name", Name);
             writer.WriteAdditionalData(AdditionalData);
         }

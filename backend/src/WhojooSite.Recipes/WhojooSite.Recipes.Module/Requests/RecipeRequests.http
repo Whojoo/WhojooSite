@@ -1,5 +1,27 @@
-﻿### GET request to example server
+﻿### Get cookbooks
+GET {{baseUrl}}/api/recipes-module/cookbooks
+
+### Create cookbook
+POST {{baseUrl}}/api/recipes-module/cookbooks
+Content-Type: application/json
+
+{
+  "name": "Basis kookboek"
+}
+
+### GET request to example server
 GET {{baseUrl}}/api/recipes-module/recipes?pageSize=100
 
 ### GET single recipe
 GET {{baseUrl}}/api/recipes-module/recipes/1
+
+### POST start new recipe
+POST {{baseUrl}}/api/recipes-module/recipes/start-new-recipe
+Content-Type: application/json
+
+{
+  "name": "Macaroni",
+  "description": "Gemakkelijke macaroni om te maken",
+  "cookbookId": 1,
+  "ownerId": "{{$random.uuid}}"
+}

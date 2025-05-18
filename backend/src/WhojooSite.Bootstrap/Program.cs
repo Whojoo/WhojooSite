@@ -19,7 +19,8 @@ builder.Services.AddOpenApi(
     "recipes-module",
     options =>
     {
-        options.AddSchemaTransformer<StronglyTypedIdSchemaTransformer>();
+        options.AddSchemaTransformer<RecipesModuleSchemaTransformer>();
+        options.ShouldInclude = description => description.GroupName == "recipes-module";
     });
 
 // Add services to the container.

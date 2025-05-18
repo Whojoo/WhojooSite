@@ -5,10 +5,42 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/recipes-module/recipes/start-new-recipe": {
+      "post": {
+        "tags": [
+          "StartNewRecipe"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartNewRecipeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/recipes-module/recipes": {
       "get": {
         "tags": [
-          "WhojooSite.Bootstrap"
+          "ListRecipesEndpoint"
         ],
         "parameters": [
           {
@@ -30,7 +62,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListRecipesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -46,7 +95,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -66,12 +116,201 @@
           }
         }
       }
+    },
+    "/api/recipes-module/cookbooks": {
+      "get": {
+        "tags": [
+          "ListCookbooksEndpoint"
+        ],
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "nextKey",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCookbooksResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CreateCookbookEndpoint"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCookbookRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "CookbookId": {
-        "type": "integer"
+        "type": "integer",
+        "format": "int64"
+      },
+      "CreateCookbookRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ListCookbooksItem": {
+        "required": [
+          "cookbookId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "cookbookId": {
+            "$ref": "#/components/schemas/CookbookId"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ListCookbooksResponse": {
+        "required": [
+          "cookbooks",
+          "nextKey",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "cookbooks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListCookbooksItem"
+            }
+          },
+          "nextKey": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ListRecipesResponse": {
+        "required": [
+          "recipes",
+          "nextKey"
+        ],
+        "type": "object",
+        "properties": {
+          "recipes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeDto"
+            }
+          },
+          "nextKey": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "OwnerId": {
+        "type": "string",
+        "format": "uuid"
       },
       "RecipeDto": {
         "required": [
@@ -97,16 +336,49 @@
         }
       },
       "RecipeId": {
-        "type": "integer"
+        "type": "integer",
+        "format": "int64"
+      },
+      "StartNewRecipeRequest": {
+        "required": [
+          "name",
+          "description",
+          "ownerId",
+          "cookbookId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/OwnerId"
+          },
+          "cookbookId": {
+            "$ref": "#/components/schemas/CookbookId"
+          }
+        }
       }
     }
   },
   "tags": [
     {
-      "name": "WhojooSite.Bootstrap"
+      "name": "StartNewRecipe"
+    },
+    {
+      "name": "ListRecipesEndpoint"
     },
     {
       "name": "GetRecipeByIdEndpoint"
+    },
+    {
+      "name": "ListCookbooksEndpoint"
+    },
+    {
+      "name": "CreateCookbookEndpoint"
     }
   ]
 }

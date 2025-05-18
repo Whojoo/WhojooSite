@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-using WhojooSite.Recipes.Module.Domain.Cookbook;
+using WhojooSite.Recipes.Module.Domain.Cookbooks;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 using WhojooSite.Recipes.Module.Domain.SpiceMix;
 

@@ -29,7 +29,7 @@ public class RecipesModuleInitializer : IModuleInitializer
                 options => options.MigrationsHistoryTable("__EFMigrationsHistory", "recipes"));
         });
 
-        applicationBuilder.EnrichNpgsqlDbContext<RecipesDbContext>();
+        // applicationBuilder.EnrichNpgsqlDbContext<RecipesDbContext>();
 
         applicationBuilder.Services
             .AddEndpoints<IRecipeModuleEndpoint>()
@@ -39,7 +39,9 @@ public class RecipesModuleInitializer : IModuleInitializer
 
     public void MapEndpoints(RouteGroupBuilder routeGroupBuilder)
     {
-        var recipeModuleGroup = routeGroupBuilder.MapGroup("/recipes-module");
+        var recipeModuleGroup = routeGroupBuilder
+            .MapGroup("/recipes-module")
+            .WithGroupName("recipes-module");
 
         recipeModuleGroup.MapEndpoints<IRecipeModuleEndpoint>();
     }

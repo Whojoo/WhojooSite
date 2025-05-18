@@ -1,17 +1,17 @@
 using WhojooSite.Recipes.Module.Domain.Common;
 using WhojooSite.Recipes.Module.Domain.Recipes;
 
-namespace WhojooSite.Recipes.Module.Domain.Cookbook;
+namespace WhojooSite.Recipes.Module.Domain.Cookbooks;
 
 internal class Cookbook : Entity<CookbookId>
 {
     private readonly List<RecipeId> _recipeIds = [];
 
-    public Cookbook(CookbookId id, string name, List<RecipeId> recipeIdIds)
-        : base(id)
+    public Cookbook(string name, List<RecipeId>? recipeIdIds = null, CookbookId? id = null)
+        : base(id ?? CookbookId.Empty)
     {
         Name = name;
-        _recipeIds = recipeIdIds;
+        _recipeIds = recipeIdIds ?? [];
     }
 
     private Cookbook() { }
