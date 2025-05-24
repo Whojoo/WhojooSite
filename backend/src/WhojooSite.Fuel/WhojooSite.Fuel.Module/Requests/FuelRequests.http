@@ -1,0 +1,13 @@
+﻿### Get TrackableObjects
+GET {{baseUrl}}/api/fuel-module/trackable-objects
+
+### Create Trackble Object
+POST {{baseUrl}}/api/fuel-module/trackable-objects
+Content-Type: application/json
+
+{
+  "name": "ML-JG-09",
+  "objectTypeName": "motorcycle",
+  "ownerId": "{{$uuid}}"
+}
+

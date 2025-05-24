@@ -7,16 +7,23 @@ public static class HandlerExtensions
     public static IServiceCollection AddHandlers<TAssemblyMarker>(this IServiceCollection services)
     {
         services.Scan(scan => scan.FromAssemblyOf<TAssemblyMarker>()
-            .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<>)), false)
-            .AsImplementedInterfaces()
-            .WithTransientLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)), false)
             .AsImplementedInterfaces()
-            .WithTransientLifetime()
+            .WithScopedLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)), false)
             .AsImplementedInterfaces()
-            .WithTransientLifetime());
+            .WithScopedLifetime());
 
+        return services;
+    }
+
+    public static IServiceCollection AddDispatchers(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IQueryDispatcher<,>), typeof(Dispatchers.QueryDispatcher<,>));
+        services.AddScoped(typeof(ICommandDispatcher<,>), typeof(Dispatchers.CommandDispatcher<,>));
+        services.AddSingleton(typeof(IRequestPipelineHandler<,>), typeof(LoggingRequestPipelineHandler<,>));
+        services.AddSingleton(typeof(IRequestPipelineHandler<,>), typeof(ExceptionRequestPipelineHandler<,>));
+        services.AddSingleton(typeof(IRequestPipelineHandler<,>), typeof(ValidationRequestPipelineHandler<,>));
         return services;
     }
 }
