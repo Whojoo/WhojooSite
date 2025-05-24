@@ -84,6 +84,79 @@
         }
       }
     },
+    "/api/recipes-module/recipes/complete": {
+      "get": {
+        "tags": [
+          "ListCompleteRecipesEndpoint"
+        ],
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCompleteRecipesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/recipes-module/recipes/complete/{recipeId}": {
+      "get": {
+        "tags": [
+          "GetCompleteRecipeByIdEndpoint"
+        ],
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/recipes-module/recipes/{recipeId}": {
       "get": {
         "tags": [
@@ -250,6 +323,45 @@
           }
         }
       },
+      "Ingredient": {
+        "required": [
+          "name",
+          "amount",
+          "measurementUnit"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "measurementUnit": {
+            "type": "string"
+          }
+        }
+      },
+      "ListCompleteRecipesResponse": {
+        "required": [
+          "recipes",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "recipes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Recipe"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "ListCookbooksItem": {
         "required": [
           "cookbookId",
@@ -312,6 +424,58 @@
         "type": "string",
         "format": "uuid"
       },
+      "Recipe": {
+        "required": [
+          "name",
+          "description",
+          "cookbookId",
+          "ownerId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cookbookId": {
+            "$ref": "#/components/schemas/CookbookId"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Step"
+            },
+            "nullable": true
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            },
+            "nullable": true
+          },
+          "spices": {
+            "type": "array",
+            "items": {},
+            "nullable": true
+          },
+          "spiceMixIngredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpiceMixIngredient"
+            },
+            "nullable": true
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/OwnerId"
+          },
+          "id": {
+            "$ref": "#/components/schemas/RecipeId"
+          }
+        }
+      },
       "RecipeDto": {
         "required": [
           "id",
@@ -339,6 +503,22 @@
         "type": "integer",
         "format": "int64"
       },
+      "SpiceMixId": {},
+      "SpiceMixIngredient": {
+        "type": "object",
+        "properties": {
+          "spiceMixId": {
+            "$ref": "#/components/schemas/SpiceMixId"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "measurementUnit": {
+            "type": "string"
+          }
+        }
+      },
       "StartNewRecipeRequest": {
         "required": [
           "name",
@@ -361,7 +541,30 @@
             "$ref": "#/components/schemas/CookbookId"
           }
         }
-      }
+      },
+      "Step": {
+        "required": [
+          "name",
+          "summary",
+          "recipeId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "recipeId": {
+            "$ref": "#/components/schemas/RecipeId"
+          },
+          "id": {
+            "$ref": "#/components/schemas/StepId"
+          }
+        }
+      },
+      "StepId": {}
     }
   },
   "tags": [
@@ -370,6 +573,12 @@
     },
     {
       "name": "ListRecipesEndpoint"
+    },
+    {
+      "name": "ListCompleteRecipesEndpoint"
+    },
+    {
+      "name": "GetCompleteRecipeByIdEndpoint"
     },
     {
       "name": "GetRecipeByIdEndpoint"

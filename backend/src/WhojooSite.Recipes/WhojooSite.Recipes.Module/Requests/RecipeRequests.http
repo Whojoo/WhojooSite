@@ -25,3 +25,9 @@ Content-Type: application/json
   "cookbookId": 1,
   "ownerId": "{{$random.uuid}}"
 }
+
+### GET complete
+GET {{baseUrl}}/api/recipes-module/recipes/complete/1
+
+### GET list complete recipes
+GET {{baseUrl}}/api/recipes-module/recipes/complete
