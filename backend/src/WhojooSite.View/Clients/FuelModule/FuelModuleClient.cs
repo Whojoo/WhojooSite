@@ -10,25 +10,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
-using WhojooSite.View.Clients.RecipesModule.Api;
-namespace WhojooSite.View.Clients.RecipesModule
+using WhojooSite.View.Clients.FuelModule.Api;
+namespace WhojooSite.View.Clients.FuelModule
 {
     /// <summary>
     /// The main entry point of the SDK, exposes the configuration and the fluent API.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    public partial class RecipeModuleClient : BaseRequestBuilder
+    public partial class FuelModuleClient : BaseRequestBuilder
     {
         /// <summary>The api property</summary>
-        public global::WhojooSite.View.Clients.RecipesModule.Api.ApiRequestBuilder Api
+        public global::WhojooSite.View.Clients.FuelModule.Api.ApiRequestBuilder Api
         {
-            get => new global::WhojooSite.View.Clients.RecipesModule.Api.ApiRequestBuilder(PathParameters, RequestAdapter);
+            get => new global::WhojooSite.View.Clients.FuelModule.Api.ApiRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.RecipeModuleClient"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.FuelModule.FuelModuleClient"/> and sets the default values.
         /// </summary>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public RecipeModuleClient(IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}", new Dictionary<string, object>())
+        public FuelModuleClient(IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}", new Dictionary<string, object>())
         {
             ApiClientBuilder.RegisterDefaultSerializer<JsonSerializationWriterFactory>();
             ApiClientBuilder.RegisterDefaultSerializer<TextSerializationWriterFactory>();

@@ -5,7 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System;
-namespace WhojooSite.View.Clients.Models
+namespace WhojooSite.View.Clients.RecipesModule.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
@@ -17,17 +17,17 @@ namespace WhojooSite.View.Clients.Models
         /// <summary>The cookbooks property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public List<global::WhojooSite.View.Clients.Models.ListCookbooksItem>? Cookbooks { get; set; }
+        public List<global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksItem>? Cookbooks { get; set; }
 #nullable restore
 #else
-        public List<global::WhojooSite.View.Clients.Models.ListCookbooksItem> Cookbooks { get; set; }
+        public List<global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksItem> Cookbooks { get; set; }
 #endif
         /// <summary>The nextKey property</summary>
         public long? NextKey { get; set; }
         /// <summary>The totalCount property</summary>
         public int? TotalCount { get; set; }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.ListCookbooksResponse"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksResponse"/> and sets the default values.
         /// </summary>
         public ListCookbooksResponse()
         {
@@ -36,12 +36,12 @@ namespace WhojooSite.View.Clients.Models
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.ListCookbooksResponse"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksResponse"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::WhojooSite.View.Clients.Models.ListCookbooksResponse CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksResponse CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::WhojooSite.View.Clients.Models.ListCookbooksResponse();
+            return new global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksResponse();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -51,7 +51,7 @@ namespace WhojooSite.View.Clients.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "cookbooks", n => { Cookbooks = n.GetCollectionOfObjectValues<global::WhojooSite.View.Clients.Models.ListCookbooksItem>(global::WhojooSite.View.Clients.Models.ListCookbooksItem.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "cookbooks", n => { Cookbooks = n.GetCollectionOfObjectValues<global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksItem>(global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksItem.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "nextKey", n => { NextKey = n.GetLongValue(); } },
                 { "totalCount", n => { TotalCount = n.GetIntValue(); } },
             };
@@ -63,7 +63,7 @@ namespace WhojooSite.View.Clients.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
-            writer.WriteCollectionOfObjectValues<global::WhojooSite.View.Clients.Models.ListCookbooksItem>("cookbooks", Cookbooks);
+            writer.WriteCollectionOfObjectValues<global::WhojooSite.View.Clients.RecipesModule.Models.ListCookbooksItem>("cookbooks", Cookbooks);
             writer.WriteLongValue("nextKey", NextKey);
             writer.WriteIntValue("totalCount", TotalCount);
             writer.WriteAdditionalData(AdditionalData);

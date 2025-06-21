@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
-using WhojooSite.View.Clients.Api.RecipesModule.Cookbooks;
-using WhojooSite.View.Clients.Api.RecipesModule.Recipes;
-namespace WhojooSite.View.Clients.Api.RecipesModule
+using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Cookbooks;
+using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes;
+namespace WhojooSite.View.Clients.RecipesModule.Api.RecipesModule
 {
     /// <summary>
     /// Builds and executes requests for operations under \api\recipes-module
@@ -17,17 +17,17 @@ namespace WhojooSite.View.Clients.Api.RecipesModule
     public partial class RecipesModuleRequestBuilder : BaseRequestBuilder
     {
         /// <summary>The cookbooks property</summary>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder Cookbooks
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder Cookbooks
         {
-            get => new global::WhojooSite.View.Clients.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder(PathParameters, RequestAdapter);
+            get => new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Cookbooks.CookbooksRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The recipes property</summary>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder Recipes
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder Recipes
         {
-            get => new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder(PathParameters, RequestAdapter);
+            get => new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.RecipesModuleRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.RecipesModuleRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
@@ -35,7 +35,7 @@ namespace WhojooSite.View.Clients.Api.RecipesModule
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.RecipesModuleRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.RecipesModuleRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>

@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "WhojooSite.Bootstrap | fuel-module",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/fuel-module/trackable-objects": {
+      "post": {
+        "tags": [
+          "CreateTrackableObjectEndpoint"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTrackableObjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ListTrackableObjectsEndpoint"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListTrackableObjectsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateTrackableObjectRequest": {
+        "required": [
+          "name",
+          "ownerId",
+          "objectTypeName"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/OwnerId"
+          },
+          "objectTypeName": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ListTrackableObjectsResponse": {
+        "required": [
+          "trackableObjects",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "trackableObjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TrackableObject"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ObjectType": {
+        "required": [
+          "objectTypeId",
+          "name",
+          "creationDate"
+        ],
+        "type": "object",
+        "properties": {
+          "objectTypeId": {
+            "$ref": "#/components/schemas/ObjectTypeId"
+          },
+          "name": {
+            "type": "string"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "nullable": true
+      },
+      "ObjectTypeId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "OwnerId": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "TrackableObject": {
+        "required": [
+          "name",
+          "ownerId",
+          "creationDate",
+          "objectTypeId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/TrackableObjectId"
+          },
+          "name": {
+            "type": "string"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/OwnerId"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "objectTypeId": {
+            "$ref": "#/components/schemas/ObjectTypeId"
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/ObjectType"
+          }
+        }
+      },
+      "TrackableObjectId": {
+        "type": "string",
+        "format": "uuid"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "CreateTrackableObjectEndpoint"
+    },
+    {
+      "name": "ListTrackableObjectsEndpoint"
+    }
+  ]
+}

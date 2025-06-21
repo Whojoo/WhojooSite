@@ -19,7 +19,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services
     .AddApplication(builder.Configuration)
-    .AddInfrastructure();
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

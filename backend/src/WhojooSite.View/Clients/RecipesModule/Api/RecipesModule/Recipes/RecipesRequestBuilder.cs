@@ -8,10 +8,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-using WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item;
-using WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe;
-using WhojooSite.View.Clients.Models;
-namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
+using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Complete;
+using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item;
+using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.StartNewRecipe;
+using WhojooSite.View.Clients.RecipesModule.Models;
+namespace WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes
 {
     /// <summary>
     /// Builds and executes requests for operations under \api\recipes-module\recipes
@@ -19,38 +20,43 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class RecipesRequestBuilder : BaseRequestBuilder
     {
-        /// <summary>The startNewRecipe property</summary>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder StartNewRecipe
+        /// <summary>The complete property</summary>
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Complete.CompleteRequestBuilder Complete
         {
-            get => new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder(PathParameters, RequestAdapter);
+            get => new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Complete.CompleteRequestBuilder(PathParameters, RequestAdapter);
         }
-        /// <summary>Gets an item from the WhojooSite.View.Clients.api.recipesModule.recipes.item collection</summary>
+        /// <summary>The startNewRecipe property</summary>
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder StartNewRecipe
+        {
+            get => new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.StartNewRecipe.StartNewRecipeRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>Gets an item from the WhojooSite.View.Clients.RecipesModule.api.recipesModule.recipes.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[long position]
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[long position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
                 urlTplParams.Add("recipeId", position);
-                return new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
+                return new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
-        /// <summary>Gets an item from the WhojooSite.View.Clients.api.recipesModule.recipes.item collection</summary>
+        /// <summary>Gets an item from the WhojooSite.View.Clients.RecipesModule.api.recipesModule.recipes.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder"/></returns>
         [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[string position]
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder this[string position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
                 if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("recipeId", position);
-                return new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
+                return new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.Item.WithRecipeItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
@@ -58,42 +64,42 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
         public RecipesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/api/recipes-module/recipes{?nextKey*,pageSize*}", rawUrl)
         {
         }
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.ListRecipesResponse"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
-        /// <exception cref="global::WhojooSite.View.Clients.Models.HttpValidationProblemDetails">When receiving a 400 status code</exception>
+        /// <exception cref="global::WhojooSite.View.Clients.RecipesModule.Models.HttpValidationProblemDetails">When receiving a 400 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<global::WhojooSite.View.Clients.Models.ListRecipesResponse?> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse?> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<global::WhojooSite.View.Clients.Models.ListRecipesResponse> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse> GetAsync(Action<RequestConfiguration<global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
             var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
             {
-                { "400", global::WhojooSite.View.Clients.Models.HttpValidationProblemDetails.CreateFromDiscriminatorValue },
+                { "400", global::WhojooSite.View.Clients.RecipesModule.Models.HttpValidationProblemDetails.CreateFromDiscriminatorValue },
             };
-            return await RequestAdapter.SendAsync<global::WhojooSite.View.Clients.Models.ListRecipesResponse>(requestInfo, global::WhojooSite.View.Clients.Models.ListRecipesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse>(requestInfo, global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToGetRequestInformation(Action<RequestConfiguration<global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>> requestConfiguration = default)
         {
 #endif
             var requestInfo = new RequestInformation(Method.GET, UrlTemplate, PathParameters);
@@ -104,11 +110,11 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder WithUrl(string rawUrl)
+        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder(rawUrl, RequestAdapter);
+            return new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder(rawUrl, RequestAdapter);
         }
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         #pragma warning disable CS1591
@@ -125,7 +131,7 @@ namespace WhojooSite.View.Clients.Api.RecipesModule.Recipes
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class RecipesRequestBuilderGetRequestConfiguration : RequestConfiguration<global::WhojooSite.View.Clients.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>
+        public partial class RecipesRequestBuilderGetRequestConfiguration : RequestConfiguration<global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.Recipes.RecipesRequestBuilder.RecipesRequestBuilderGetQueryParameters>
         {
         }
     }

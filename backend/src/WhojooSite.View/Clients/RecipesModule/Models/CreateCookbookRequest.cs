@@ -5,7 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System;
-namespace WhojooSite.View.Clients.Models
+namespace WhojooSite.View.Clients.RecipesModule.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
@@ -23,7 +23,7 @@ namespace WhojooSite.View.Clients.Models
         public string Name { get; set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.CreateCookbookRequest"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.CreateCookbookRequest"/> and sets the default values.
         /// </summary>
         public CreateCookbookRequest()
         {
@@ -32,12 +32,12 @@ namespace WhojooSite.View.Clients.Models
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.CreateCookbookRequest"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.CreateCookbookRequest"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::WhojooSite.View.Clients.Models.CreateCookbookRequest CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::WhojooSite.View.Clients.RecipesModule.Models.CreateCookbookRequest CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::WhojooSite.View.Clients.Models.CreateCookbookRequest();
+            return new global::WhojooSite.View.Clients.RecipesModule.Models.CreateCookbookRequest();
         }
         /// <summary>
         /// The deserialization information for the current model

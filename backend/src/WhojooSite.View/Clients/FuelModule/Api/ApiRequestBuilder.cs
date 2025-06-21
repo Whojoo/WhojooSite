@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System;
-using WhojooSite.View.Clients.RecipesModule.Api.RecipesModule;
-namespace WhojooSite.View.Clients.RecipesModule.Api
+using WhojooSite.View.Clients.FuelModule.Api.FuelModule;
+namespace WhojooSite.View.Clients.FuelModule.Api
 {
     /// <summary>
     /// Builds and executes requests for operations under \api
@@ -15,13 +15,13 @@ namespace WhojooSite.View.Clients.RecipesModule.Api
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ApiRequestBuilder : BaseRequestBuilder
     {
-        /// <summary>The recipesModule property</summary>
-        public global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.RecipesModuleRequestBuilder RecipesModule
+        /// <summary>The fuelModule property</summary>
+        public global::WhojooSite.View.Clients.FuelModule.Api.FuelModule.FuelModuleRequestBuilder FuelModule
         {
-            get => new global::WhojooSite.View.Clients.RecipesModule.Api.RecipesModule.RecipesModuleRequestBuilder(PathParameters, RequestAdapter);
+            get => new global::WhojooSite.View.Clients.FuelModule.Api.FuelModule.FuelModuleRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.ApiRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.FuelModule.Api.ApiRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
@@ -29,7 +29,7 @@ namespace WhojooSite.View.Clients.RecipesModule.Api
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Api.ApiRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.FuelModule.Api.ApiRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>

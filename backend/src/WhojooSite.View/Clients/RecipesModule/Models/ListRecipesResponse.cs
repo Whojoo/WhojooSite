@@ -5,7 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System;
-namespace WhojooSite.View.Clients.Models
+namespace WhojooSite.View.Clients.RecipesModule.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
@@ -19,13 +19,13 @@ namespace WhojooSite.View.Clients.Models
         /// <summary>The recipes property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public List<global::WhojooSite.View.Clients.Models.RecipeDto>? Recipes { get; set; }
+        public List<global::WhojooSite.View.Clients.RecipesModule.Models.RecipeDto>? Recipes { get; set; }
 #nullable restore
 #else
-        public List<global::WhojooSite.View.Clients.Models.RecipeDto> Recipes { get; set; }
+        public List<global::WhojooSite.View.Clients.RecipesModule.Models.RecipeDto> Recipes { get; set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.Models.ListRecipesResponse"/> and sets the default values.
+        /// Instantiates a new <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse"/> and sets the default values.
         /// </summary>
         public ListRecipesResponse()
         {
@@ -34,12 +34,12 @@ namespace WhojooSite.View.Clients.Models
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::WhojooSite.View.Clients.Models.ListRecipesResponse"/></returns>
+        /// <returns>A <see cref="global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::WhojooSite.View.Clients.Models.ListRecipesResponse CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::WhojooSite.View.Clients.Models.ListRecipesResponse();
+            return new global::WhojooSite.View.Clients.RecipesModule.Models.ListRecipesResponse();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -50,7 +50,7 @@ namespace WhojooSite.View.Clients.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "nextKey", n => { NextKey = n.GetLongValue(); } },
-                { "recipes", n => { Recipes = n.GetCollectionOfObjectValues<global::WhojooSite.View.Clients.Models.RecipeDto>(global::WhojooSite.View.Clients.Models.RecipeDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "recipes", n => { Recipes = n.GetCollectionOfObjectValues<global::WhojooSite.View.Clients.RecipesModule.Models.RecipeDto>(global::WhojooSite.View.Clients.RecipesModule.Models.RecipeDto.CreateFromDiscriminatorValue)?.AsList(); } },
             };
         }
         /// <summary>
@@ -61,7 +61,7 @@ namespace WhojooSite.View.Clients.Models
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteLongValue("nextKey", NextKey);
-            writer.WriteCollectionOfObjectValues<global::WhojooSite.View.Clients.Models.RecipeDto>("recipes", Recipes);
+            writer.WriteCollectionOfObjectValues<global::WhojooSite.View.Clients.RecipesModule.Models.RecipeDto>("recipes", Recipes);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
