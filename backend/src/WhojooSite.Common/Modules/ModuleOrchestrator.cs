@@ -1,6 +1,5 @@
 using System.Diagnostics;
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
 using Serilog;
@@ -38,24 +37,6 @@ public class ModuleOrchestrator(ILogger logger)
 
             _logger.Information(
                 "Module {ModuleName} is configured in {ElapsedMilliseconds} ms",
-                moduleInitializer.ModuleName,
-                elapsed.TotalMilliseconds);
-        }
-    }
-
-    public void MapModules(WebApplication app)
-    {
-        var rootGroup = app.MapGroup("/api");
-
-        foreach (var moduleInitializer in _moduleInitializers)
-        {
-            var startTimestamp = Stopwatch.GetTimestamp();
-            moduleInitializer.MapModule(app);
-            moduleInitializer.MapEndpoints(rootGroup);
-            var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
-
-            _logger.Information(
-                "Module {ModuleName} is mapped in {ElapsedMilliseconds} ms",
                 moduleInitializer.ModuleName,
                 elapsed.TotalMilliseconds);
         }

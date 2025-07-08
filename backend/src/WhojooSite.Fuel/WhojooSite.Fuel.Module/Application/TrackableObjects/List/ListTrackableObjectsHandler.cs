@@ -16,12 +16,10 @@ internal record ListTrackableObjectsQueryResponse(TrackableObject[] TrackableObj
 internal class ListTrackableObjectsHandler(ITrackableObjectRepository trackableObjectRepository)
     : IQueryHandler<ListTrackableObjectsQuery, ListTrackableObjectsQueryResponse>
 {
-    private readonly ITrackableObjectRepository _trackableObjectRepository = trackableObjectRepository;
-
     public async Task<Result<ListTrackableObjectsQueryResponse>> HandleAsync(ListTrackableObjectsQuery request,
         CancellationToken cancellation)
     {
-        var resultList = await _trackableObjectRepository.ListAsync(cancellation);
+        var resultList = await trackableObjectRepository.ListAsync(cancellation);
         return Result<ListTrackableObjectsQueryResponse>.Success(ListTrackableObjectsHandlerMapper.MapToResponse(resultList));
     }
 }

@@ -1,3 +1,5 @@
+using FastEndpoints;
+
 using Serilog;
 
 using WhojooSite.Common.Handlers;
@@ -16,6 +18,8 @@ var logger = Log.Logger = new LoggerConfiguration()
 
 builder.AddServiceDefaults()
     .AddSerilog();
+
+builder.Services.AddFastEndpoints();
 
 builder.Services.AddOpenApi(
     "recipes-module",
@@ -60,6 +64,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseOutputCache();
 
-moduleOrchestrator.MapModules(app);
+app.MapFastEndpoints();
 
 await app.RunAsync();

@@ -10,7 +10,7 @@ var recipeMigrationService =
     builder.AddProject<WhojooSite_Recipes_MigrationService>("recipeMigrationService");
 
 var database = builder
-    .AddPostgres("postgres")
+    .AddPostgres("postgres", port: 5432)
     .WithDataVolume()
     .WithPgAdmin()
     .AddDatabase("ServerDb");

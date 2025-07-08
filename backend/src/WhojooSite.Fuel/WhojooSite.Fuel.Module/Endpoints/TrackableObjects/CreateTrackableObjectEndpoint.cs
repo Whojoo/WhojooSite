@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FastEndpoints;
+
+using FluentValidation.Results;
+
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Routing;
 
 using Riok.Mapperly.Abstractions;
 
 using WhojooSite.Common.Handlers;
-using WhojooSite.Common.Results;
 using WhojooSite.Fuel.Module.Application.TrackableObjects.Create;
 using WhojooSite.Fuel.Module.Domain.Shared;
 using WhojooSite.Fuel.Module.Domain.TrackableObjects;
@@ -15,24 +15,35 @@ namespace WhojooSite.Fuel.Module.Endpoints.TrackableObjects;
 
 internal record CreateTrackableObjectRequest(string Name, OwnerId OwnerId, string ObjectTypeName);
 
-internal class CreateTrackableObjectEndpoint : IFuelModuleEndpoint
+internal class CreateTrackableObjectEndpoint(
+    ICommandDispatcher<CreateTrackableObjectCommand, TrackableObjectId> commandDispatcher)
+    : Endpoint<CreateTrackableObjectRequest>
 {
-    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+    public override void Configure()
     {
-        endpointRouteBuilder.MapPost("/trackable-objects", CreateTrackableObjectAsync);
+        Post("/trackable-objects");
+        Group<FuelModuleApiGroup>();
+        AllowAnonymous();
     }
 
-    private static async Task<Results<Created, ValidationProblem>> CreateTrackableObjectAsync(
-        CreateTrackableObjectRequest request,
-        ICommandDispatcher<CreateTrackableObjectCommand, TrackableObjectId> commandDispatcher,
-        CancellationToken cancellationToken)
+    public override async Task HandleAsync(CreateTrackableObjectRequest req, CancellationToken ct)
     {
-        var command = CreateTrackableObjectEndpointMapper.MapToCommand(request);
-        var result = await commandDispatcher.DispatchAsync(command, cancellationToken);
+        var command = CreateTrackableObjectEndpointMapper.MapToCommand(req);
+        var result = await commandDispatcher.DispatchAsync(command, ct);
 
-        return result.Match<Results<Created, ValidationProblem>>(
-            _ => TypedResults.Created(),
-            errors => errors.MapToValidationProblem());
+        var sendTask = result.Match(
+            _ => SendAsync(null, StatusCodes.Status201Created, ct),
+            errors =>
+            {
+                foreach (var error in errors)
+                {
+                    AddError(new ValidationFailure(error.Code, error.Description));
+                }
+
+                return SendErrorsAsync(cancellation: ct);
+            });
+
+        await sendTask;
     }
 }
 

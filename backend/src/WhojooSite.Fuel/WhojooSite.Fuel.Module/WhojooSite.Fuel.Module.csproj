@@ -13,6 +13,8 @@
 
     <ItemGroup>
         <PackageReference Include="Dapper"/>
+        <PackageReference Include="FastEndpoints"/>
+        <PackageReference Include="FastEndpoints.Swagger"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Npgsql"/>
         <PackageReference Include="Npgsql.OpenTelemetry"/>

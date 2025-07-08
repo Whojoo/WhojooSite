@@ -7,7 +7,9 @@ Content-Type: application/json
 
 {
   "name": "ML-JG-09",
-  "objectTypeName": "motorcycle",
+  "objectTypeName": "fiets",
   "ownerId": "{{$uuid}}"
 }
 
+### Get Single Trackable Object
+GET {{baseUrl}}/api/fuel-module/trackable-objects/019703e2-6656-7e21-8c74-249227e9d161

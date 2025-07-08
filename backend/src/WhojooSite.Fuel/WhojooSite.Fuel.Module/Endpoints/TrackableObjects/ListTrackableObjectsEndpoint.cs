@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FastEndpoints;
+
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Routing;
 
 using Riok.Mapperly.Abstractions;
 
@@ -14,21 +13,28 @@ namespace WhojooSite.Fuel.Module.Endpoints.TrackableObjects;
 
 internal record ListTrackableObjectsResponse(TrackableObject[] TrackableObjects, int TotalCount);
 
-internal class ListTrackableObjectsEndpoint : IFuelModuleEndpoint
+internal class ListTrackableObjectsEndpoint(
+    IQueryDispatcher<ListTrackableObjectsQuery, ListTrackableObjectsQueryResponse> queryDispatcher)
+    : EndpointWithoutRequest<ListTrackableObjectsResponse>
 {
-    public void MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
+    public override void Configure()
     {
-        endpointRouteBuilder.MapGet("/trackable-objects", ListTrackableObjectsAsync);
+        Get("/trackable-objects");
+        Group<FuelModuleApiGroup>();
+        AllowAnonymous();
     }
 
-    private static async Task<Results<Ok<ListTrackableObjectsResponse>, InternalServerError<string>>> ListTrackableObjectsAsync(
-        IQueryDispatcher<ListTrackableObjectsQuery, ListTrackableObjectsQueryResponse> queryDispatcher,
-        CancellationToken cancellationToken)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        var result = await queryDispatcher.DispatchAsync(new ListTrackableObjectsQuery(OwnerId.Empty), cancellationToken);
-        return result.Match<Results<Ok<ListTrackableObjectsResponse>, InternalServerError<string>>>(
-            response => TypedResults.Ok(ListTrackableObjectsEndpointMapper.MapToResponse(response)),
-            errors => TypedResults.InternalServerError(errors[0].Description));
+        var result = await queryDispatcher.DispatchAsync(new ListTrackableObjectsQuery(OwnerId.Empty), ct);
+        var sendTask = result.Match(
+            response => SendOkAsync(ListTrackableObjectsEndpointMapper.MapToResponse(response), ct),
+            errors =>
+            {
+                AddError(errors[0].Description, errors[0].Code);
+                return SendErrorsAsync(StatusCodes.Status500InternalServerError, ct);
+            });
+        await sendTask;
     }
 }
 

@@ -18,12 +18,9 @@ internal class CreateTrackableObjectHandler(
     private static readonly ResultError StoringTrackableObjectFailed =
         ResultError.Failure("TrackableObject", "Failed to store trackable object");
 
-    private readonly IObjectTypeRepository _objectTypeRepository = objectTypeRepository;
-    private readonly ITrackableObjectRepository _trackableObjectRepository = trackableObjectRepository;
-
     public async Task<Result<TrackableObjectId>> HandleAsync(CreateTrackableObjectCommand request, CancellationToken cancellation)
     {
-        var objectTypeId = await _objectTypeRepository.GetIdFromNameAsync(request.ObjectTypeName, cancellation);
+        var objectTypeId = await objectTypeRepository.GetIdFromNameAsync(request.ObjectTypeName, cancellation);
 
         if (!objectTypeId.HasValue)
         {
@@ -34,7 +31,7 @@ internal class CreateTrackableObjectHandler(
             .Create(request.Name, objectTypeId.Value, request.OwnerId)
             .BindAsync(async trackableObject =>
             {
-                var storeResult = await _trackableObjectRepository.StoreAsync(trackableObject, cancellation);
+                var storeResult = await trackableObjectRepository.StoreAsync(trackableObject, cancellation);
                 return Result.Success((trackableObject.Id, storeResult));
             })
             .ErrorIfAsync(bind => bind.storeResult == 0, StoringTrackableObjectFailed)

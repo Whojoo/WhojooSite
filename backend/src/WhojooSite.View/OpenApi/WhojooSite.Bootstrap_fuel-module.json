@@ -8,8 +8,9 @@
     "/api/fuel-module/trackable-objects": {
       "post": {
         "tags": [
-          "CreateTrackableObjectEndpoint"
+          "WhojooSite.Bootstrap"
         ],
+        "operationId": "WhojooSiteFuelModuleEndpointsTrackableObjectsCreateTrackableObjectEndpoint",
         "requestBody": {
           "content": {
             "application/json": {
@@ -21,25 +22,16 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           }
         }
       },
       "get": {
         "tags": [
-          "ListTrackableObjectsEndpoint"
+          "WhojooSite.Bootstrap"
         ],
+        "operationId": "WhojooSiteFuelModuleEndpointsTrackableObjectsListTrackableObjectsEndpoint",
         "responses": {
           "200": {
             "description": "OK",
@@ -47,16 +39,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListTrackableObjectsResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
                 }
               }
             }
@@ -83,41 +65,6 @@
           },
           "objectTypeName": {
             "type": "string"
-          }
-        }
-      },
-      "HttpValidationProblemDetails": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "detail": {
-            "type": "string",
-            "nullable": true
-          },
-          "instance": {
-            "type": "string",
-            "nullable": true
-          },
-          "errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
           }
         }
       },
@@ -207,10 +154,7 @@
   },
   "tags": [
     {
-      "name": "CreateTrackableObjectEndpoint"
-    },
-    {
-      "name": "ListTrackableObjectsEndpoint"
+      "name": "WhojooSite.Bootstrap"
     }
   ]
 }

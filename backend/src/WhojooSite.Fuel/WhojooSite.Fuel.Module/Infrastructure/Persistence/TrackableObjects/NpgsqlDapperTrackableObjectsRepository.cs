@@ -39,8 +39,9 @@ internal class NpgsqlDapperTrackableObjectsRepository(IFuelConnectionFactory fue
     {
         const string sql =
             """
-            SELECT trackable.id, trackable.identifier, trackable.object_type_id, trackable.owner_id, trackable.creation_date, 
-                   type.id, type.type_name, type.creation_date
+            SELECT trackable.id as Id, trackable.identifier as Name, trackable.object_type_id as ObjectTypeId, 
+                   trackable.owner_id as OwnerId, trackable.creation_date as CreationDate, 
+                   type.id as ObjectTypeId, type.type_name as Name, type.creation_date as CreationDate
             FROM fuel.trackable_object AS trackable
             INNER JOIN fuel.object_type type ON type.id = object_type_id;
 
@@ -51,11 +52,14 @@ internal class NpgsqlDapperTrackableObjectsRepository(IFuelConnectionFactory fue
 
         var multiRead = await connection.QueryMultipleAsync(sql);
 
-        var trackableObjects = multiRead.Read<TrackableObject, ObjectType, TrackableObject>((to, ot) =>
-        {
-            to.ObjectType = ot;
-            return to;
-        }).ToArray();
+        var trackableObjects = multiRead.Read<TrackableObject, ObjectType, TrackableObject>(
+                (trackableObject, objectType) =>
+                {
+                    trackableObject.ObjectType = objectType;
+                    return trackableObject;
+                },
+                "ObjectTypeId")
+            .ToArray();
 
         var totalCount = multiRead.Read<int>().First();
 

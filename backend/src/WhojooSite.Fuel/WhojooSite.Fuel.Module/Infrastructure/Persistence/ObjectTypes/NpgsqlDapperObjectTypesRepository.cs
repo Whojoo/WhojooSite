@@ -20,6 +20,6 @@ internal class NpgsqlDapperObjectTypesRepository(IFuelConnectionFactory fuelConn
             """;
 
         var connection = await _fuelConnectionFactory.CreateConnectionAsync();
-        return await connection.QueryFirstOrDefaultAsync<ObjectTypeId>(sql, new { TypeName = name });
+        return await connection.QueryFirstOrDefaultAsync<ObjectTypeId?>(sql, new { TypeName = name });
     }
 }
